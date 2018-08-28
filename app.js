@@ -100,28 +100,37 @@ fs.readdir(moveFrom, function (err, files) {
 
         console.log("'%s' is a directory.", fromPath);
 
-      
         processFile(toPath, file, ['{{serverBack}}', '{{server}}'], [tbServerBack, tbServer]);
-        
-
-      // fs.rename(fromPath, toPath, function (error) {
-
-      //   if (error) {
-
-      //     console.error("File moving error.", error);
-
-      //   }
-
-      //   else {
-
-      //     console.log("Moved file '%s' to '%s'.", fromPath, toPath);
-
-      //   }
-
-      // });
 
     });
 
   });
 
 });
+
+
+const cb = () => {
+
+  if (io && socketClients) {
+
+    let globalObj = { socketClients, io }
+
+    module.exports.socketClients = socketClients;
+    module.exports.io = io;
+
+    require('./webServer/express.js')((webServer) => {
+
+      //start express server
+      webServer(port, version, server, app);
+    });
+
+    require('./webServer/socket.io').socket(io);
+
+  } else {
+
+    setTimeout(function () { cb(); }, 0);
+
+  }
+}
+
+cb();
