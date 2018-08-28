@@ -1,0 +1,27 @@
+{
+  "name": "trakbak",
+  "version": "1.0.0",
+  "description": "Node.JS and socket.JS web analyzer and tracker.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ravonus/TrakBak.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ravonus/TrakBak/issues"
+  },
+  "homepage": "https://github.com/Ravonus/TrakBak#readme",
+  "dependencies": {
+    "colors": "^1.3.2",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.3",
+    "ip": "^1.1.5",
+    "socket.io": "^2.1.1",
+    "url-parse": "^1.4.3"
+  }
+}
