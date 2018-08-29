@@ -2,3 +2,12 @@ language: node_js
 
 node_js:
   - "stable"
+
+notifications:
+  discord:
+    channels:
+      - 484404630428844043:5NC94duPiKVXYfNinGL7LCLzO3i4Wwi0_j9ZSAO6a03loeyhLxXZ1bdi4_ySQPBJoVy2
+    pull_request_template:
+      - 'Build [#%{build_number}](%{build_url}) ([%{commit}](%{compare_url})) of %{repository}@%{branch} in PR [#%{pull_request_number}](%{pull_request_url}) by %{author} %{result} in %{duration}'
+    branch_template:
+      - 'Build [#%{build_number}](%{build_url}) ([%{commit}](%{compare_url})) of %{repository}@%{branch} by %{author} %{result} in %{duration}'
