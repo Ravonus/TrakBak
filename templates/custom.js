@@ -1,4 +1,5 @@
 //This auto feels backend server ip and port.
+var clikbakSocket = '{{serverBackz}}';
 var clikbakSocket = '{{serverBack}}';
 
 //public table variable.
