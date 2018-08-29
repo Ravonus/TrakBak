@@ -6,10 +6,11 @@ const express = require('express');
 const routes = require('./routes');
 let started, callback , start;
 
-start = (port, version, server, app) => {
+start = (port, version, server, app, cb) => {
 
   server.listen(port, () => {
     console.log(`ClikBak Socket and Client Server  `.cyan.bold.underline + `${version}`.yellow.bold + `\n\nServer started on port`.cyan.bold.underline + `:  `.green.bold + `${port}`.yellow.bold);
+    cb('test');
   });
   app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -25,9 +26,11 @@ start = (port, version, server, app) => {
 
 function webServer() {
 
+
   started = "started";
 
   if (typeof callback == 'function') {
+    cb('test');
     callback(test);
   }
 };

@@ -10,6 +10,7 @@ const express = require('express'),
   server = http.createServer(app),
   serverSecure = https.createServer(app),
   io = require('socket.io')(server),
+  argv = require('yargs').argv,
   port = 2022,
   cookieSession = require('cookie-session'),
   ip = require("ip"),
@@ -17,54 +18,54 @@ const express = require('express'),
   tbServerBack = process.env.cbSocketBack || 'http://' + ip.address() + ':1338';
 
 let socketClients = new Object(),
-    moveFrom = path.join(__dirname, '/templates'),
-    moveTo = path.join(__dirname, '/public/js');
+  templatePath = path.join(__dirname, '/templates'),
+  publicPath = path.join(__dirname, '/public/js');
 
-//Read file - Replace all static variables with regex words - Place within public client folder.
+//Read file - Replace all static variables with regex words - Place within public client folder. This function is used within the file loop. Used to look at template files and put correct URL for sockets and API within.
 function processFile(myPath, file, word, replace) {
 
-  fs.readFile(moveFrom+'/'+file, "utf8" , function(err, data) {
+  fs.readFile(templatePath + '/' + file, "utf8", function (err, data) {
     if (err) {
-        throw err;
+      throw err;
     }
 
 
-    if(typeof word === 'object') {
+    if (typeof word === 'object') {
 
-      word.forEach( (reg, index) => {
+      word.forEach((reg, index) => {
 
         var myRegEx = new RegExp(reg, 'g');
 
-        data = data.replace(myRegEx,replace[index]);
-          
+        data = data.replace(myRegEx, replace[index]);
+
       });
 
-      fs.writeFile(myPath, data, function(err) {
-        if(err) {
-            return console.log(err);
+      fs.writeFile(myPath, data, function (err) {
+        if (err) {
+          return console.log(err);
         }
-    
-    }); 
+
+      });
 
     } else {
 
       var myRegEx = new RegExp(word, 'g');
-      fs.writeFile(myPath, data.replace(myRegEx,replace), function(err) {
-        if(err) {
-            return console.log(err);
+      fs.writeFile(myPath, data.replace(myRegEx, replace), function (err) {
+        if (err) {
+          return console.log(err);
         }
-    
-    }); 
+
+      });
 
     }
-   
+
   });
 
 }
 
-// Loop through all the files in the temp directory
+// Loop through all the files in the template directory
 
-fs.readdir(moveFrom, function (err, files) {
+fs.readdir(templatePath, function (err, files) {
 
   if (err) {
 
@@ -78,9 +79,9 @@ fs.readdir(moveFrom, function (err, files) {
 
     // Make one pass and make the file complete
 
-    var fromPath = path.join(moveFrom, file);
+    var fromPath = path.join(templatePath, file);
 
-    var toPath = path.join(moveTo, file);
+    var toPath = path.join(publicPath, file);
 
     fs.stat(fromPath, function (error, stat) {
 
@@ -92,15 +93,7 @@ fs.readdir(moveFrom, function (err, files) {
 
       }
 
-      if (stat.isFile())
-
-        console.log("'%s' is a file.", fromPath);
-
-      else if (stat.isDirectory())
-
-        console.log("'%s' is a directory.", fromPath);
-
-        processFile(toPath, file, ['{{serverBack}}', '{{server}}'], [tbServerBack, tbServer]);
+      processFile(toPath, file, ['{{serverBack}}', '{{server}}'], [tbServerBack, tbServer]);
 
     });
 
@@ -108,7 +101,7 @@ fs.readdir(moveFrom, function (err, files) {
 
 });
 
-
+//Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way...
 const cb = () => {
 
   if (io && socketClients) {
@@ -120,8 +113,36 @@ const cb = () => {
 
     require('./webServer/express.js')((webServer) => {
 
-      //start express server
-      webServer(port, version, server, app);
+      //start express server and then do callback after started (Mocha testing if test argument was provided)
+      webServer(port, version, server, app, function () {
+
+        if (argv.mochaTest || argv.mocha || argv.test || argv.mochatest) {
+          var Mocha = require('mocha'),
+            fs = require('fs'),
+            path = require('path');
+
+          // Instantiate a Mocha instance.
+          var mocha = new Mocha();
+
+          var testDir = 'mochaTest'
+
+          // Add each .js file to the mocha instance
+          fs.readdirSync(testDir).filter(function (file) {
+            // Only keep the .js files
+            return file.substr(-3) === '.js';
+
+          }).forEach(function (file) {
+            mocha.addFile(
+              path.join(testDir, file)
+            );
+          });
+
+          // Run the tests.
+          mocha.run(function (failures) {
+            process.exitCode = failures ? -1 : 0;  // exit with non-zero status if there were failures
+          });
+        };
+      });
     });
 
     require('./webServer/socket.io').socket(io);

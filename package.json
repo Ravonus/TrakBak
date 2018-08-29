@@ -4,7 +4,8 @@
   "description": "Node.JS and socket.JS web analyzer and tracker.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "test": "node app.js --mochaTest"
   },
   "repository": {
     "type": "git",
@@ -17,12 +18,18 @@
   },
   "homepage": "https://github.com/Ravonus/TrakBak#readme",
   "dependencies": {
+    "chai": "^4.1.2",
     "colors": "^1.3.2",
     "cookie-session": "^2.0.0-beta.3",
+    "expect": "^23.5.0",
     "express": "^4.16.3",
     "hbs": "^4.0.1",
     "ip": "^1.1.5",
     "socket.io": "^2.1.1",
-    "url-parse": "^1.4.3"
+    "url-parse": "^1.4.3",
+    "yargs": "^12.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
