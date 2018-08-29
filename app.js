@@ -140,7 +140,10 @@ const cb = () => {
           // Run the tests.
           mocha.run(function (failures) {
             process.exitCode = failures ? -1 : 0;  // exit with non-zero status if there were failures
+            //exit node ( Our script stays open because it has a web server. Need to exit so mocha test is finished...);
+            process.exit()
           });
+          
         };
       });
     });
