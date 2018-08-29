@@ -93,7 +93,7 @@ fs.readdir(templatePath, function (err, files) {
 
       }
 
-      processFile(toPath, file, ['{{serverBack}}', '{{server}}'], [tbServerBack, tbServer]);
+      processFile(toPath, file, ['{{serverBackz}}', '{{serverz}}'], [tbServerBack, tbServer]);
 
     });
 
