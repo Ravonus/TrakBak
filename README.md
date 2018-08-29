@@ -3,4 +3,5 @@ Node.JS and socket.JS web analyzer and tracker.
 
 
 # Travis/Mocha Passing
-https://travis-ci.org/Ravonus/TrakBak.svg?branch=master
+
+<img src="https://travis-ci.org/Ravonus/TrakBak.svg?branch=master" alt="Testing" height="50" width="150">
