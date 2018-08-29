@@ -14,8 +14,10 @@ const express = require('express'),
   port = 2022,
   cookieSession = require('cookie-session'),
   ip = require("ip"),
-  tbServer = process.env.cbSocket || ip.address() + ':2022',
-  tbServerBack = process.env.cbSocketBack || 'http://' + ip.address() + ':1338';
+  config = require('./config/config'),
+  tbServer = process.env.cbSocket || `${ip.address()}:${config.httpPort}`,
+  tbServerBack = process.env.cbSocketBack || `http://${ip.address()}:${config.httpPort}`
+
 
 let socketClients = new Object(),
   templatePath = path.join(__dirname, '/templates'),
@@ -114,7 +116,7 @@ const cb = () => {
     require('./webServer/express.js')((webServer) => {
 
       //start express server and then do callback after started (Mocha testing if test argument was provided)
-      webServer(port, version, server, app, function () {
+      webServer(config.httpPort, version, server, app, function () {
 
         if (argv.mochaTest || argv.mocha || argv.test || argv.mochatest) {
           var Mocha = require('mocha'),

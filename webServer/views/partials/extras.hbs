@@ -1,0 +1,432 @@
+<li id="cbLi" style="display:none;">
+  <a class="collapsible-header waves-effect arrow-r">
+    <i class="fa fa-tachometer"></i> Dashboard
+    <i class="fa fa-angle-down rotate-icon"></i>
+  </a>
+  <div class="collapsible-body">
+    <ul>
+
+    </ul>
+  </div>
+</li>
+
+<li id="cbLiSub" style="display:none;">
+  <a class="waves-effect">Main</a>
+</li>
+
+<div style="display: none;" class="row" id="viewScripts">
+
+
+
+</div>
+
+<!--View sockets table-->
+
+<div id="viewScheduleHtml" style="display: none;" class="container-fluid">
+
+  <a href="#" id="clickTest">test</a>
+
+  <!--Top Table UI-->
+
+  <div class="card white card-cascade narrower mt-5">
+
+    <!--Card image-->
+    <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <button type="button" onclick="selectDestroy()" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-plus mt-0"></i>
+        </button>
+      </div>
+
+      <a class="white-text mx-3">Sockets</a>
+      <div>
+        <button data-toggle="modal" data-target="#confirmDelete" type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-remove mt-0"></i>
+        </button>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-info-circle mt-0"></i>
+        </button>
+      </div>
+
+    </div>
+    <!--/Card image-->
+
+    <div class="px-4">
+
+      <div class="table-wrapper table-responsive">
+        <!--Table-->
+        <table class="table table-hover mb-0" id="testTable">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="mr-2 label-table"></label>
+              </th>
+              <th class="th-lg">
+                <a>Socket Id
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a>name
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a>domains
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a>paths
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              {{!--
+              <th class="th-lg">
+                <a href="">links
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a href="">user
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a href="">id
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a href="">updatedAt
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+            </tr> --}}
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+
+      <hr class="my-0">
+
+      <!--Bottom Table UI-->
+      <div class="d-flex justify-content-between">
+
+
+
+
+      </div>
+      <!--Bottom Table UI-->
+
+    </div>
+  </div>
+</div>
+<!--End View sockets table-->
+
+<!--View Domains table-->
+
+<div id="viewDomainHtml" style="display: none;" class="container-fluid">
+
+  <!--Top Table UI-->
+
+  <div class="card white card-cascade narrower mt-5">
+
+    <!--Card image-->
+    <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <button type="button" onclick="selectDestroy()" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-plus mt-0"></i>
+        </button>
+      </div>
+
+      <a href="" class="white-text mx-3">My Domains</a>
+
+      <div>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-remove mt-0"></i>
+        </button>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-info-circle mt-0"></i>
+        </button>
+      </div>
+
+    </div>
+    <!--/Card image-->
+
+    <div class="px-4">
+
+      <div class="table-wrapper table-responsive">
+        <!--Table-->
+        <table class="table table-hover mb-0" id="testTable">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="mr-2 label-table"></label>
+              </th>
+              <th class="th-lg">
+                <a>Domain
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+
+      <hr class="my-0">
+
+      <!--Bottom Table UI-->
+      <div class="d-flex justify-content-between">
+
+
+
+
+      </div>
+      <!--Bottom Table UI-->
+
+    </div>
+  </div>
+</div>
+<!--End View domain table-->
+
+<!--View Landing page table-->
+
+<div id="viewLPHtml" style="display: none;" class="container-fluid">
+
+  <!--Top Table UI-->
+
+  <div class="card white card-cascade narrower mt-5">
+
+    <!--Card image-->
+    <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <button type="button" onclick="selectDestroy()" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-plus mt-0"></i>
+        </button>
+      </div>
+
+      <a href="" class="white-text mx-3">My Landing Pages</a>
+
+      <div>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-remove mt-0"></i>
+        </button>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-info-circle mt-0"></i>
+        </button>
+      </div>
+
+    </div>
+    <!--/Card image-->
+
+    <div class="px-4">
+
+      <div class="table-wrapper table-responsive">
+        <!--Table-->
+        <table class="table table-hover mb-0" id="testTable">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="mr-2 label-table"></label>
+              </th>
+              <th class="th-lg">
+                <a>Name
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+              <th class="th-lg">
+                <a>Path
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+
+      <hr class="my-0">
+
+      <!--Bottom Table UI-->
+      <div class="d-flex justify-content-between">
+
+      </div>
+      <!--Bottom Table UI-->
+
+    </div>
+  </div>
+</div>
+<!--End View landing page table-->
+
+<!--View Callbacks page table-->
+
+<div id="viewCallbacksHtml" style="display: none;" class="container-fluid">
+
+  <!--Top Table UI-->
+
+  <div class="card white card-cascade narrower mt-5">
+
+    <!--Card image-->
+    <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <button type="button" onclick="selectDestroy()" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-plus mt-0"></i>
+        </button>
+      </div>
+
+      <a href="" class="white-text mx-3">My Callbacks</a>
+
+      <div>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-remove mt-0"></i>
+        </button>
+        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <i class="fa fa-info-circle mt-0"></i>
+        </button>
+      </div>
+
+    </div>
+    <!--/Card image-->
+
+    <div class="px-4">
+
+      <div class="table-wrapper table-responsive">
+        <!--Table-->
+        <table class="table table-hover mb-0" id="testTable">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox" class="mr-2 label-table"></label>
+              </th>
+              <th class="th-lg">
+                <a>Name
+                  <i class="fa fa-sort ml-1"></i>
+                </a>
+              </th>
+
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+      </div>
+
+      <hr class="my-0">
+
+      <!--Bottom Table UI-->
+      <div class="d-flex justify-content-between">
+
+
+
+
+      </div>
+      <!--Bottom Table UI-->
+
+    </div>
+  </div>
+</div>
+<!--End View callbacks table-->
+
+<div class="col-12 col-sm-6 col-md-6 col-lg-4 my-5 narrower mx-auto" style="display:none;" id="scriptCard">
+  <div class="card border-dark mb-3">
+    <div class="card-header gradient-card-header blue-gradient d-flex justify-content-between align-items-center">
+
+
+      <button type="button" onclick="" class="btn btn-outline-white btn-rounded btn-sm px-2 mr-auto waves-effect waves-light">
+        <i class="fa fa-plus mt-0"></i>
+      </button>
+      <button type="button" onclick="" class="btn btn-outline-white btn-rounded btn-sm px-2 mr-auto waves-effect waves-light">&nbsp;
+        <i class="fa fa-info mt-0">&nbsp;</i>
+      </button>
+
+      <a class="mx-auto"></a>
+
+      <div class="switch square blue-white-switch mr-auto">
+        <label>
+          <input type="checkbox" checked="checked">
+          <span class="lever"></span>
+        </label>
+      </div>
+
+      <button type="button" onclick="" class="btn btn-outline-white btn-rounded btn-sm mr-auto px-2 waves-effect waves-light">
+        <i class="fa fa-times mt-0"></i>
+      </button>
+
+    </div>
+
+    <div class="card-body text-dark">
+      <h5 class="card-title">Dark card title</h5>
+      <div class="row scriptRow">
+
+      </div>
+    </div>
+    <div class="card-footer bg-transparent border-dark">Footer</div>
+  </div>
+</div>
+
+
+
+<ul id="extraFloatButton" style="display:none;">
+  <li>
+    <a class="btn-floating red">
+      <i class="fa fa-star"></i>
+    </a>
+  </li>
+  <li>
+    <a class="btn-floating warning-color">
+      <i class="fa fa-user"></i>
+    </a>
+  </li>
+  <li>
+    <a class="btn-floating green">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  <li>
+    <a class="btn-floating blue">
+      <i class="fa fa-shopping-cart"></i>
+    </a>
+  </li>
+</ul>

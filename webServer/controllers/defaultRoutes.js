@@ -42,14 +42,12 @@ module.exports = {
 
       });
 
-
     }
 
   },
   cbsockets: function (req, res, next) {
 
     res.sendFile(public + '/sockets.html');
-
 
   },
   verify: function (req, res, next) {
@@ -62,7 +60,8 @@ module.exports = {
     res.send('accepted');
   },
   catchAll: function (req, res, next) {
-
-    res.render('404.hbs');
+    res.status(404);
+    url = req.url;
+    res.render('404.hbs', {title: '404: Page Not Found', url: url });
   }
 }

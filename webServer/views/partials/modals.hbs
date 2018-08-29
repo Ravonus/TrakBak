@@ -1,0 +1,311 @@
+<!-- Modal -->
+<div class="modal fade" id="newSocketModal" tabindex="-1" role="dialog" aria-labelledby="newSocketModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Socket</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="md-form form-sm">
+              <input type="text" id="socketName" class="form-control form-control-sm createSocket">
+              <label class="createSocket" for="socketName">Socket name</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary sockets createSocket" multiple searchable="Search here..">
+                <option value="domains" disabled selected>Domains</option>
+                <button class="btn-save btn btn-primary btn-sm">Save</button>
+              </select>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary sockets createSocket" multiple searchable="Search here..">
+                <option value="paths" disabled selected>Paths</option>
+                <button class="btn-save btn btn-primary btn-sm">Save</button>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary sockets createSocket" multiple searchable="Search here..">
+                <option value="postbacks" disabled selected>Postbacks</option>
+
+              </select>
+
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary createSocket">
+                <option value="clikbak" disabled selected>Socket Type</option>
+                <option value="clikbak">Clikbak</option>
+              </select>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="createSocket()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Newscript -->
+<div class="modal fade" id="newScriptModal" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Script</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="md-form form-sm">
+              <input type="text" id="socketName" class="form-control form-control-sm createSocket">
+              <label class="createSocket" for="socketName">Script name</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary">
+                <option value="test" disabled selected>Templates</option>
+                <option value="basic">basic</option>
+                <option value="basic-google">Basic-Google</option>
+              </select>
+            </div>
+          </div>
+          <div id="basicSelect" style="display:none;" class="col-12 col-md-6">
+            <select class="mdb-select colorful-select dropdown-primary">
+              <option value="" disabled selected>Choose your option</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" onclick="saveScript();" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="javascriptModal" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel">
+
+
+
+
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <input value="none" type="text" id="viewScriptRegEx" hidden="yes">
+        <h5 class="modal-title" id="viewScriptTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div id="codeWrapper" data-language="javascript"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onclick="updateScript()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editScriptModal" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel">
+
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <br></br>
+        <br></br>
+        other
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createDomainModal" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Domain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="md-form form-sm">
+              <input type="text" id="domainName" class="form-control form-control-sm createDomain">
+              <label class="createDomain" for="domainName">Domain Name</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="createDomain()" class="btn btn-primary mx-auto">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createLPModal" tabindex="-1" role="dialog" aria-labelledby="createLinkModalLabel">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Landing Page</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="md-form form-sm">
+              <input type="text" id="LPName" class="form-control form-control-sm createLP">
+              <label class="createLP" for="domainName">Landing page</label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="md-form form-sm">
+              <input type="text" id="fullPathName" class="form-control form-control-sm createLP">
+              <label class="createLP" for="fullPathName">Full path</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="createLP()" class="btn btn-primary mx-auto">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createPostbackModal" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Domain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="md-form form-sm">
+              <input type="text" id="domainName" class="form-control form-control-sm createDomain">
+              <label class="createDomain" for="domainName">Domain Name</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="createDomain()" class="btn btn-primary mx-auto">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addDomain" tabindex="-1" role="dialog" aria-labelledby="newScriptModalLabel">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Domain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="md-form form-sm">
+              <input type="text" id="domainName" class="form-control form-control-sm createDomain">
+              <label class="createDomain" for="domainName">Domain Name</label>
+            </div>
+          </div>
+          <div class="col-12" class="path" style="display:none;">
+            <div class="md-form form-sm">
+              <input type="text" id="path" class="form-control form-control-sm createDomain">
+              <label class="path" for="path">Path</label>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="sm-form form-sm">
+              <select class="mdb-select colorful-select dropdown-primary sockets createSocket" multiple searchable="Search here..">
+                <option value="paths" disabled selected>Paths</option>
+                <button class="btn-save btn btn-primary btn-sm">Save</button>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="addChip()" class="btn btn-primary mx-auto">Add</button>
+      </div>
+    </div>
+  </div>
+  <input type="text" class="addSocket" hidden="yes" id="">
+</div>
+
+
+<div class="modal fade bottom" id="confirmDelete">
+<div class="modal-dialog modal-frame modal-bottom" role="document">
+                    <!--Content-->
+                    <div class="modal-content">
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="row d-flex justify-content-center align-items-center">
+
+                                <p class="pt-3 pr-2">Are you sure you would like to delete socket?</p>
+                                <button onclick="deleteSocket()" type="button" class="btn btn-secondary waves-effect waves-light">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.Content-->
+                </div>
+</div>

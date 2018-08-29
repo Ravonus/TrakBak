@@ -1,6 +1,5 @@
 const fs = require('fs'),
       chai = require('chai');
-      assert = require('assert');
 
 describe('Check Files', function () {
 
@@ -70,7 +69,7 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if custom.js moved to public js file.', function () {
+    describe('Check if customSocket.js moved to public js file.', function () {
       it('Should return true', function (done) {
 
         chai.expect(fs.existsSync('./public/js/customSocket.js')).to.be.true;
@@ -79,7 +78,7 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if custom.js varibles were changed', function () {
+    describe('Check if customSocket.js varibles were changed', function () {
       it('Should not return error', function (done) {
 
         var readFile = () => {
