@@ -29,6 +29,12 @@ let currentEnvironment = typeof(process.env.NODE_ENV) == 'string' ? process.env.
 
 // Check that the current environment is one of the enviorments obove, if not, default to staging
 let environmentToExport = typeof(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging;
+if(environmentToExport.envName === 'staging') {
 
+   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+   
+} else {
+
+}
 // Export the module
 module.exports = environmentToExport;
