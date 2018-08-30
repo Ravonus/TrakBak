@@ -1,7 +1,7 @@
 //var socket = io('https://cp.clikbak.com');
 // var socket = io('http://localhost:2022z');
 var socket = io('{{serverz}}');
-var clikbakSocket = '{{serverBackz}}';
+var clikbakSocket = 'http://192.168.0.169:3000';
 
 function closeChip(click, type) {
 

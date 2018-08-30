@@ -22,7 +22,6 @@ start = (port, version, server, app, cb) => {
 
   //set up routes
   app.use('/', routes);
-
 }
 
 function webServer() {

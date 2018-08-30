@@ -17,7 +17,7 @@ describe('Check Files', function () {
     describe('Check if custom.js moved to public js file.', function () {
       it('Should return true', function (done) {
 
-        chai.expect(fs.existsSync('./public/js/custom.js')).to.be.true;
+        chai.expect(fs.existsSync('./webServer/public/js/custom.js')).to.be.true;
         done();
 
       });
@@ -28,7 +28,7 @@ describe('Check Files', function () {
 
         var readFile = () => {
 
-          fs.readFile('./public/js/custom.js', 'utf8', function (err, data) {
+          fs.readFile('./webServer/public/js/custom.js', 'utf8', function (err, data) {
 
             if (err) {
               throw err;
@@ -72,7 +72,7 @@ describe('Check Files', function () {
     describe('Check if customSocket.js moved to public js file.', function () {
       it('Should return true', function (done) {
 
-        chai.expect(fs.existsSync('./public/js/customSocket.js')).to.be.true;
+        chai.expect(fs.existsSync('./webServer/public/js/customSocket.js')).to.be.true;
         done();
 
       });
@@ -89,7 +89,7 @@ describe('Check Files', function () {
 
           }
 
-          fs.readFile('./public/js/customSocket.js', 'utf8', function (err, data) {
+          fs.readFile('./webServer/public/js/customSocket.js', 'utf8', function (err, data) {
 
             if (err) {
               throw err;
