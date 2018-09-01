@@ -24,9 +24,7 @@ describe('Check All Server Routes', function () {
 
         });
 
-
       });
-
 
       describe(`Check http//${ip.address()}:${config.httpPort}/page/not/found. Catch all`, function () {
 
@@ -34,7 +32,7 @@ describe('Check All Server Routes', function () {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpPort, path: '/page/not/found' };
           var req = http.request(options, function (res) {
-            chai.expect(res.statusCode).to.equal(404);
+            chai.expect(resc .statusCode).to.equal(404);
 
             done();
           });
@@ -59,7 +57,6 @@ describe('Check All Server Routes', function () {
 
         });
 
-
       });
 
     });
@@ -78,7 +75,6 @@ describe('Check All Server Routes', function () {
 
         });
 
-
       });
 
       describe(`Check https//${ip.address()}:${config.httpsPort}/page/not/found Catch all`, function () {
@@ -90,8 +86,6 @@ describe('Check All Server Routes', function () {
 
             chai.expect(res.statusCode).to.equal(404);
 
-
-
             done();
           });
           req.end();
@@ -101,11 +95,28 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort}/`, function () {
+      describe(`Check https//${ip.address()}:${config.httpsPort} /`, function () {
 
         it('Should return 200', function (done) {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/' };
+          var req = https.request(options, function (res) {
+
+            chai.expect(res.statusCode).to.equal(200);
+
+            done();
+          });
+          req.end();
+
+        });
+
+      });
+
+      describe(`Check https//${ip.address()}:${config.httpsPort} /login`, function () {
+
+        it('Should return 200', function (done) {
+
+          var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/login' };
           var req = https.request(options, function (res) {
 
             chai.expect(res.statusCode).to.equal(200);

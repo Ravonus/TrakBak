@@ -1,0 +1,1 @@
+var t,clikbakSocket="poops";clikbakSocket="192.168.0.169:3003";function logout(){localStorage.removeItem("clikbak"),window.location.href="/"}function capFirst(o){return o.charAt(0).toUpperCase()+o.slice(1)}

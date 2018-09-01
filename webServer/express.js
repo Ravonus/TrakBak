@@ -9,6 +9,8 @@ let started, callback , start;
 
 start = (port, version, server, app, cb) => {
 
+
+
   server.listen(port, () => {
     console.log(`ClikBak Socket and Client Server  `.cyan.bold.underline + `${version}`.yellow.bold + `\n\nServer started on port`.cyan.bold.underline + `:  `.green.bold + `${port}`.yellow.bold);
     cb('test');
@@ -16,9 +18,20 @@ start = (port, version, server, app, cb) => {
   app.use(bodyParser.urlencoded({ extended: false }));
 
   app.set('view engine', 'hbs');
+  
   app.set('views', __dirname + '/views');
   hbs.registerPartials(__dirname + '/views/partials');
-  app.use(express.static(__dirname + '/public'));
+
+
+  console.log(port.toString().indexOf(server._connectionKey))
+  if(port === config.httpsPort) {
+    app.use(express.static(__dirname + '/securePublic'));
+
+  } else {
+    app.use( express.static(__dirname + '/public'));
+
+  }
+  
 
   //set up routes
   app.use('/', routes);

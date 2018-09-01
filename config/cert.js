@@ -2,25 +2,28 @@
  
 var Greenlock = require('greenlock');
 var greenlock;
- 
+var leChallenge = require('le-challenge-fs');
+var https = require('https');
 
 
 
- 
+  
 // Storage Backend
 var leStore = require('le-store-certbot').create({
   configDir: './tmp'                                 // or /etc/letsencrypt or wherever
 , debug: true
 });
- 
+
  
 // ACME Challenge Handlers
-var leHttpChallenge = require('le-challenge-manual').create({
-  webrootPath: './public/.well-known/acme-challenge'                              // or template string such as
-, debug: true                                           // '/srv/www/:hostname/.well-known/acme-challenge'
+var leHttpChallenge = leChallenge.create({
+  webrootPath: './webServer/public/.well-known/acme-challenge'                                                    // defaults to 80                             // or template string such as
+, debug: true                                         // '/srv/www/:hostname/.well-known/acme-challenge'
 });
- 
- 
+
+
+
+
 function leAgree(opts, agreeCb) {
   // opts = { email, domains, tosUrl }
   agreeCb(null, opts.tosUrl);
@@ -65,7 +68,7 @@ greenlock = Greenlock.create({
  
  
 // Check in-memory cache of certificates for the named domain
-greenlock.check({ domains: [ 'example.com' ] }).then(function (results) {
+greenlock.check({ domains: [ 'trakbak.tk' ] }).then(function (results) {
   if (results) {
     // we already have certificates
     return;
@@ -75,7 +78,7 @@ greenlock.check({ domains: [ 'example.com' ] }).then(function (results) {
   // Register Certificate manually
   greenlock.register({
  
-    domains: ['www.trakbak.tk']                                // CHANGE TO YOUR DOMAIN (list for SANS)
+    domains: ['trakbak.tk']                                // CHANGE TO YOUR DOMAIN (list for SANS)
   , email: 'chad@technomancyit.com'                                 // CHANGE TO YOUR EMAIL
   , agreeTos: true                                            // set to tosUrl string (or true) to pre-approve (and skip agreeToTerms)
   , rsaKeySize: 2048                                        // 2048 or higher

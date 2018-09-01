@@ -1,6 +1,7 @@
 const express = require('express'),
   colors = require('colors'),
   app = express(),
+  appSecure = express(),
   version = "0.0.1-alpha",
   fs = require('fs'),
   path = require('path'),
@@ -21,9 +22,8 @@ let httpsServerOptions = {
   'key': fs.readFileSync('./webServer/https/key.pem'),
   'cert': fs.readFileSync('./webServer/https/cert.pem')
 }
-let serverSecure = https.createServer(httpsServerOptions, app);
-
-
+let serverSecure = https.createServer(httpsServerOptions, appSecure);
+let ioS = require('socket.io')(serverSecure);
 
 let socketClients = new Object()
 
@@ -31,7 +31,7 @@ let socketClients = new Object()
 //Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way...
 cb = () => {
 
-  if (io && socketClients) {
+  if (io && ioS && socketClients) {
 
     let globalObj = { socketClients, io }
 
@@ -43,7 +43,7 @@ cb = () => {
       //start express server and then do callback after started (Mocha testing if test argument was provided)
       webServer(config.httpPort, version, server, app, function () {
 
-        webServer(config.httpsPort, version, serverSecure, app, function () {
+        webServer(config.httpsPort, version, serverSecure, appSecure, function () {
 
           if (argv.mochaTest || argv.mocha || argv.test || argv.mochatest) {
             var Mocha = require('mocha'),
@@ -78,7 +78,7 @@ cb = () => {
 
           //Letsencrypt Info
         
-          require('./config/cert.js');
+      //    require('./config/cert.js');
 
 
         });
@@ -89,8 +89,8 @@ cb = () => {
 
     });
 
+    require('./webServer/socket.io').socket(ioS);
     require('./webServer/socket.io').socket(io);
-
   } else {
 
     setTimeout(function () { cb(); }, 0);

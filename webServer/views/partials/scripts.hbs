@@ -1,59 +1,8 @@
-<!-- JQuery -->
-<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="js/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="js/mdb.min.js"></script>
-<!-- Socket.io -->
 <script type="text/javascript" src="socket.io/socket.io.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/af-2.2.2/b-1.5.1/b-colvis-1.5.1/cr-1.4.1/fc-3.2.4/r-2.2.1/rr-1.2.3/sc-1.4.4/datatables.min.js"></script>
-<!-- prism and codeflask scripts -->
-<script src="js/prism.min.js"></script>
-<script src="js/codeflask.js"></script>
-<!-- Custom Socket Client Script -->
-<script src="js/customSocket.js"></script>
-<!-- Custom Javascript -->
-<script type="text/javascript" src="../../js/custom.js"></script>
-<script src="js/xedit.js"></script>
 
 
-<script>
-    //Animation init
-    new WOW().init();
+    <!-- Custom Socket Client Script -->
+    <script src="../../js/customSocket.js"></script>
+    <!-- Custom Javascript -->
+    <script type="text/javascript" src="../../js/custom.js"></script>
 
-</script>
-
-<script>
-    // SideNav Initialization
-    $(".button-collapse").sideNav();
-
-    if (document.querySelector('.custom-scrollbar')) {
-        var container = document.querySelector('.custom-scrollbar');
-        Ps.initialize(container, {
-            wheelSpeed: 2,
-            wheelPropagation: true,
-            minScrollbarLength: 20
-        });
-    }
-    // Data Picker Initialization
-    $('.datepicker').pickadate();
-
-    // Material Select Initialization
-    $(document).ready(function () {
-
-
-        var flask = new CodeFlask;
-        flask.run('#codeWrapper', { language: 'javascript'})
-
-
-
-        $('.mdb-select').material_select();
-    });
-
-    // Tooltips Initialization
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
