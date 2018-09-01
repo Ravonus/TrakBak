@@ -1,1 +1,0 @@
-var clikbakSocket="{{serverS}}";clikbakSocket="{{serverBack}}";var t;function logout(){localStorage.removeItem("clikbak");window.location.href="/"}function capFirst(a){return a.charAt(0).toUpperCase()+a.slice(1)};

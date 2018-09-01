@@ -38,6 +38,7 @@ jspm_packages/
 
 public/js/custom.js
 public/js/customSocket.js
+tmp/
 
 # TypeScript v1 declaration files
 typings/

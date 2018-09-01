@@ -207,7 +207,7 @@ module.exports = {
 
     io.on('connection', (socket) => {
       
-      console.log(socket);
+
       console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
      

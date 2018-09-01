@@ -2,7 +2,7 @@ var socket = io('{{server}}');
 var clikbakSocket = '{{serverBack}}';
 
 socket.on('connected', function (data) {
-  console.log(data);
+  console.log('dawgs n shit on connect.');
 })
 
 
@@ -20,7 +20,6 @@ socket.on('me', function (data) {
 
   }
 });
-
 
 
 socket.on('login', function (data) {
