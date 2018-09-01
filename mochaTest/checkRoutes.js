@@ -32,7 +32,7 @@ describe('Check All Server Routes', function () {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpPort, path: '/page/not/found' };
           var req = http.request(options, function (res) {
-            chai.expect(resc .statusCode).to.equal(404);
+            chai.expect(res.statusCode).to.equal(404);
 
             done();
           });
