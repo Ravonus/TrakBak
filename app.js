@@ -17,6 +17,30 @@ const express = require('express'),
 
 require("./controllers/templateLoop.js");
 
+const DB = require('./mongoose/mongoose')
+
+var jamieAuthor = new DB.Author ({
+  _id: new DB.mongoose.Types.ObjectId(),
+  name: {
+      firstName: 'Jamie',
+      lastName: 'Munro'
+  },
+  biography: 'Jamie is the author of ASP.NET MVC 5 with Bootstrap and Knockout.js.',
+  twitter: 'https://twitter.com/endyourif',
+  facebook: 'https://www.facebook.com/End-Your-If-194251957252562/'
+});
+
+
+
+jamieAuthor.save(function(err) {
+  if (err) throw err;
+   
+  console.log('Author successfully saved.');
+
+});
+
+
+
 
 let httpsServerOptions = {
   'key': fs.readFileSync('./webServer/https/key.pem'),

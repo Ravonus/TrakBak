@@ -32,6 +32,7 @@
     "le-challenge-manual": "^2.1.0",
     "le-store-certbot": "^2.2.0",
     "letsencrypt": "^2.1.9",
+    "mongoose": "^5.2.14",
     "node-minify": "^3.4.0",
     "socket.io": "^2.1.1",
     "uglify-js": "^3.4.9",
