@@ -1,45 +1,27 @@
 const mongoose = require('mongoose');
 
-var authorSchema = mongoose.Schema({
+var userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
-          firstName: String,
-      lastName: String
+    firstName: String,
+    lastName: String
   },
   biography: String,
-  twitter: String,
-  facebook: String,
-  linkedin: String,
+  password: String,
+  groups: Number,
+  permissions: Number,
   profilePicture: Buffer,
-  created: { 
-      type: Date,
-      default: Date.now
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  updated: {
+    type: Date,
+    default: Date.now
   }
 });
 
 
-var authorSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-    name: {
-            firstName: String,
-        lastName: String
-    },
-    biography: String,
-    twitter: String,
-    facebook: String,
-    linkedin: String,
-    profilePicture: Buffer,
-    created: { 
-        type: Date,
-        default: Date.now
-    },
-    updated: { 
-      type: Date,
-      default: Date.now
-  }
-});
+var User = mongoose.model('User', userSchema);
 
-
-var Author = mongoose.model('Author', authorSchema);
-
-module.exports = Author;
+module.exports = User;

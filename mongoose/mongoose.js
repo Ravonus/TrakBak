@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 var schema = {};
-var Author = require('./user');
+var User = require('./user');
 
 mongoose.connect('mongodb://localhost/trakBak-dev', function (err) {
  
@@ -14,5 +14,5 @@ mongoose.connect('mongodb://localhost/trakBak-dev', function (err) {
 
 module.exports = { 
   mongoose: mongoose, 
-  Author: Author
+  User: User
 };

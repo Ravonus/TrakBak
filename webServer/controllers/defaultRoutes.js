@@ -4,8 +4,11 @@ let globalObj = require(path.join(__dirname, '../../', `app.js`)),
 socketClients = globalObj.socketClients;
 let io = globalObj.io;
 var cookie = require('cookie');
+var userRoutes = require('./userRoutes');
 
 module.exports = {
+  user: userRoutes,
+  
   home: function (req, res, next) {
 
     // Write responsea

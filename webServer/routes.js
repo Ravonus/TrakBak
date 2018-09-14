@@ -1,13 +1,17 @@
 var express = require('express');
-var defaultCtrl = require('./controllers/defaultRoutes');
+var routes = require('./controllers/defaultRoutes');
 
 var router = express.Router();
+//User Routes
+router.route('/user/create').post(routes.user.createUser);
 
-router.route('/').get(defaultCtrl.home);
-router.route('/login').get(defaultCtrl.login);
-router.route('/callback').get(defaultCtrl.callback);
-router.route('/auth/verify').get(defaultCtrl.verify);
-router.route('/script/template').get(defaultCtrl.template);
-router.route('*').get(defaultCtrl.catchAll);
+//default Routes
+router.route('/').get(routes.home);
+router.route('/login').get(routes.login);
+router.route('/callback').get(routes.callback);
+router.route('/auth/verify').get(routes.verify);
+router.route('/script/template').get(routes.template);
+router.route('/script/template').get(routes.template);
+router.route('*').get(routes.catchAll);
 
 module.exports = router;
