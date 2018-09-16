@@ -1,30 +1,45 @@
 const cookie = require('cookie'),
-      DB = require('../mongoose');
+  DB = require('../mongoose');
 
 module.exports = {
   createUser: (req, res) => {
 
-    let createUser = new DB.User ({
-      _id: new DB.mongoose.Types.ObjectId(),
-      name: {
+    if (req.isUnauthenticated()) {
+
+      let createUser = new DB.User({
+        _id: new DB.mongoose.Types.ObjectId(),
+        name: {
           firstName: req.body.firstName,
-          lastName: req.body.lastName
-      },
-      biography: 'Postman post request.',
-      password: req.body.password
-    });
-    
-    createUser.save(function(err) {
-      if (err) res.status(400).send(err);
-      res.status(200).send(req.body);
-    
+          lastName: req.body.lastName,
+          username: req.body.username
+        },
+        biography: 'Postman post request.',
+        password: req.body.password
+      })
+
+      createUser.save().then(user => {
+
+      req.login(user, err => {
+        if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
+        else res.redirect("/");
+      });
+    })
+    .catch(err => {
+      if (err.name === "ValidationError") {
+       // req.flash("Sorry, that username is already taken.");
+        res.redirect("/register");
+      } else res.redirect("/");
     });
 
-  },
-  getUser: (req, res, next) => {
+    } else {
+      res.redirect("/login");
+    }
 
   },
-  updateUser: (req, res, next) => {
+  getUser: (req, res) => {
+
+  },
+  updateUser: (req, res) => {
 
   }
 }

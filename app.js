@@ -9,6 +9,8 @@ const express = require('express'),
   server = http.createServer(app),
   io = require('socket.io')(server),
   argv = require('yargs').argv,
+  passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy,
   config = require('./config/config');
 
 require("./controllers/templateLoop.js");
@@ -22,6 +24,41 @@ const serverSecure = https.createServer(httpsServerOptions, appSecure),
 
 let socketClients = new Object();
 
+
+//passport setup. Setup session  This is the middle where function. Push both app/ and appSecure to setup both servers.
+
+function passportMiddleWare(app) {
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
+}
+
+passportMiddleWare(app);
+passportMiddleWare(appSecure);
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(userId, done) {
+  User.findById(userId, (err, user) => done(err, user));
+});
+
+//setup authentication for passport. This will let us attach passport checks ontop of express route calls.
+const local = new LocalStrategy((username, password, done) => {
+  User.findOne({ username })
+    .then(user => {
+      if (!user || !user.validPassword(password)) {
+        done(null, false, { message: "Invalid username/password" });
+      } else {
+        done(null, user);
+      }
+    })
+    .catch(e => done(e));
+});
+passport.use("local", local);
+
 //Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way...
 cb = () => {
 
@@ -29,6 +66,7 @@ cb = () => {
 
     module.exports.socketClients = socketClients;
     module.exports.io = io;
+    
 
     require('./webServer/express.js')((webServer) => {
 
@@ -91,3 +129,5 @@ cb = () => {
 }
 
 cb();
+
+module.exports.app = app;

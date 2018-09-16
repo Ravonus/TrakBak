@@ -9,25 +9,36 @@ const path = require("path"),
 module.exports = {
   user: userRoutes,
 
-  home: function (req, res, next) {
+  home: function (req, res) {
 
-    // Write responsea
-    if (req.headers.cookie) {
 
-      let cookies = cookie.parse(req.headers.cookie);
+    if(req.isAuthenticated()) {
+      res.render('index.hbs');
+    } else {
 
-      if (cookies.jwt) {
-        req.session.jwt = cookies.jwt;
-      }
+      res.render('login.hbs');
     }
+    
 
-    //res.end(req.session.views + ' views')
+    // // Write responsea
+    // if (req.headers.cookie) {
 
-    res.render('index.hbs');
+    //   let cookies = cookie.parse(req.headers.cookie);
+
+    //   if (cookies.jwt) {
+    //     req.session.jwt = cookies.jwt;
+    //   }
+    // }
+
   },
-  login: function (req, res, next) {
+  login: function (req, res) {
 
-    res.render('login.hbs');
+    if(req.isUnauthenticated()) {
+      res.render('login.hbs');
+    } else {
+      res.render('index.hbs');
+    }
+    
   },
   callback: function (req, res, next) {
 

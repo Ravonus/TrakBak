@@ -7,7 +7,7 @@ User = require('./models/User'),
 prefix = config.envName,
 databaseName = config.databaseName;
 
-mongoose.connect(`mongodb://${mongoDB}/${prefix}-${databaseName}`, function (err) {
+mongoose.connect(`mongodb://${mongoDB}/${prefix}-${databaseName}`, { useNewUrlParser: true } , function (err) {
  
    if (err) throw err;
  

@@ -6,8 +6,10 @@ var UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
     firstName: String,
-    lastName: String
+    lastName: String,
+    username: {type: String, required: true, unique: true },
   },
+
   biography: String,
   passwordHash: String,
   groups: Number,
