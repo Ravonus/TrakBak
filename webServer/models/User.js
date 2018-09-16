@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
 uniqueValidator = require("mongoose-unique-validator"),
 bcrypt = require('bcrypt');
 
-var UserSchema = mongoose.Schema({
+var UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
     firstName: String,

@@ -11,6 +11,7 @@ module.exports = {
           lastName: req.body.lastName
       },
       biography: 'Postman post request.',
+      password: req.body.password
     });
     
     createUser.save(function(err) {
