@@ -5,6 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "staging": "NODE_ENV=staging node app.js",
+    "development": "NODE_ENV=development node app.js",
+    "production": "NODE_ENV=production node app.js",
     "test": "node app.js --mochaTest"
   },
   "repository": {

@@ -8,10 +8,10 @@ const fs = require('fs'),
 
 
 //Read file function - Replace all static variables with regex words - Place within public client folder. This function is used within the file loop. Used to look at template files and put correct URL for sockets and API within.
-function processFile(myPath, file, word, replace) {
+processFile = (myPath, file, word, replace) => {
 
   //read file that was pushed to function. Look at where templates are located.
-  fs.readFile(templatePath + '/' + file, "utf8", function (err, data) {
+  fs.readFile(templatePath + '/' + file, "utf8", (err, data) => {
     if (err) {
       throw err;
     }
@@ -34,9 +34,7 @@ function processFile(myPath, file, word, replace) {
 
       // writes to custom javascript folder within Webserver. So public can view server
 
-
-        console.log(myPath)
-      fs.writeFile(myPath, data.code, function (err) {
+      fs.writeFile(myPath, data.code, (err) => {
         if (err) {
           return console.log(err);
         }
@@ -51,7 +49,7 @@ function processFile(myPath, file, word, replace) {
 
         data = UglifyJS.minify(data);
         var myRegEx = new RegExp(word, 'g');
-        fs.writeFile(myPath, data.code.replace(myRegEx, replace), function (err) {
+        fs.writeFile(myPath, data.code.replace(myRegEx, replace), (err) => {
           if (err) {
             return console.log(err);
           }
@@ -85,7 +83,7 @@ function processFile(myPath, file, word, replace) {
 
   // Loop through all the files in the template directory
 
-  fs.readdir(templatePath, function (err, files) {
+  fs.readdir(templatePath, (err, files) => {
 
     if (err) {
 
@@ -96,7 +94,7 @@ function processFile(myPath, file, word, replace) {
     }
 
     //loops through files and runs above function.
-    files.forEach(function (file, index) {
+    files.forEach( (file, index) => {
 
 
       // Make one pass and make the file complete
@@ -105,7 +103,7 @@ function processFile(myPath, file, word, replace) {
 
       var toPath = path.join(publicPath, file);
       var toPathSecure = path.join(publicPathSecure, file);
-      fs.stat(fromPath, function (error, stat) {
+      fs.stat(fromPath, (error, stat) => {
 
         if (error) {
 

@@ -9,7 +9,7 @@ const path = require("path"),
 module.exports = {
   user: userRoutes,
 
-  home: function (req, res) {
+  home: (req, res) => {
 
 
     if(req.isAuthenticated()) {
@@ -31,7 +31,7 @@ module.exports = {
     // }
 
   },
-  login: function (req, res) {
+  login:  (req, res) => {
 
     if(req.isUnauthenticated()) {
       res.render('login.hbs');
@@ -40,14 +40,14 @@ module.exports = {
     }
     
   },
-  callback: function (req, res, next) {
+  callback: (req, res) => {
 
 
     res.sendFile(public + '/callback.html');
 
     if (socketClients && socketClients[req.query.sid]) {
 
-      Object.keys(socketClients[req.query.sid]).forEach(function (key) {
+      Object.keys(socketClients[req.query.sid]).forEach((key) => {
         //   socketClients[req.query.sid][key];
 
         if (socketClients[req.query.sid][key] === req.query.cid) {
@@ -59,21 +59,21 @@ module.exports = {
     }
 
   },
-  cbsockets: function (req, res, next) {
+  cbsockets: (req, res) => {
 
     res.sendFile(public + '/sockets.html');
 
   },
-  verify: function (req, res, next) {
+  verify: (req, res) => {
 
     res.sendFile(public + '/verify.html');
   },
 
-  template: function (req, res, next) {
+  template: (req, res) => {
 
     res.send('accepted');
   },
-  catchAll: function (req, res, next) {
+  catchAll: (req, res) => {
     res.status(404);
     url = req.url;
     res.render('404.hbs', { title: '404: Page Not Found', url: url });

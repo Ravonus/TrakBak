@@ -2,6 +2,15 @@ const cookie = require('cookie'),
   DB = require('../mongoose');
 
 module.exports = {
+  login: (req, res) => {
+
+    if(req.isUnauthenticated()) {
+      res.render('login.hbs');
+    } else {
+      res.render('index.hbs');
+    }
+    
+  },
   createUser: (req, res) => {
 
     if (req.isUnauthenticated()) {

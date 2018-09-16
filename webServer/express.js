@@ -10,7 +10,13 @@ let started, callback , start;
 start = (port, version, server, app, cb) => {
 
   server.listen(port, () => {
-    console.log(`ClikBak Socket and Client Server  `.cyan.bold.underline + `${version}`.yellow.bold + `\n\nServer started on port`.cyan.bold.underline + `:  `.green.bold + `${port}`.yellow.bold);
+
+    if(server.cert) {
+      console.log(`TrakBak secure `.cyan.bold.underline + `${version}`.yellow.bold + `\n\nServer started on port`.cyan.bold.underline + `:  `.green.bold + `${port}`.yellow.bold + `\n\r`);
+    } else {
+      console.log(`TrakBak not secure `.cyan.bold.underline + `${version}`.yellow.bold + `\n\nServer started on port`.cyan.bold.underline + `:  `.green.bold + `${port}`.yellow.bold + `\n\r`);
+    }
+
     cb('test');
   });
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,13 +34,11 @@ start = (port, version, server, app, cb) => {
 
   }
   
-
   //set up routes
   app.use('/', routes);
 }
 
-function webServer() {
-
+let webServer = () => {
 
   started = "started";
 
@@ -46,7 +50,7 @@ function webServer() {
 
 webServer();
 
-module.exports = function (cb) {
+module.exports = (cb) => {
   if (typeof started != 'undefined') {
     cb(start); // If foo is already define, I don't wait.
   } else {

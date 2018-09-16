@@ -1,12 +1,12 @@
 const fs = require('fs'),
       chai = require('chai');
 
-describe('Check Files', function () {
+describe('Check Files', () =>  {
 
-  describe('Check custom.js file', function () {
+  describe('Check custom.js file', () =>  {
 
-    describe('Check if custom.js is within template folder', function () {
-      it('Should return true', function (done) {
+    describe('Check if custom.js is within template folder', () =>  {
+      it('Should return true', (done) =>  {
 
         chai.expect(fs.existsSync('./templates/custom.js')).to.be.true;
         done();
@@ -14,8 +14,8 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if custom.js moved to public js file.', function () {
-      it('Should return true', function (done) {
+    describe('Check if custom.js moved to public js file.', () =>  {
+      it('Should return true', (done) =>  {
 
         chai.expect(fs.existsSync('./webServer/public/js/custom.js')).to.be.true;
         done();
@@ -23,12 +23,12 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if custom.js varibles were changed', function () {
-      it('Should not return error', function (done) {
+    describe('Check if custom.js varibles were changed', () =>  {
+      it('Should not return error', (done) =>  {
 
         var readFile = () => {
 
-          fs.readFile('./webServer/public/js/custom.js', 'utf8', function (err, data) {
+          fs.readFile('./webServer/public/js/custom.js', 'utf8', (err, data) => {
 
             if (err) {
               throw err;
@@ -58,10 +58,10 @@ describe('Check Files', function () {
     });
   });
 
-  describe('Check customSocket.js file', function () {
+  describe('Check customSocket.js file', () =>  {
 
-    describe('Check if customSocket.js is within template folder', function () {
-      it('Should return true', function (done) {
+    describe('Check if customSocket.js is within template folder', () =>  {
+      it('Should return true', (done) =>  {
 
         chai.expect(fs.existsSync('./templates/customSocket.js')).to.be.true;
         done();
@@ -69,8 +69,8 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if customSocket.js moved to public js file.', function () {
-      it('Should return true', function (done) {
+    describe('Check if customSocket.js moved to public js file.', () =>  {
+      it('Should return true', (done) =>  {
 
         chai.expect(fs.existsSync('./webServer/public/js/customSocket.js')).to.be.true;
         done();
@@ -78,8 +78,8 @@ describe('Check Files', function () {
       });
     });
 
-    describe('Check if customSocket.js varibles were changed', function () {
-      it('Should not return error', function (done) {
+    describe('Check if customSocket.js varibles were changed', () =>  {
+      it('Should not return error', (done) =>  {
 
         var readFile = () => {
 
@@ -89,7 +89,7 @@ describe('Check Files', function () {
 
           }
 
-          fs.readFile('./webServer/public/js/customSocket.js', 'utf8', function (err, data) {
+          fs.readFile('./webServer/public/js/customSocket.js', 'utf8', (err, data) => {
 
             if (err) {
               throw err;

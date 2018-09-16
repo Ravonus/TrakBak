@@ -6,15 +6,15 @@ const isReachable = require('is-reachable'),
       config = require('./../config/config.js'),
       chai = require('chai');
 
-describe('Check All Server Routes', function () {
+describe('Check All Server Routes',  () => {
 
-  describe('Check Node Route and Ports', function () {
+  describe('Check Node Route and Ports', () =>{
 
-    describe('Check Unsecure Routes', function () {
+    describe('Check Unsecure Routes', () =>{
 
-      describe(`Check http ${ip.address()} with port ${config.httpPort}`, function () {
+      describe(`Check http ${ip.address()} with port ${config.httpPort}`, () =>{
 
-        it('Should return true', function () {
+        it('Should return true', () =>{
 
           return isReachable(`${ip.address()}:${config.httpPort}`).then(reachable => {
 
@@ -26,12 +26,12 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check http//${ip.address()}:${config.httpPort}/page/not/found. Catch all`, function () {
+      describe(`Check http//${ip.address()}:${config.httpPort}/page/not/found. Catch all`, () =>{
 
-        it('Should return 404', function (done) {
+        it('Should return 404', (done) => {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpPort, path: '/page/not/found' };
-          var req = http.request(options, function (res) {
+          var req = http.request(options, (res) => {
             chai.expect(res.statusCode).to.equal(404);
 
             done();
@@ -43,12 +43,12 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check http//${ip.address()}:${config.httpPort}/`, function () {
+      describe(`Check http//${ip.address()}:${config.httpPort}/`, () =>{
 
-        it('Should return 404', function (done) {
+        it('Should return 404', (done) => {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpPort, path: '/' };
-          var req = http.request(options, function (res) {
+          var req = http.request(options, (res) => {
             chai.expect(res.statusCode).to.equal(200);
 
             done();
@@ -61,11 +61,11 @@ describe('Check All Server Routes', function () {
 
     });
 
-    describe('Check Secure Routes', function () {
+    describe('Check Secure Routes', () =>{
 
-      describe(`Check https secure ${ip.address()} with port ${config.httpsPort}`, function () {
+      describe(`Check https secure ${ip.address()} with port ${config.httpsPort}`, () =>{
 
-        it('Should return true', function () {
+        it('Should return true', () =>{
 
           return isReachable(`https://${ip.address()}:${config.httpsPort}`).then(reachable => {
 
@@ -77,12 +77,12 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort}/page/not/found Catch all`, function () {
+      describe(`Check https//${ip.address()}:${config.httpsPort}/page/not/found Catch all`, () =>{
 
-        it('Should return 404', function (done) {
+        it('Should return 404', (done) => {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/page/not/found' };
-          var req = https.request(options, function (res) {
+          var req = https.request(options, (res) => {
 
             chai.expect(res.statusCode).to.equal(404);
 
@@ -95,12 +95,12 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort} /`, function () {
+      describe(`Check https//${ip.address()}:${config.httpsPort} /`, () =>{
 
-        it('Should return 200', function (done) {
+        it('Should return 200', (done) => {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/' };
-          var req = https.request(options, function (res) {
+          var req = https.request(options, (res) => {
 
             chai.expect(res.statusCode).to.equal(200);
 
@@ -112,12 +112,12 @@ describe('Check All Server Routes', function () {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort} /login`, function () {
+      describe(`Check https//${ip.address()}:${config.httpsPort} /login`, () =>{
 
-        it('Should return 200', function (done) {
+        it('Should return 200',  (done) => {
 
           var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/login' };
-          var req = https.request(options, function (res) {
+          var req = https.request(options, (res) => {
 
             chai.expect(res.statusCode).to.equal(200);
 

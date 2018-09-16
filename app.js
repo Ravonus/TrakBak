@@ -2,7 +2,6 @@ const express = require('express'),
   colors = require('colors'),
   app = express(),
   appSecure = express(),
-  version = "0.0.1-alpha",
   fs = require('fs'),
   http = require('http'),
   https = require('https'),
@@ -11,6 +10,7 @@ const express = require('express'),
   argv = require('yargs').argv,
   passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy,
+  startTime = Date.now(),
   config = require('./config/config');
 
 require("./controllers/templateLoop.js");
@@ -24,7 +24,6 @@ const serverSecure = https.createServer(httpsServerOptions, appSecure),
 
 let socketClients = new Object();
 
-
 //passport setup. Setup session  This is the middle where function. Push both app/ and appSecure to setup both servers.
 
 function passportMiddleWare(app) {
@@ -35,7 +34,6 @@ function passportMiddleWare(app) {
 
 passportMiddleWare(app);
 passportMiddleWare(appSecure);
-
 
 passport.serializeUser(function(user, done) {
   done(null, user._id);
@@ -66,15 +64,15 @@ cb = () => {
 
     module.exports.socketClients = socketClients;
     module.exports.io = io;
+    module.exports.startTime = startTime;
     
-
     require('./webServer/express.js')((webServer) => {
 
       //start express server and then do callback after started (Mocha testing if test argument was provided)
-      webServer(config.httpPort, version, server, app, function () {
+      webServer(config.httpPort, config.version, server, app, () => {
 
         //this is secure webserver
-        webServer(config.httpsPort, version, serverSecure, appSecure, function () {
+        webServer(config.httpsPort, config.version, serverSecure, appSecure, () =>{
 
           if (argv.mochaTest || argv.mocha || argv.test || argv.mochatest) {
             var Mocha = require('mocha'),
@@ -87,21 +85,28 @@ cb = () => {
             var testDir = 'mochaTest'
 
             // Add each .js file to the mocha instance
-            fs.readdirSync(testDir).filter(function (file) {
+            fs.readdirSync(testDir).filter( (file) => {
               // Only keep the .js files
               return file.substr(-3) === '.js';
 
-            }).forEach(function (file) {
+            }).forEach((file) => {
               mocha.addFile(
                 path.join(testDir, file)
               );
             });
 
             // Run the tests.
-            mocha.run(function (failures) {
+            mocha.run((failures) => {
+
               process.exitCode = failures ? -1 : 0;  // exit with non-zero status if there were failures
-              //exit node ( Our script stays open because it has a web server. Need to exit so mocha test is finished...);
-              process.exit()
+
+              if(process.exitCode === -1) process.exit(failures);
+
+              //exit node ( Our script stays open because it has a web server. Need to exit so mocha test finishes.)
+
+              console.log('Mocha test '.yellow.bold + 'finished with no errors'.green.bold + '!\n\r'.blue.bold);
+
+              process.exit('success')
             });
 
           };
@@ -110,12 +115,9 @@ cb = () => {
 
           //    require('./config/cert.js');
 
-
         });
 
-
       });
-
 
     });
 
@@ -123,7 +125,7 @@ cb = () => {
     require('./webServer/socket.io').socket(io);
   } else {
 
-    setTimeout(function () { cb(); }, 0);
+    setTimeout( () => { cb(); }, 0);
 
   }
 }

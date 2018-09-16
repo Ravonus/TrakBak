@@ -64,11 +64,11 @@ getRequest = (jwt, path, _callback) => {
     headers
   };
 
-  let httpreq = http.request(options, function (response) {
+  let httpreq = http.request(options, (response) =>  {
 
     response.setEncoding('utf8');
 
-    response.on('data', function (body) {
+    response.on('data', (body) =>  {
 
       _callback(body, path);
 
@@ -76,7 +76,7 @@ getRequest = (jwt, path, _callback) => {
 
   });
 
-  httpreq.on('error', function (err) {
+  httpreq.on('error', (err) =>  {
 
   })
 
@@ -123,7 +123,7 @@ postRequest = (jwt, path, object, _callback) => {
 
     response.setEncoding('utf8');
 
-    response.on('data', function (body) {
+    response.on('data', (body) =>  {
 
       _callback(body);
 
@@ -131,7 +131,7 @@ postRequest = (jwt, path, object, _callback) => {
 
   });
 
-  httpreq.on('error', function (err) {
+  httpreq.on('error', (err) =>  {
 
   })
 
@@ -174,11 +174,11 @@ updateRequest = (jwt, path, object, _callback) => {
     };
   };
 
-  let httpreq = http.request(options, function (response) {
+  let httpreq = http.request(options, (response) =>  {
 
     response.setEncoding('utf8');
 
-    response.on('data', function (body) {
+    response.on('data', (body) =>  {
 
       _callback(body);
 
@@ -186,14 +186,13 @@ updateRequest = (jwt, path, object, _callback) => {
 
   });
 
-  httpreq.on('error', function (err) {
+  httpreq.on('error', (err) =>  {
 
   })
 
   httpreq.write(json);
   httpreq.end();
 }
-
 
 module.exports = {
 
@@ -203,7 +202,6 @@ module.exports = {
     let activeClients = {};
 
     //sockets
-    console.log('ran')
 
     io.on('connection', (socket) => {
       

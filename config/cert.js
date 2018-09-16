@@ -68,7 +68,7 @@ greenlock = Greenlock.create({
  
  
 // Check in-memory cache of certificates for the named domain
-greenlock.check({ domains: [ 'trakbak.tk' ] }).then(function (results) {
+greenlock.check({ domains: [ 'trakbak.tk' ] }).then((results) => {
   if (results) {
     // we already have certificates
     return;
@@ -84,11 +84,11 @@ greenlock.check({ domains: [ 'trakbak.tk' ] }).then(function (results) {
   , rsaKeySize: 2048                                        // 2048 or higher
   , challengeType: 'http-01'                                // http-01, tls-sni-01, or dns-01
  
-  }).then(function (results) {
+  }).then((results) => {
  
     console.log('success');
  
-  }, function (err) {
+  }, (err) => {
  
     // Note: you must either use greenlock.middleware() with express,
     // manually use greenlock.challenges['http-01'].get(opts, domain, key, val, done)
