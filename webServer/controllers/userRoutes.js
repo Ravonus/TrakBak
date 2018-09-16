@@ -3,16 +3,29 @@ const cookie = require('cookie'),
 
 module.exports = {
   login: (req, res) => {
+ 
+    //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
+    req.login({ username:req.body.username, password:req.body.password}, (user) => {
 
-    if(req.isUnauthenticated()) {
-      res.render('login.hbs');
-    } else {
-      res.render('index.hbs');
-    }
-    
+      console.log('login ran');
+
+      console.log(user.error);
+      if(user.error) {
+        return res.render('login.hbs');
+
+      }
+
+      console.log(user);
+      res.setHeader('Content-Type', 'application/json');
+     res.send(JSON.stringify(user));
+
+
+    });
+
   },
   createUser: (req, res) => {
 
+    console.log('razzn');
     if (req.isUnauthenticated()) {
 
       let createUser = new DB.User({
@@ -28,17 +41,17 @@ module.exports = {
 
       createUser.save().then(user => {
 
-      req.login(user, err => {
-        if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
-        else res.redirect("/");
-      });
-    })
-    .catch(err => {
-      if (err.name === "ValidationError") {
-       // req.flash("Sorry, that username is already taken.");
-        res.redirect("/register");
-      } else res.redirect("/");
-    });
+        req.login(user, err => {
+          if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
+          else res.redirect("/");
+        });
+      })
+        .catch(err => {
+          if (err.name === "ValidationError") {
+            // req.flash("Sorry, that username is already taken.");
+            res.redirect("/register");
+          } else res.redirect("/");
+        });
 
     } else {
       res.redirect("/login");

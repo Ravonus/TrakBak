@@ -28,6 +28,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.plugin(uniqueValidator);
 
 UserSchema.methods.validPassword = function(password) {
+  console.log(this)
   return bcrypt.compareSync(password, this.passwordHash);
 };
 
@@ -36,5 +37,6 @@ UserSchema.virtual("password").set(function(value) {
 });
 
 var User = mongoose.model('User', UserSchema);
+
 
 module.exports = User;

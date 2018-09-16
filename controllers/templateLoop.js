@@ -5,8 +5,6 @@ const fs = require('fs'),
   UglifyJS = require('uglify-js'),
   templatePath = path.join(__dirname, '../templates');
 
-
-
 //Read file function - Replace all static variables with regex words - Place within public client folder. This function is used within the file loop. Used to look at template files and put correct URL for sockets and API within.
 processFile = (myPath, file, word, replace) => {
 
@@ -39,25 +37,19 @@ processFile = (myPath, file, word, replace) => {
           return console.log(err);
         }
 
-        
       });
-
 
     } else {
       //does same thing as above but not within loop.
 
+      data = UglifyJS.minify(data);
+      var myRegEx = new RegExp(word, 'g');
+      fs.writeFile(myPath, data.code.replace(myRegEx, replace), (err) => {
+        if (err) {
+          return console.log(err);
+        }
 
-        data = UglifyJS.minify(data);
-        var myRegEx = new RegExp(word, 'g');
-        fs.writeFile(myPath, data.code.replace(myRegEx, replace), (err) => {
-          if (err) {
-            return console.log(err);
-          }
-         
-        });
-
-
-
+      });
 
     }
 
@@ -65,81 +57,66 @@ processFile = (myPath, file, word, replace) => {
 
 }
 
+var publicPathSecure = path.join(__dirname, '../webServer/securePublic/js'),
+  tbServerSecure = process.env.cbSocket || `${ip.address()}:${config.httpsPort}`,
+  tbServerBackSecure = process.env.cbSocketBack || `${ip.address()}:${config.httpsPort}`;
+
+var publicPath = path.join(__dirname, '../webServer/public/js'),
+  tbServer = process.env.cbSocket || `${ip.address()}:${config.httpPort}`,
+  tbServerBack = process.env.cbSocketBack || `${ip.address()}:${config.httpPort}`;
+
+// Loop through all the files in the template directory
+
+fs.readdir(templatePath, (err, files) => {
+
+  if (err) {
+
+    console.error("Could not list the directory.", err);
+
+    process.exit(1);
+
+  }
+
+  //loops through files and runs above function.
+  files.forEach((file, index) => {
 
 
+    // Make one pass and make the file complete
 
+    var fromPath = path.join(templatePath, file);
 
-    var publicPathSecure = path.join(__dirname, '../webServer/securePublic/js'),
-      tbServerSecure = process.env.cbSocket || `${ip.address()}:${config.httpsPort}`,
-      tbServerBackSecure = process.env.cbSocketBack || `${ip.address()}:${config.httpsPort}`;
+    var toPath = path.join(publicPath, file);
+    var toPathSecure = path.join(publicPathSecure, file);
+    fs.stat(fromPath, (error, stat) => {
 
-      var publicPath = path.join(__dirname, '../webServer/public/js'),
-      tbServer = process.env.cbSocket || `${ip.address()}:${config.httpPort}`,
-      tbServerBack = process.env.cbSocketBack || `${ip.address()}:${config.httpPort}`;
+      if (error) {
 
+        console.error("Error stating file.", error);
 
+        return;
 
+      }
 
-
-  // Loop through all the files in the template directory
-
-  fs.readdir(templatePath, (err, files) => {
-
-    if (err) {
-
-      console.error("Could not list the directory.", err);
-
-      process.exit(1);
-
-    }
-
-    //loops through files and runs above function.
-    files.forEach( (file, index) => {
-
-
-      // Make one pass and make the file complete
-
-      var fromPath = path.join(templatePath, file);
-
-      var toPath = path.join(publicPath, file);
-      var toPathSecure = path.join(publicPathSecure, file);
-      fs.stat(fromPath, (error, stat) => {
-
-        if (error) {
-
-          console.error("Error stating file.", error);
-
-          return;
-
-        }
-
-        processFile(toPath, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBack, tbServerBack, tbServer, 'poops']);
-        processFile(toPathSecure, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBackSecure, tbServerBackSecure, tbServerSecure, 'poops']);
-      });
-
+      processFile(toPath, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBack, tbServerBack, tbServer, 'poops']);
+      processFile(toPathSecure, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBackSecure, tbServerBackSecure, tbServerSecure, 'poops']);
     });
 
   });
 
+});
 
-  var deleteFolderRecursive = function(path) {
-    if (fs.existsSync(path)) {
-      fs.readdirSync(path).forEach(function(file, index){
-        var curPath = path + "/" + file;
-        if (fs.lstatSync(curPath).isDirectory()) { // recurse
-          deleteFolderRecursive(curPath);
-        } else { // delete file
-          fs.unlinkSync(curPath);
-        }
-      });
-      fs.rmdirSync(path);
-    }
-  };
+var deleteFolderRecursive = function (path) {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach(function (file, index) {
+      var curPath = path + "/" + file;
+      if (fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+};
 
-
-  deleteFolderRecursive('./tmp/');
-
-
-
-
-
+deleteFolderRecursive('./tmp/');
