@@ -4,53 +4,28 @@ const express = require('express'),
   appSecure = express(),
   version = "0.0.1-alpha",
   fs = require('fs'),
-  path = require('path'),
-  URL = require('url-parse'),
   http = require('http'),
   https = require('https'),
   server = http.createServer(app),
   io = require('socket.io')(server),
   argv = require('yargs').argv,
-  cookieSession = require('cookie-session'),
-  ip = require("ip"),
   config = require('./config/config');
 
 require("./controllers/templateLoop.js");
-
-const DB = require('./mongoose/mongoose')
-
-var jamieAuthor = new DB.User ({
-  _id: new DB.mongoose.Types.ObjectId(),
-  name: {
-      firstName: 'Jamie',
-      lastName: 'Munro'
-  },
-  biography: 'Jamie is the author of ASP.NET MVC 5 with Bootstrap and Knockout.js.',
-});
-
-jamieAuthor.save(function(err) {
-  if (err) throw err;
-   console.log(jamieAuthor);
-  console.log('User successfully saved.');
-
-});
 
 let httpsServerOptions = {
   'key': fs.readFileSync('./webServer/https/key.pem'),
   'cert': fs.readFileSync('./webServer/https/cert.pem')
 }
-let serverSecure = https.createServer(httpsServerOptions, appSecure);
-let ioS = require('socket.io')(serverSecure);
+const serverSecure = https.createServer(httpsServerOptions, appSecure),
+  ioS = require('socket.io')(serverSecure);
 
-let socketClients = new Object()
-
+let socketClients = new Object();
 
 //Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way...
 cb = () => {
 
   if (io && ioS && socketClients) {
-
-    let globalObj = { socketClients, io }
 
     module.exports.socketClients = socketClients;
     module.exports.io = io;
@@ -60,6 +35,7 @@ cb = () => {
       //start express server and then do callback after started (Mocha testing if test argument was provided)
       webServer(config.httpPort, version, server, app, function () {
 
+        //this is secure webserver
         webServer(config.httpsPort, version, serverSecure, appSecure, function () {
 
           if (argv.mochaTest || argv.mocha || argv.test || argv.mochatest) {
@@ -92,10 +68,9 @@ cb = () => {
 
           };
 
-
           //Letsencrypt Info
-        
-      //    require('./config/cert.js');
+
+          //    require('./config/cert.js');
 
 
         });

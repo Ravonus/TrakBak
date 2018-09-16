@@ -10,7 +10,9 @@ let environments = {};
 environments.staging = {
   'httpPort': 3002,
   'httpsPort': 3003,
-  'envName': 'staging',
+  'envName': 'development',
+  'databaseName': 'trakbak',
+  'mongoDB' : 'localhost',
   'hashingSecret' : 'thisIsASecret'
 
 };
@@ -21,6 +23,8 @@ environments.production = {
   'httpsPort' : 5001,
   'envName' : 'production',
   'serverName' : 'trakbak.com',
+  'databaseName': 'trakbak',
+  'mongoDB' : 'localhost',
   'hashingSecret' : 'thisIsAProductionSecret'
 };
 
@@ -29,7 +33,7 @@ let currentEnvironment = typeof(process.env.NODE_ENV) == 'string' ? process.env.
 
 // Check that the current environment is one of the enviorments obove, if not, default to staging
 let environmentToExport = typeof(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging;
-if(environmentToExport.envName === 'staging') {
+if(environmentToExport.envName === 'development' || environmentToExport.envName === 'staging') {
 
    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
    

@@ -1,20 +1,29 @@
-var cookie = require('cookie');
+const cookie = require('cookie'),
+      DB = require('../mongoose');
 
 module.exports = {
-  createUser: function (req, res, next) {
+  createUser: (req, res) => {
 
-    // Write responsea
-    if (req.headers.cookie) {
-   
-      let cookies = cookie.parse(req.headers.cookie);
+    let createUser = new DB.User ({
+      _id: new DB.mongoose.Types.ObjectId(),
+      name: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName
+      },
+      biography: 'Postman post request.',
+    });
+    
+    createUser.save(function(err) {
+      if (err) res.status(400).send(err);
+      res.status(200).send(req.body);
+    
+    });
 
-      if (cookies.jwt) {
-        req.session.jwt = cookies.jwt;
-      }
-    }
+  },
+  getUser: (req, res, next) => {
 
-    //res.end(req.session.views + ' views')
+  },
+  updateUser: (req, res, next) => {
 
-    res.json({test:'test'});
   }
 }
