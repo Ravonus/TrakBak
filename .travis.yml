@@ -1,3 +1,10 @@
+services:
+  - mongodb
+
+before_script:
+  - sleep 15
+  - mongo staging-trakbak --eval
+
 language: node_js
 
 node_js:

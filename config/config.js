@@ -15,7 +15,8 @@ environments.staging = {
   'mongoDB': 'localhost',
   'hashingSecret': 'thisIsASecret',
   'threads': 8,
-  "ignoreSSL": true
+  "ignoreSSL": true,
+  "jwtSecret": 'thisIsSecretStaging'
 };
 
 // Staging (default environment)
@@ -27,7 +28,9 @@ environments.development = {
   'mongoDB': 'localhost',
   'hashingSecret': 'thisIsASecret',
   'threads': 'softwareOff',
-  "ignoreSSL": true
+  "ignoreSSL": true,
+  "jwtSecret": 'thisIsSecretDevelopment',
+
 };
 
 //Production environment
@@ -40,13 +43,13 @@ environments.production = {
   'mongoDB': 'localhost',
   'hashingSecret': 'thisIsAProductionSecret',
   'threads': 'auto',
-  "ignoreSSL": false
+  "ignoreSSL": false,
+  "jwtSecret": 'thisIsSecretProduction'
 };
 
 // Shared variables - These will write to any environment (Keep in mind these will over right in common variable.)
 environments.share = {
-  version: '0.0.2 Alpha',
-  jwtSecret: 'thisIsSecret'
+  version: '0.0.2 Alpha'
 }
 
 // Determine which enivorment was passed as a command-line argument
@@ -75,6 +78,10 @@ if (environmentToExport.ignoreSSL) {
 //Combine share environment variables with current envioronment.
 
 environmentToExport = Object.assign(environmentToExport, environments.share)
+
+if (!environmentToExport.jwtExpire) {
+  environmentToExport.jwtExpire = 86400
+}
 
 // Export the module
 module.exports = environmentToExport;

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
       config = require('./../config/config'),
-      startTime = require('../app').startTime;
+      startTime = require('../app').startTime,
+      argv = require('yargs').argv,
       mongoDB = config.mongoDB;
 
 let User = require('./models/User'),
@@ -14,7 +15,9 @@ mongoose.connect(`mongodb://${mongoDB}/${prefix}-${databaseName}`, { useNewUrlPa
      connection = 'No';
      console.log(err);
      console.log('Could not connect to mongodb')
+     if (!argv.mochaTest && !argv.mocha && !argv.test && !argv.mochatest) {
      process.exit(err);
+     }
    };
  
    connection = 'Yes'

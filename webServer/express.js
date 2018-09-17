@@ -9,6 +9,7 @@ let started, callback , start;
 
 start = (port, version, server, app, cb) => {
 
+
   server.listen(port, () => {
 
     if(server.cert) {
@@ -19,6 +20,7 @@ start = (port, version, server, app, cb) => {
 
     cb('test');
   });
+
   app.use(bodyParser.urlencoded({ extended: false }));
 
   app.set('view engine', 'hbs');

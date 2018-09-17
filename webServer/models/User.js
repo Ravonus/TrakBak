@@ -23,7 +23,8 @@ var UserSchema = new mongoose.Schema({
   updated: {
     type: Date,
     default: Date.now
-  }
+  },
+  jwtExpire: Number
 });
 
 UserSchema.plugin(uniqueValidator);

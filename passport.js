@@ -7,7 +7,7 @@ jwt = require('jsonwebtoken'),
 config = require('./config/config'),
 LocalStrategy = require("passport-local").Strategy;
 
-var passportMiddleWare = (app) => {
+let passportMiddleWare = (app) => {
   app.use(passport.initialize());
   app.use(passport.session());
   
@@ -17,18 +17,25 @@ var passportMiddleWare = (app) => {
 passportMiddleWare(app.app);
 passportMiddleWare(app.appSecure);
 
-
 //more passport functions ( So we can use passport middlewhere ontop of routes)
 passport.serializeUser((user, done) => {
 
   //jwt function to generate token on login
 
 
-let jwtToken = (id) => {
+let jwtToken = (obj) => {
 
+  if(obj.jwtExpire){
+    console.log(obj.jwtExpire);
+  }
   // create a token
-  let token = jwt.sign({ id: id }, config.jwtSecret, {
-    expiresIn: 86400 // expires in 24 hours
+
+
+  let token = jwt.sign({ id: obj._id }, config.jwtSecret, {
+
+    expiresIn : obj.jwtExpire || config.jwtExpire
+
+
   });
 
   return token;
@@ -43,7 +50,7 @@ let jwtToken = (id) => {
       done({ error: "Invalid username/password" });
     } else {
       user.passwordHash = undefined;
-      let newUser = {jwt: jwtToken(user._id)};
+      let newUser = {jwt: jwtToken(user)};
 
       done({user: Object.assign(newUser, user._doc)});
     }

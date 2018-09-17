@@ -15,7 +15,8 @@ module.exports = {
 
       User.findOne({ _id: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
-        res.status(200).send(user);
+        decoded.id = undefined;
+        res.status(200).send(Object.assign(decoded, user._doc));
       });
 
     });
@@ -31,7 +32,6 @@ module.exports = {
       if (user.error) {
         return res.render('login.hbs');
       }
-
 
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(user));
@@ -58,7 +58,6 @@ module.exports = {
 
         req.login(user, err => {
           if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
-
 
           res.redirect("/");
 
