@@ -16,7 +16,9 @@ environments.staging = {
   'hashingSecret': 'thisIsASecret',
   'threads': 8,
   "ignoreSSL": true,
-  "jwtSecret": 'thisIsSecretStaging'
+  "jwtSecret": 'thisIsSecretStaging',
+  "mongoUser": "travis",
+  "mongopw": "1234"
 };
 
 // Staging (default environment)

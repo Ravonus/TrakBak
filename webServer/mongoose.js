@@ -9,7 +9,17 @@ prefix = config.envName,
 connection,
 databaseName = config.databaseName;
 
-mongoose.connect(`mongodb://${mongoDB}/${prefix}-${databaseName}`, { useNewUrlParser: true } , (err) => {
+console.log(config.mongoUser);
+let mongooseConnect, auth;
+if(config.mongoUser){
+mongooseConnect = `mongodb://${config.mongoUser}:${config.mongopw}@${mongoDB}:27017/${prefix}-${databaseName}`;
+auth = {authdb:"admin"};
+} else {
+  mongooseConnect = `mongodb://${mongoDB}/${prefix}-${databaseName}`;
+}
+
+console.log(mongooseConnect);
+mongoose.connect(mongooseConnect, {auth, useNewUrlParser: true } , (err) => {
  
    if (err) {
      connection = 'No';
