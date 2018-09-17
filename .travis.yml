@@ -5,8 +5,8 @@ services:
 
 before_script:
   - sleep 15
-  - mongod --version
-  - mongod staging-trakbak --eval 'db.createUser({user:"travis",pwd:"1234",roles:["readWrite"]});'
+  - mongo --version
+  - mongo staging-trakbak --eval 'db.createUser({user:"travis",pwd:"1234",roles:["readWrite"]});'
 
 node_js:
   - "stable"
