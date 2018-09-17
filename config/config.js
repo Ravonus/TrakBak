@@ -17,7 +17,7 @@ environments.staging = {
   'threads': 8,
   "ignoreSSL": true,
   "jwtSecret": 'thisIsSecretStaging',
-  "mongoUser" : "travis",
+  "mongoUser" : "travisz",
   "mongopw" : "myTravisPW1!",
   "mongoAdmin" : false
 };
@@ -33,6 +33,9 @@ environments.development = {
   'threads': 'softwareOff',
   "ignoreSSL": true,
   "jwtSecret": 'thisIsSecretDevelopment',
+  "mongoUser" : "adminDev",
+  "mongopw" : "myAdminDevPW1!",
+  "mongoAdmin" : true
 
 };
 

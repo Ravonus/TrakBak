@@ -6,7 +6,7 @@ const cookie = require('cookie'),
 
 module.exports = {
 
-  me: (req, res) => {
+  me: (req, res) =>{ 
     let token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
