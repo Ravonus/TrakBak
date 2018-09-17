@@ -3,8 +3,13 @@ services:
 
 language: node_js
 
+before_script:
+  - sleep 15
+  - mongo --version
+
 node_js:
   - "stable"
+  
 
 after_success:
   - wget https://raw.githubusercontent.com/k3rn31p4nic/travis-ci-discord-webhook/master/send.sh
