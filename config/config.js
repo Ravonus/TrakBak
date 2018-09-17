@@ -12,13 +12,14 @@ environments.staging = {
   'httpsPort': 3003,
   'envName': 'staging',
   'databaseName': 'trakbak',
-  'mongoDB': '127.0.0.1',
+  'mongoDB': 'localhost',
   'hashingSecret': 'thisIsASecret',
   'threads': 8,
   "ignoreSSL": true,
   "jwtSecret": 'thisIsSecretStaging',
   "mongoUser" : "travis",
-  "mongopw" : "1234"
+  "mongopw" : "myTravisPW1!",
+  "mongoAdmin" : false
 };
 
 // Staging (default environment)

@@ -8,12 +8,15 @@ let User = require('./models/User'),
 prefix = config.envName,
 connection,
 databaseName = config.databaseName;
-
+console.log('user/pw')
+console.log(config.mongoUser);
 console.log(config.mongopw);
 let mongooseConnect, auth;
 if(config.mongoUser){
 mongooseConnect = `mongodb://${config.mongoUser}:${config.mongopw}@${mongoDB}:27017/${prefix}-${databaseName}`;
+if(config.mongoAdmin) {
 auth = {authdb:"admin"};
+}
 } else {
   mongooseConnect = `mongodb://${mongoDB}/${prefix}-${databaseName}`;
 }

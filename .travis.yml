@@ -5,7 +5,7 @@ services:
 
 before_script:
   - sleep 15
-  - mongo --version
+  - mongo staging-trakbak --eval 'db.dropUser("travis");'
   - mongo staging-trakbak --eval 'db.createUser({user:"travis",pwd:"1234",roles:["readWrite"]});'
   - sleep 15
 
