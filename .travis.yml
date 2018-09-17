@@ -3,7 +3,7 @@ services:
 
 before_script:
   - sleep 15
-  - mongo staging-trakbak --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+  - mongo staging-trakbak --eval 'db.createUser({user:"travis",pwd:"1234",roles:["readWrite"]});'
 
 language: node_js
 
