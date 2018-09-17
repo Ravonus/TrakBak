@@ -1,11 +1,12 @@
+language: node_js
+
 services:
   - mongodb
 
-language: node_js
-
 before_script:
   - sleep 15
-  - mongo --version
+  - mongod --version
+  - mongod staging-trakbak --eval 'db.createUser({user:"travis",pwd:"1234",roles:["readWrite"]});'
 
 node_js:
   - "stable"
