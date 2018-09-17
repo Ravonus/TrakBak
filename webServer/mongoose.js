@@ -9,7 +9,7 @@ prefix = config.envName,
 connection,
 databaseName = config.databaseName;
 
-console.log(config.mongoUser);
+console.log(config.mongopw);
 let mongooseConnect, auth;
 if(config.mongoUser){
 mongooseConnect = `mongodb://${config.mongoUser}:${config.mongopw}@${mongoDB}:27017/${prefix}-${databaseName}`;
