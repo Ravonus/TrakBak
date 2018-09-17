@@ -19,7 +19,7 @@ environments.staging = {
   "jwtSecret": 'thisIsSecretStaging',
   "mongoUser" : "travisz",
   "mongopw" : "myTravisPW1!",
-  "mongoAdmin" : false
+  "mongoAdmin" : true
 };
 
 // Staging (default environment)
