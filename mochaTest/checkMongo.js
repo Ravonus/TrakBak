@@ -40,6 +40,7 @@ describe('Mocha test for Mongo database checks', () =>  {
       createUser.save(function(err, user){
         if(err) {
           chai.expect(err).to.contain.keys('name', 'biography', 'passwordHash', 'created', 'updated', '__v', '_id');
+          done();
         }
         chai.expect(user._doc).to.contain.keys('name', 'biography', 'passwordHash', 'created', 'updated', '__v', '_id');
         done();

@@ -17,8 +17,6 @@ environments.staging = {
   'threads': 8,
   "ignoreSSL": true,
   "jwtSecret": 'thisIsSecretStaging',
-  "mongoUser" : "travisz",
-  "mongopw" : "myTravisPW1!",
   "mongoAdmin" : true
 };
 
