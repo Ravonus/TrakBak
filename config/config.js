@@ -45,7 +45,8 @@ environments.production = {
 
 // Shared variables - These will write to any environment (Keep in mind these will over right in common variable.)
 environments.share = {
-  version: '0.0.2 Alpha'
+  version: '0.0.2 Alpha',
+  jwtSecret: 'thisIsSecret'
 }
 
 // Determine which enivorment was passed as a command-line argument

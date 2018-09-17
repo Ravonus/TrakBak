@@ -1,31 +1,46 @@
 const cookie = require('cookie'),
+  jwt = require('jsonwebtoken'),
+  config = require('../../config/config'),
+  User = require('../models/User'),
   DB = require('../mongoose');
 
 module.exports = {
+
+  me: (req, res) => {
+    let token = req.headers['x-access-token'];
+    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+    jwt.verify(token, config.jwtSecret, function (err, decoded) {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+
+      User.findOne({ _id: decoded.id }, function (err, user) {
+        user.passwordHash = undefined;
+        res.status(200).send(user);
+      });
+
+    });
+
+  },
+
   login: (req, res) => {
- 
+
     //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
-    req.login({ username:req.body.username, password:req.body.password}, (user) => {
+    req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
-      console.log('login ran');
 
-      console.log(user.error);
-      if(user.error) {
+      if (user.error) {
         return res.render('login.hbs');
-
       }
 
-      console.log(user);
-      res.setHeader('Content-Type', 'application/json');
-     res.send(JSON.stringify(user));
 
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(user));
 
     });
 
   },
   createUser: (req, res) => {
 
-    console.log('razzn');
     if (req.isUnauthenticated()) {
 
       let createUser = new DB.User({
@@ -43,7 +58,10 @@ module.exports = {
 
         req.login(user, err => {
           if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
-          else res.redirect("/");
+
+
+          res.redirect("/");
+
         });
       })
         .catch(err => {

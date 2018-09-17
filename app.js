@@ -8,16 +8,12 @@ const express = require('express'),
   server = http.createServer(app),
   io = require('socket.io')(server),
   argv = require('yargs').argv,
-  passport = require("passport"),
-  LocalStrategy = require("passport-local").Strategy,
   startTime = Date.now(),
-  User = require('./webServer/models/User');
   config = require('./config/config');
 
   //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/templateLoop.js");
 
-console.log();
 
 // These are options for  secure server ( It needs certificate and key. That is how it becomes secure)
 let httpsServerOptions = {
@@ -34,69 +30,14 @@ const serverSecure = https.createServer(httpsServerOptions, appSecure),
   // we will use this later (it will be object to keep track of tunnels.)
 let socketClients = new Object();
 
+//export both app middleware so we can use other files that need it. Such as the passport require right under it.
+module.exports.app = app;
+module.exports.appSecure = appSecure
+
 //passport setup. Setup session  This is the middle where function. Push both app/ and appSecure to setup both servers.
-
-var passportMiddleWare = (app) => {
-  app.use(passport.initialize());
-  app.use(passport.session());
-  
-}
-
-//Run passport middle where for both app and appSecure.
-passportMiddleWare(app);
-passportMiddleWare(appSecure);
+require('./passport');
 
 
-//more passport functions ( So we can use passport middlewhere ontop of routes)
-passport.serializeUser((user, done) => {
-
-  
-  console.log(user.passwordHash);
-
-  if(!user.passwordHash) {
-  var username = user.username;
-  var password = user.password;
-  var userSet = User.findOne({'name.username': username}, function (err, user){
-
-    if (!user || !user.validPassword(password)) {
-      done({ error: "Invalid username/password" });
-    } else {
-      done({obj: user});
-    }
-  });
- 
-
-  return;
- 
-  }
-
-
-
-
-  console.log('this is firing still')
-  done(null, user._id);
-
-});
-
-passport.deserializeUser(function(userId, done) {
-  
-  User.findById(userId, (err, user) => done(err, user).then(console.log('ran')));
-});
-
-//setup authentication for passport. This will let us attach passport checks ontop of express route calls.
-
-const local = new LocalStrategy((username, password, done) => {
-  User.findOne({ username })
-    .then(user => {
-      if (!user || !user.validPassword(password)) {
-        done(null, false, { message: "Invalid username/password" });
-      } else {
-        done(null, user);
-      }
-    })
-    .catch(e => done(e));
-});
-passport.use("local", local);
 
 //Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way... This can take a minute so created callback. Once variables are found it runs the start web server scripts.
 cb = () => {
@@ -179,5 +120,3 @@ cb = () => {
 }
 
 cb();
-
-module.exports.app = app;
