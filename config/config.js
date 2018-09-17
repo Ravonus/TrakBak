@@ -12,7 +12,7 @@ environments.staging = {
   'httpsPort': 3003,
   'envName': 'staging',
   'databaseName': 'trakbak',
-  'mongoDB': 'localhost',
+  'mongoDB': '127.0.0.1',
   'hashingSecret': 'thisIsASecret',
   'threads': 8,
   "ignoreSSL": true,
