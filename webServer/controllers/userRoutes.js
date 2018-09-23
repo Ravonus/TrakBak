@@ -6,7 +6,7 @@ const cookie = require('cookie'),
 
 module.exports = {
 
-  me: (req, res) =>{ 
+  me: (req, res) => { 
     let token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
@@ -25,21 +25,37 @@ module.exports = {
 
   login: (req, res) => {
 
+    console.log('this login is running')
     //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
     req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
+   //   var user = user.user;
 
+
+
+
+    //  res.setHeader('Content-Type', 'application/json');
       if (user.error) {
-        return res.render('login.hbs');
-      }
+        //  return res.render('login.hbs');
+        console.log(user.error);
+    //    res.sendStatus(500).send({error:user.error});
 
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(user));
+    res.send({error:user.error});
+
+        } else {
+          res.send(JSON.stringify(user));
+        }
+
+      
+
+      // res.setHeader('Content-Type', 'application/json');
+      // res.send(JSON.stringify(user));
 
     });
 
   },
   createUser: (req, res) => {
+
 
     if (req.isUnauthenticated()) {
 
@@ -54,7 +70,12 @@ module.exports = {
         password: req.body.password
       })
 
+      console.log(createUser);
+
       createUser.save().then(user => {
+
+        console.log('ranzz');
+   
 
         req.login(user, err => {
           if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
@@ -64,6 +85,7 @@ module.exports = {
         });
       })
         .catch(err => {
+          console.log('ran');
           if (err.name === "ValidationError") {
             // req.flash("Sorry, that username is already taken.");
             res.redirect("/register");

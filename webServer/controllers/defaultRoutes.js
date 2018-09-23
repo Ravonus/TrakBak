@@ -3,16 +3,32 @@ const path = require("path"),
   globalObj = require(path.join(__dirname, '../../', `app.js`)),
   socketClients = globalObj.socketClients,
   io = globalObj.io,
-  cookie = require('cookie'),
+  cookie = require('cookie-signature'),
+  config = require('../../config/config'),
+  jwt = require('jsonwebtoken'),
   userRoutes = require('./userRoutes');
 
 module.exports = {
   user: userRoutes,
 
   home: (req, res) => {
+ 
+    console.log(req.cookies.jwt)
 
+    // if(req.cookies && req.cookies.jwt){
+    // var decoded = jwt.verify(req.cookies.jwt, config.jwtSecret);
+    // }
 
-    if(req.isAuthenticated()) {
+    // console.log(decoded);
+   // console.log(req);
+  
+   if(req.cookies.jwt){
+   var jwtCookie = cookie.unsign(req.cookies.jwt, config.jwtSecret);
+   var decoded = jwt.verify(jwtCookie, config.jwtSecret);
+   
+   }
+
+    if(req.cookies.jwt && decoded && decoded.id) {
       res.render('index.hbs');
     } else {
 
@@ -33,6 +49,9 @@ module.exports = {
   },
   login:  (req, res) => {
 
+   
+    console.log('this login is running 2!!!')
+   
     if(req.isUnauthenticated()) {
       res.render('login.hbs');
     } else {

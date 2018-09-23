@@ -5,11 +5,22 @@ app = require('./app'),
 User = require('./webServer/models/User'),
 jwt = require('jsonwebtoken'),
 config = require('./config/config'),
+session  = require('express-session'),
 LocalStrategy = require("passport-local").Strategy;
 
 let passportMiddleWare = (app) => {
+
+  // app.use(session({
+  //   secret:config.jwtSecret,
+  //   resave: true,
+  //   saveUninitialized: true,
+  //   cookie: { secure: false } // Remember to set this
+  // }));
+  // app.set('trust proxy', 1) 
   app.use(passport.initialize());
-  app.use(passport.session());
+
+  app.use(passport.session())
+ 
   
 }
 
@@ -24,6 +35,8 @@ passport.serializeUser((user, done) => {
 
 
 let jwtToken = (obj) => {
+
+
 
   if(obj.jwtExpire){
     console.log(obj.jwtExpire);

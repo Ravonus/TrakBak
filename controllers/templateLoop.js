@@ -5,8 +5,10 @@ const fs = require('fs'),
   UglifyJS = require('uglify-js'),
   templatePath = path.join(__dirname, '../templates');
 
+
 //Read file function - Replace all static variables with regex words - Place within public client folder. This function is used within the file loop. Used to look at template files and put correct URL for sockets and API within.
 processFile = (myPath, file, word, replace) => {
+  
 
   //read file that was pushed to function. Look at where templates are located.
   fs.readFile(templatePath + '/' + file, "utf8", (err, data) => {
@@ -28,11 +30,11 @@ processFile = (myPath, file, word, replace) => {
 
       });
 
-      data = UglifyJS.minify(data);
-
+      // data = UglifyJS.minify(data);
+//data.code
       // writes to custom javascript folder within Webserver. So public can view server
 
-      fs.writeFile(myPath, data.code, (err) => {
+      fs.writeFile(myPath, data, (err) => {
         if (err) {
           return console.log(err);
         }
@@ -42,9 +44,9 @@ processFile = (myPath, file, word, replace) => {
     } else {
       //does same thing as above but not within loop.
 
-      data = UglifyJS.minify(data);
+      // data = UglifyJS.minify(data);
       var myRegEx = new RegExp(word, 'g');
-      fs.writeFile(myPath, data.code.replace(myRegEx, replace), (err) => {
+      fs.writeFile(myPath, data.replace(myRegEx, replace), (err) => {
         if (err) {
           return console.log(err);
         }
@@ -97,8 +99,8 @@ fs.readdir(templatePath, (err, files) => {
 
       }
 
-      processFile(toPath, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBack, tbServerBack, tbServer, 'poops']);
-      processFile(toPathSecure, file, ['{{serverBack}}', '{{serverBackz}}', '{{server}}', '{{serverS}}'], [tbServerBackSecure, tbServerBackSecure, tbServerSecure, 'poops']);
+      processFile(toPath, file, ['{{serverBack}}',  '{{serverBack}}', '{{server}}'], [tbServerBack, tbServerBack, tbServer]);
+      processFile(toPathSecure, file, ['{{serverBack}}',  '{{serverBack}}', '{{server}}'], [tbServerBackSecure, tbServerBackSecure, tbServerSecure]);
     });
 
   });

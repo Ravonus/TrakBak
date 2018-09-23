@@ -1,6 +1,7 @@
 const express = require('express'),
   routes = require('./controllers/defaultRoutes'),
   bodyParser = require('body-parser').json(),
+  passport = require('passport');
   router = express.Router();
   //let r = router.route(path).post(bodyParser, route);
 
@@ -10,6 +11,12 @@ const express = require('express'),
 router.route('/user').post(bodyParser, routes.user.createUser);
 
 //User Login Route
+
+
+
+
+
+
 router.route('/user/login').post(bodyParser, routes.user.login);
 
 //User Me route (Check jwt token);

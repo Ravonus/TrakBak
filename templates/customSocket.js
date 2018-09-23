@@ -1,5 +1,14 @@
 var socket = io('{{server}}');
-var clikbakSocket = '{{serverBack}}';
+var trakbakSocket = '{{serverBack}}';
+
+function login() {
+
+  socket.emit('login', {
+    url: window.location.href,
+    form: [loginApp.login,loginApp.password]
+  });
+
+}
 
 socket.on('connected', function (data) {
   console.log('dawgs n shit on connect.');
@@ -9,40 +18,44 @@ socket.on('connected', function (data) {
 socket.on('me', function (data) {
   if (!JSON.parse(data.msg).error) {
 
-    clikbak.user = JSON.parse(data.msg);
+    trakbak.user = JSON.parse(data.msg);
     checkRegistration();
     sideNav();
     //  selectSocket(['domains', 'paths', 'postbacks']);
   } else {
 
-    localStorage.removeItem("clikbak");
+    localStorage.removeItem("trakbak");
     window.location.href = "/";
 
   }
 });
 
-
 socket.on('login', function (data) {
 
-  if (JSON.parse(data.msg).jwt) {
+  var user = data.user;
+  console.log(user.jwt);
 
-    var jwt = JSON.parse(data.msg).jwt;
-    var user = JSON.parse(data.msg).user;
+  if (user.jwt) {
+
+    console.log(user.jwt);
+    
+    setCookie('jwt', user.jwt, 30)
+    var jwt = user.jwt;
     // Save data to sessionStorage
-    localStorage.setItem('clikbak', JSON.parse(data.msg).jwt);
+    localStorage.setItem('trakbak', jwt);
 
-    if (JSON.parse(data.msg).user.registrationKey !== null) {
+    // if (user.registrationKey !== null) {
 
-      var options = {
-        closeButton: true,
-        preventDuplicates: true,
-        positionClass: 'toast-top-full-width'
+    //   var options = {
+    //     closeButton: true,
+    //     preventDuplicates: true,
+    //     positionClass: 'toast-top-full-width'
 
-      }
+    //   }
 
-      alerts('error', 'Email Verification', 'You still need to verify your email before you can access application.', options)
+    //   alerts('error', 'Email Verification', 'You still need to verify your email before you can access application.', options)
 
-    }
+    // }
     window.location.href = '/';
   } else {
 
@@ -56,7 +69,7 @@ socket.on('login', function (data) {
       "showDuration": 500,
       "hideDuration": 1000,
       "onClose": function () {
-        console.log('test');
+
       },
       "timeOut": 5000,
       "extendedTimeOut": 5000,
@@ -66,9 +79,10 @@ socket.on('login', function (data) {
       "hideMethod": "fadeOut",
     };
 
-    var error = JSON.parse(data.msg);
+   // var error = JSON.parse(data.msg);
 
-    Command: toastr["error"](error.message, error.error, options)
+   // Command: toastr["error"](error.message, error.error, options)
 
   }
 });
+

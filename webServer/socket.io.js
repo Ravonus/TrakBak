@@ -1,16 +1,9 @@
 //sockets
-const querystring = require('querystring'),
-  http = require('http'),
-  url = require('url'),
-  cookie = require('cookie'),
-  path = require('path'),
-  fs = require('fs'),
+const http = require('http'),
   config = require('./../config/config'),
   port = config.httpPort,
-  jwtKey = '00cad614304af8bcc50a77b2b0df46e4',
   ivId = '26ae5cc854e36b6bdfca366848dea6bb',
-  host = 'localhost',
-  globalObj = require(path.join(__dirname, '../', `app.js`)),
+  host = 'localhost';
 
   encryptString = (text, salt) => {
 
@@ -96,6 +89,7 @@ postRequest = (jwt, path, object, _callback) => {
       "Content-Length": Buffer.byteLength(json)
     };
     var options = {
+      credentials: 'same-origin',
       host,
       port,
       path,
@@ -209,7 +203,43 @@ module.exports = {
       console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
      
-})
+
+
+socket.on('login', (data) => {
+      
+  
+
+
+  postRequest('nojwt', 'http://localhost:3002/user/login', {username:data.form[0], password:data.form[1]}, function(data) {
+   
+    var obj = JSON.parse(data)
+
+  if(obj.user) {
+    
+
+    
+    var cookie = require('cookie-signature');
+    
+
+    console.log(obj);
+
+    //create siganture for jwt cookie - push via sockets and have client save cookie.
+    var signature = cookie.sign(obj.user.jwt, config.jwtSecret);
+
+    obj.user.jwt = signature;
+
+    data = JSON.stringify(obj.user.jwt);
+
+    socket.emit('login', obj);
+    } else {
+      socket.emit('login', obj);
+    }
+  });
+
+ 
+});
+
+});
 
   }
 }

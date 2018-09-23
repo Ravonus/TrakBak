@@ -31,9 +31,7 @@ environments.development = {
   'threads': 'softwareOff',
   "ignoreSSL": true,
   "jwtSecret": 'thisIsSecretDevelopment',
-  "mongoUser" : "adminDev",
-  "mongopw" : "myAdminDevPW1!",
-  "mongoAdmin" : true
+
 
 };
 
@@ -84,6 +82,7 @@ if (environmentToExport.ignoreSSL) {
 environmentToExport = Object.assign(environmentToExport, environments.share)
 
 if (!environmentToExport.jwtExpire) {
+
   environmentToExport.jwtExpire = 86400
 }
 

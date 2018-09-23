@@ -7,6 +7,7 @@ const express = require('express'),
   https = require('https'),
   server = http.createServer(app),
   io = require('socket.io')(server),
+  cookieParser = require('cookie-parser'),
   argv = require('yargs').argv,
   startTime = Date.now(),
   config = require('./config/config');
@@ -14,7 +15,8 @@ const express = require('express'),
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/templateLoop.js");
 
-
+app.use(cookieParser())
+appSecure.use(cookieParser())
 // These are options for  secure server ( It needs certificate and key. That is how it becomes secure)
 let httpsServerOptions = {
   'key': fs.readFileSync('./webServer/https/key.pem'),

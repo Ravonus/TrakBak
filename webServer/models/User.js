@@ -2,7 +2,6 @@ const mongoose = require('mongoose'),
 uniqueValidator = require("mongoose-unique-validator"),
 bcrypt = require('bcrypt');
 
-
 var UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
@@ -39,9 +38,6 @@ UserSchema.virtual("password").set(function(value) {
 });
 
 
-
-
 var User = mongoose.model('User', UserSchema);
-
 
 module.exports = User;
