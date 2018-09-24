@@ -12,6 +12,8 @@ const express = require('express'),
   startTime = Date.now(),
   config = require('./config/config');
 
+  
+
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/templateLoop.js");
 

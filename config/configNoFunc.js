@@ -88,8 +88,5 @@ if (!environmentToExport.jwtExpire) {
   environmentToExport.jwtExpire = 86400
 }
 
-environmentToExport.functions = require("../controllers/appFunctions");
-
-
 // Export the module
 module.exports = environmentToExport;

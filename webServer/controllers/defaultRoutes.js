@@ -8,7 +8,6 @@ const path = require("path"),
   jwt = require('jsonwebtoken'),
   userRoutes = require('./userRoutes');
 
-
 module.exports = {
   user: userRoutes,
 
@@ -36,9 +35,6 @@ module.exports = {
 
   },
   login: (req, res) => {
-
-
-    console.log('this login is running 2!!!')
 
     if (req.isUnauthenticated()) {
       res.render('login.hbs');
