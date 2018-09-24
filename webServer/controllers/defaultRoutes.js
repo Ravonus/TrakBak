@@ -8,56 +8,44 @@ const path = require("path"),
   jwt = require('jsonwebtoken'),
   userRoutes = require('./userRoutes');
 
+
 module.exports = {
   user: userRoutes,
 
   home: (req, res) => {
- 
-    console.log(req.cookies.jwt)
 
-    // if(req.cookies && req.cookies.jwt){
-    // var decoded = jwt.verify(req.cookies.jwt, config.jwtSecret);
-    // }
+    if (req.cookies && req.cookies.jwt) {
 
-    // console.log(decoded);
-   // console.log(req);
-  
-   if(req.cookies.jwt){
-   var jwtCookie = cookie.unsign(req.cookies.jwt, config.jwtSecret);
-   var decoded = jwt.verify(jwtCookie, config.jwtSecret);
-   
-   }
+      var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
 
-    if(req.cookies.jwt && decoded && decoded.id) {
+      if (jwtCookie) {
+        console.log(jwtCookie)
+        jwtCookie = config.functions.jwtUnScramble(jwtCookie);
+        console.log(jwtCookie);
+        var decoded = jwt.verify(jwtCookie.trim(), config.jwtSecret);
+      }
+
+    }
+
+    if (req.cookies && req.cookies.jwt && decoded && decoded.id) {
       res.render('index.hbs');
     } else {
 
       res.render('login.hbs');
     }
-    
-
-    // // Write responsea
-    // if (req.headers.cookie) {
-
-    //   let cookies = cookie.parse(req.headers.cookie);
-
-    //   if (cookies.jwt) {
-    //     req.session.jwt = cookies.jwt;
-    //   }
-    // }
 
   },
-  login:  (req, res) => {
+  login: (req, res) => {
 
-   
+
     console.log('this login is running 2!!!')
-   
-    if(req.isUnauthenticated()) {
+
+    if (req.isUnauthenticated()) {
       res.render('login.hbs');
     } else {
       res.render('index.hbs');
     }
-    
+
   },
   callback: (req, res) => {
 

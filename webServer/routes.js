@@ -1,7 +1,6 @@
 const express = require('express'),
   routes = require('./controllers/defaultRoutes'),
   bodyParser = require('body-parser').json(),
-  passport = require('passport');
   router = express.Router();
   //let r = router.route(path).post(bodyParser, route);
 

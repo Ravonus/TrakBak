@@ -9,7 +9,7 @@ var UserSchema = new mongoose.Schema({
     lastName: String,
     username: {type: String, required: true, unique: true },
   },
-
+  sessionJwt:String,
   biography: String,
   passwordHash: String,
   groups: Number,

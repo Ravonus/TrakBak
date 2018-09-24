@@ -5,35 +5,6 @@ const http = require('http'),
   ivId = '26ae5cc854e36b6bdfca366848dea6bb',
   host = 'localhost';
 
-  encryptString = (text, salt) => {
-
-    const crypto = require('crypto'),
-      algorithm = 'aes-256-ctr',
-      iv = Buffer.from(ivId, 'hex');
-
-    let cipher = crypto.createCipheriv(algorithm, salt, iv)
-    let crypted = cipher.update(text, 'utf8', 'hex')
-    crypted += cipher.final('hex');
-    return crypted;
-  }
-
-decryptString = (text, salt) => {
-
-  const crypto = require('crypto'),
-    algorithm = 'aes-256-ctr',
-    iv = Buffer.from(ivId, 'hex');
-
-  try {
-    var decipher = crypto.createDecipheriv(algorithm, salt, iv)
-    var dec = decipher.update(text, 'hex', 'utf8')
-    dec += decipher.final('utf8');
-    return dec;
-  } catch (err) {
-    console.log(err);
-  }
-
-}
-
 getRequest = (jwt, path, _callback) => {
 
   if (jwt) {
@@ -57,11 +28,11 @@ getRequest = (jwt, path, _callback) => {
     headers
   };
 
-  let httpreq = http.request(options, (response) =>  {
+  let httpreq = http.request(options, (response) => {
 
     response.setEncoding('utf8');
 
-    response.on('data', (body) =>  {
+    response.on('data', (body) => {
 
       _callback(body, path);
 
@@ -69,7 +40,7 @@ getRequest = (jwt, path, _callback) => {
 
   });
 
-  httpreq.on('error', (err) =>  {
+  httpreq.on('error', (err) => {
 
   })
 
@@ -117,7 +88,7 @@ postRequest = (jwt, path, object, _callback) => {
 
     response.setEncoding('utf8');
 
-    response.on('data', (body) =>  {
+    response.on('data', (body) => {
 
       _callback(body);
 
@@ -125,7 +96,7 @@ postRequest = (jwt, path, object, _callback) => {
 
   });
 
-  httpreq.on('error', (err) =>  {
+  httpreq.on('error', (err) => {
 
   })
 
@@ -168,11 +139,11 @@ updateRequest = (jwt, path, object, _callback) => {
     };
   };
 
-  let httpreq = http.request(options, (response) =>  {
+  let httpreq = http.request(options, (response) => {
 
     response.setEncoding('utf8');
 
-    response.on('data', (body) =>  {
+    response.on('data', (body) => {
 
       _callback(body);
 
@@ -180,7 +151,7 @@ updateRequest = (jwt, path, object, _callback) => {
 
   });
 
-  httpreq.on('error', (err) =>  {
+  httpreq.on('error', (err) => {
 
   })
 
@@ -198,48 +169,36 @@ module.exports = {
     //sockets
 
     io.on('connection', (socket) => {
-      
 
       console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
-     
+
+      socket.on('login', (data) => {
 
 
-socket.on('login', (data) => {
-      
-  
+        postRequest('nojwt', 'http://localhost:3002/user/login', { username: data.form[0], password: data.form[1] }, function (data) {
+
+          var obj = JSON.parse(data);
+
+          if (obj.user) {
+
+            var cookie = require('cookie-signature');
+
+            //create siganture for jwt cookie - push via sockets and have client save cookie.
+            var signature = cookie.sign(config.functions.jwtScramble(obj.user._id, obj.user.jwt), config.cookieSecret);
+
+            obj.user.jwt = signature;
+
+            socket.emit('login', obj);
+          } else {
+            socket.emit('login', obj);
+          }
+        });
 
 
-  postRequest('nojwt', 'http://localhost:3002/user/login', {username:data.form[0], password:data.form[1]}, function(data) {
-   
-    var obj = JSON.parse(data)
+      });
 
-  if(obj.user) {
-    
-
-    
-    var cookie = require('cookie-signature');
-    
-
-    console.log(obj);
-
-    //create siganture for jwt cookie - push via sockets and have client save cookie.
-    var signature = cookie.sign(obj.user.jwt, config.jwtSecret);
-
-    obj.user.jwt = signature;
-
-    data = JSON.stringify(obj.user.jwt);
-
-    socket.emit('login', obj);
-    } else {
-      socket.emit('login', obj);
-    }
-  });
-
- 
-});
-
-});
+    });
 
   }
 }
