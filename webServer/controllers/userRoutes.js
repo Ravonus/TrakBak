@@ -68,19 +68,15 @@ module.exports = {
         password: req.body.password
       })
 
-      console.log(createUser);
-
       createUser.save().then(user => {
-   
-        res.status(200).send(user);
+        user._doc.passwordHash = undefined;
+        res.status(200).send(Object.assign({created: true}, user._doc));
 
       })
         .catch(err => {
-          console.log('error strart');
 
           var key = Object.keys(err.errors)[Object.keys(err.errors).length-1];
 
-         console.log('err over')
           if (err.name === "ValidationError") {
      
               return next(config.message.apiError({res:res, type:err.errors[key].path, statusCode: 500}))
