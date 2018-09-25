@@ -1,7 +1,7 @@
 {{> head}}
 <style>
     .intro-2 {
-        background: url("http://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img%20(11).jpg")no-repeat center center;
+        background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img%20(11).jpg")no-repeat center center;
         background-size: cover;
     }
 
@@ -78,9 +78,9 @@
 <body class="fixed-sn white-skin">
 
     <!--Main Navigation-->
-    <header>
+    <header id="loginVue" >
 
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar">
+        <nav  class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <strong>ClikBak</strong>
@@ -132,13 +132,13 @@
                                     <form id="formLogin" action="auth/register" method="post" >
                                     <div class="md-form">
                                         <i class="fa fa-envelope prefix white-text"></i>
-                                        <input type="text" id="username" name="username" class="form-control">
+                                        <input v-model="login" type="text" id="username" name="username" class="form-control">
                                         <label for="username">Your email</label>
                                     </div>
 
                                     <div class="md-form">
                                         <i class="fa fa-lock prefix white-text"></i>
-                                        <input type="password" id="password"  name="password" class="form-control">
+                                        <input v-model="password" type="password" id="password" name="password" class="form-control">
                                         <label for="password" >Your password</label>
                                     </div>
                                     </form> 

@@ -3,42 +3,45 @@ const path = require("path"),
   globalObj = require(path.join(__dirname, '../../', `app.js`)),
   socketClients = globalObj.socketClients,
   io = globalObj.io,
-  cookie = require('cookie'),
+  cookie = require('cookie-signature'),
+  config = require('../../config/config'),
+  jwt = require('jsonwebtoken'),
   userRoutes = require('./userRoutes');
 
 module.exports = {
   user: userRoutes,
 
-  home: (req, res) => {
+  home: (req, res, next) => {
 
+    if (req.cookies && req.cookies.jwt) {
 
-    if(req.isAuthenticated()) {
-      res.render('index.hbs');
+      var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
+
+      if (jwtCookie) {
+        console.log(jwtCookie)
+        jwtCookie = config.functions.jwtUnScramble(jwtCookie);
+        console.log(jwtCookie);
+        var decoded = jwt.verify(jwtCookie.trim(), config.jwtSecret);
+      }
+
+    }
+
+    if (req.cookies && req.cookies.jwt && decoded && decoded.id) {
+      return next(config.message.render({res:res, page: 'index.hbs'}));
     } else {
 
-      res.render('login.hbs');
+      return next(config.message.render({res:res, page:'login.hbs'}));
     }
-    
-
-    // // Write responsea
-    // if (req.headers.cookie) {
-
-    //   let cookies = cookie.parse(req.headers.cookie);
-
-    //   if (cookies.jwt) {
-    //     req.session.jwt = cookies.jwt;
-    //   }
-    // }
 
   },
-  login:  (req, res) => {
+  login: (req, res) => {
 
-    if(req.isUnauthenticated()) {
+    if (req.isUnauthenticated()) {
       res.render('login.hbs');
     } else {
       res.render('index.hbs');
     }
-    
+
   },
   callback: (req, res) => {
 

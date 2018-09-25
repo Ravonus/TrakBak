@@ -42,11 +42,11 @@ describe('Mocha test for Mongo database checks', () =>  {
 
       createUser.save(function(err, user){
         if(err) {
-          chai.expect(err).to.contain.keys('name', 'biography', 'passwordHash', 'created', 'updated', '__v', '_id');
+          chai.expect(err).to.contain.keys('name', 'biography', 'passwordHash', 'createdAt', 'updatedAt', '__v', '_id');
           done();
         }
         createdUserId = user._id;
-        chai.expect(user._doc).to.contain.keys('name', 'biography', 'passwordHash', 'created', 'updated', '__v', '_id');
+        chai.expect(user._doc).to.contain.keys( 'name', 'biography', 'passwordHash', 'createdAt', 'updatedAt', '__v', '_id');
         done();
       })
 
@@ -63,7 +63,7 @@ describe('Mocha test for Mongo database checks', () =>  {
           done();
         }
 
-        chai.expect(user._doc).to.contain.keys('name', 'biography', 'passwordHash', 'created', 'updated', '__v', '_id');
+        chai.expect(user._doc).to.contain.keys('name', 'biography', 'passwordHash', 'createdAt', 'updatedAt', '__v', '_id');
         done();
       });
 

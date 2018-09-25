@@ -1,1 +1,88 @@
-var socket=io("192.168.0.169:3002"),clikbakSocket="192.168.0.169:3002";socket.on("connected",function(e){console.log("dawgs n shit on connect.")}),socket.on("me",function(e){JSON.parse(e.msg).error?(localStorage.removeItem("clikbak"),window.location.href="/"):(clikbak.user=JSON.parse(e.msg),checkRegistration(),sideNav())}),socket.on("login",function(e){if(JSON.parse(e.msg).jwt){JSON.parse(e.msg).jwt,JSON.parse(e.msg).user;if(localStorage.setItem("clikbak",JSON.parse(e.msg).jwt),null!==JSON.parse(e.msg).user.registrationKey){var o={closeButton:!0,preventDuplicates:!0,positionClass:"toast-top-full-width"};alerts("error","Email Verification","You still need to verify your email before you can access application.",o)}window.location.href="/"}else{o={closeButton:!0,debug:!1,newestOnTop:!1,progressBar:!1,positionClass:"toast-top-right",preventDuplicates:!0,showDuration:500,hideDuration:1e3,onClose:function(){console.log("test")},timeOut:5e3,extendedTimeOut:5e3,showEasing:"swing",hideEasing:"linear",showMethod:"fadeIn",hideMethod:"fadeOut"};var t=JSON.parse(e.msg);toastr.error(t.message,t.error,o)}});
+var socket = io('192.168.0.169:3002');
+var trakbakSocket = '192.168.0.169:3002';
+
+function login() {
+
+  socket.emit('login', {
+    url: window.location.href,
+    form: [loginApp.login,loginApp.password]
+  });
+
+}
+
+socket.on('connected', function (data) {
+  console.log('dawgs n shit on connect.');
+})
+
+
+socket.on('me', function (data) {
+  if (!JSON.parse(data.msg).error) {
+
+    trakbak.user = JSON.parse(data.msg);
+    checkRegistration();
+    sideNav();
+    //  selectSocket(['domains', 'paths', 'postbacks']);
+  } else {
+
+    localStorage.removeItem("trakbak");
+    window.location.href = "/";
+
+  }
+});
+
+socket.on('login', function (data) {
+
+  var user = data.user;
+  console.log(user.jwt);
+
+  if (user.jwt) {
+
+    console.log(user.jwt);
+    
+    setCookie('jwt', user.jwt, 30)
+    var jwt = user.jwt;
+    // Save data to sessionStorage
+    localStorage.setItem('trakbak', jwt);
+
+    // if (user.registrationKey !== null) {
+
+    //   var options = {
+    //     closeButton: true,
+    //     preventDuplicates: true,
+    //     positionClass: 'toast-top-full-width'
+
+    //   }
+
+    //   alerts('error', 'Email Verification', 'You still need to verify your email before you can access application.', options)
+
+    // }
+    window.location.href = '/';
+  } else {
+
+    var options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "showDuration": 500,
+      "hideDuration": 1000,
+      "onClose": function () {
+
+      },
+      "timeOut": 5000,
+      "extendedTimeOut": 5000,
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut",
+    };
+
+   // var error = JSON.parse(data.msg);
+
+   // Command: toastr["error"](error.message, error.error, options)
+
+  }
+});
+

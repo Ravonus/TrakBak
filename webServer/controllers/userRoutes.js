@@ -6,12 +6,13 @@ const cookie = require('cookie'),
 
 module.exports = {
 
-  me: (req, res) =>{ 
+  me: (req, res, next) => { 
     let token = req.headers['x-access-token'];
-    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+    
+    if (!token) return next(config.message.apiError({res:res, type:'noToken', statusCode: 401}))
 
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
-      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      if (err) return next(config.message.apiError({res:res, type:'badToken', statusCode: 500}))
 
       User.findOne({ _id: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
@@ -28,18 +29,31 @@ module.exports = {
     //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
     req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
+   //   var user = user.user;
 
+
+    //  res.setHeader('Content-Type', 'application/json');
       if (user.error) {
-        return res.render('login.hbs');
-      }
+        //  return res.render('login.hbs');
+        console.log(user.error);
+    //    res.sendStatus(500).send({error:user.error});
 
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(user));
+    res.send({error:user.error});
+
+        } else {
+          res.send(JSON.stringify(user));
+        }
+
+      
+
+      // res.setHeader('Content-Type', 'application/json');
+      // res.send(JSON.stringify(user));
 
     });
 
   },
-  createUser: (req, res) => {
+  createUser: (req, res, next) => {
+
 
     if (req.isUnauthenticated()) {
 
@@ -55,19 +69,19 @@ module.exports = {
       })
 
       createUser.save().then(user => {
+        user._doc.passwordHash = undefined;
+        res.status(200).send(Object.assign({created: true}, user._doc));
 
-        req.login(user, err => {
-          if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
-
-          res.redirect("/");
-
-        });
       })
         .catch(err => {
+
+          var key = Object.keys(err.errors)[Object.keys(err.errors).length-1];
+
           if (err.name === "ValidationError") {
-            // req.flash("Sorry, that username is already taken.");
-            res.redirect("/register");
-          } else res.redirect("/");
+     
+              return next(config.message.apiError({res:res, type:err.errors[key].path, statusCode: 500}))
+            
+          }
         });
 
     } else {

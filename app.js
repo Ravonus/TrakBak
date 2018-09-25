@@ -7,18 +7,22 @@ const express = require('express'),
   https = require('https'),
   server = http.createServer(app),
   io = require('socket.io')(server),
+  cookieParser = require('cookie-parser'),
   argv = require('yargs').argv,
   startTime = Date.now(),
   config = require('./config/config');
 
+  
+
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/templateLoop.js");
 
-
+app.use(cookieParser())
+appSecure.use(cookieParser())
 // These are options for  secure server ( It needs certificate and key. That is how it becomes secure)
 let httpsServerOptions = {
-  'key': fs.readFileSync('./webServer/https/key.pem'),
-  'cert': fs.readFileSync('./webServer/https/cert.pem')
+  'key': fs.readFileSync('./webServer/https/key.pem', 'ascii'),
+  'cert': fs.readFileSync('./webServer/https/cert.pem', 'ascii')
 }
 
 //setup constant for secure server. We can't start it like above because we need the options we created for the secure server
@@ -32,7 +36,8 @@ let socketClients = new Object();
 
 //export both app middleware so we can use other files that need it. Such as the passport require right under it.
 module.exports.app = app;
-module.exports.appSecure = appSecure
+module.exports.appSecure = appSecure,
+module.exports.serverSecure = serverSecure;
 
 //passport setup. Setup session  This is the middle where function. Push both app/ and appSecure to setup both servers.
 require('./passport');
