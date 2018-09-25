@@ -6,12 +6,13 @@ const cookie = require('cookie'),
 
 module.exports = {
 
-  me: (req, res) => { 
+  me: (req, res, next) => { 
     let token = req.headers['x-access-token'];
-    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+    
+    if (!token) return next(config.message.apiError({res:res, type:'noToken', statusCode: 401}))
 
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
-      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      if (err) return next(config.message.apiError({res:res, type:'badToken', statusCode: 500}))
 
       User.findOne({ _id: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
@@ -51,7 +52,7 @@ module.exports = {
     });
 
   },
-  createUser: (req, res) => {
+  createUser: (req, res, next) => {
 
 
     if (req.isUnauthenticated()) {
@@ -70,23 +71,21 @@ module.exports = {
       console.log(createUser);
 
       createUser.save().then(user => {
-
-        console.log('ranzz');
    
+        res.status(200).send(user);
 
-        req.login(user, err => {
-          if (err) res.render('404.hbs', { title: '404: Page Not Found', url: url });
-
-          res.redirect("/");
-
-        });
       })
         .catch(err => {
-          console.log('ran');
+          console.log('error strart');
+
+          var key = Object.keys(err.errors)[Object.keys(err.errors).length-1];
+
+         console.log('err over')
           if (err.name === "ValidationError") {
-            // req.flash("Sorry, that username is already taken.");
-            res.redirect("/register");
-          } else res.redirect("/");
+     
+              return next(config.message.apiError({res:res, type:err.errors[key].path, statusCode: 500}))
+            
+          }
         });
 
     } else {

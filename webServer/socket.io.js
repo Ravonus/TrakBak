@@ -16,8 +16,9 @@ module.exports = {
 
       socket.on('login', (data) => {
 
-        config.functions.postRequest('nojwt', 'http://localhost:3002/user/login', { username: data.form[0], password: data.form[1] }, function (data) {
+        config.functions.postRequest('nojwt', 'https://localhost:5001/user/login', { username: data.form[0], password: data.form[1] }, function (data) {
 
+        console.log('wtf');
           var obj = JSON.parse(data);
 
           if (obj.user) {

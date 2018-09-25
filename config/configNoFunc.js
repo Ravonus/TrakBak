@@ -53,7 +53,9 @@ environments.production = {
 environments.share = {
   version: '0.0.2 Alpha',
   cookieSecret: 'theyBeS3crets!',
-  host: 'localhost'
+  host: 'localhost',
+  certLocation: '/webServer/https/cert.pem',
+  keyLocation: '/webServer/https/key.pem'
 }
 
 // Determine which enivorment was passed as a command-line argument

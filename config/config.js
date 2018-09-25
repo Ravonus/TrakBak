@@ -1,3 +1,6 @@
+const path = require('path');
+
+
 /*
 * Create and export configuration variables
 *
@@ -40,7 +43,7 @@ environments.production = {
   'httpPort': 5000,
   'httpsPort': 5001,
   'envName': 'production',
-  'serverName': 'trakbak.com',
+  'serverName': 'https://www.trakbak.tk:5001',
   'databaseName': 'trakbak',
   'mongoDB': 'localhost',
   'hashingSecret': 'thisIsAProductionSecret',
@@ -53,7 +56,9 @@ environments.production = {
 environments.share = {
   version: '0.0.2 Alpha',
   cookieSecret: 'theyBeS3crets!',
-  host: 'localhost'
+  host: 'localhost',
+  certLocation: '/webServer/https/cert.pem',
+  keyLocation: '/webServer/https/key.pem'
 }
 
 // Determine which enivorment was passed as a command-line argument
@@ -61,6 +66,8 @@ let currentEnvironment = typeof (process.env.NODE_ENV) == 'string' ? process.env
 
 // Check that the current environment is one of the enviorments obove, if not, default to staging
 let environmentToExport = typeof (environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging;
+
+environmentToExport = Object.assign(environmentToExport, environments.share);
 
 // This checks if environment has thread default changed. Default of node = 4. Auto will use math and count your threads(Hyper threading too), you can run softwareOff and it will remove hyper threading or software cores.
 
@@ -78,17 +85,31 @@ if (environmentToExport.threads === 'auto') {
 if (environmentToExport.ignoreSSL) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
+console.log(typeof(environmentToExport.certLocation));
+if(typeof(environmentToExport.certLocation) === 'string') {
+  
+  process.env.NODE_EXTRA_CA_CERTS =  path.join(__dirname, '../',  environmentToExport.certLocation);
+
+ 
+  console.log(process.env.NODE_EXTRA_CA_CERTS);
+}
 
 //Combine share environment variables with current envioronment.
 
-environmentToExport = Object.assign(environmentToExport, environments.share)
+
 
 if (!environmentToExport.jwtExpire) {
 
   environmentToExport.jwtExpire = 86400
 }
 
+if(environmentToExport.serverName) {
+  process.env.cbSocket = environmentToExport.serverName;
+  process.env.cbSocketBack = environmentToExport.serverName;
+}
+
 environmentToExport.functions = require("../controllers/appFunctions");
+environmentToExport.message = require("../controllers/messenger");
 
 
 // Export the module

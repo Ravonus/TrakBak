@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
   },
   sessionJwt:String,
   biography: String,
-  passwordHash: String,
+  passwordHash: {type: String, required: true },
   groups: Number,
   permissions: Number,
   profilePicture: Buffer,
@@ -33,11 +33,12 @@ UserSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.passwordHash);
 };
 
+if(this.passwordHash) {
 UserSchema.virtual("password").set(function(value) {
   this.passwordHash = bcrypt.hashSync(value, 12);
 });
 
-
+}
 var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

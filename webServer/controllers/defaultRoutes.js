@@ -11,7 +11,7 @@ const path = require("path"),
 module.exports = {
   user: userRoutes,
 
-  home: (req, res) => {
+  home: (req, res, next) => {
 
     if (req.cookies && req.cookies.jwt) {
 
@@ -27,10 +27,10 @@ module.exports = {
     }
 
     if (req.cookies && req.cookies.jwt && decoded && decoded.id) {
-      res.render('index.hbs');
+      return next(config.message.render({res:res, page: 'index.hbs'}));
     } else {
 
-      res.render('login.hbs');
+      return next(config.message.render({res:res, page:'login.hbs'}));
     }
 
   },

@@ -3,13 +3,13 @@ const config = require('../config/configNoFunc'),
 
 const port = config.httpsPort;
 const host = config.host;
-const ivId = '26ae5cc854e36b6bdfca366848dea6bb'
-
-console.log(config);
+const ivId = '26ae5cc854e36b6bdfca366848dea6bb',
+rejectUnauthorized =  false,
+requestCert = true
 
 var functions = {
 
-  reverse: function (str) {
+  reverse: (str) => {
     let reversed = "";
     for (var i = str.length - 1; i >= 0; i--) {
       reversed += str[i];
@@ -17,7 +17,7 @@ var functions = {
     return reversed;
   },
 
-  jwtScramble: function (id, token) {
+  jwtScramble: (id, token) => {
 
     token = functions.reverse(token);
     var idArr = id.match(/.{0,4}/g);
@@ -34,7 +34,7 @@ var functions = {
 
   },
 
-  jwtUnScramble: function (token) {
+  jwtUnScramble: (token) => {
 
     var tokenArr = token.match(/.{0,8}/g);
     var newToken = '';
@@ -57,7 +57,7 @@ var functions = {
 
   },
 
-  encryptString: function (text, salt) {
+  encryptString: (text, salt) => {
 
     const crypto = require('crypto'),
       algorithm = 'aes-256-ctr',
@@ -69,7 +69,7 @@ var functions = {
     return crypted;
   },
 
-  decryptString: function (text, salt) {
+  decryptString: (text, salt) => {
 
     const crypto = require('crypto'),
       algorithm = 'aes-256-ctr',
@@ -104,6 +104,8 @@ var functions = {
       host,
       port,
       path,
+      rejectUnauthorized,
+      requestCert,
       method: 'GET',
       headers
     };
@@ -130,6 +132,7 @@ var functions = {
 
   postRequest: (jwt, path, object, _callback) => {
 
+    console.log('ran')
 
     let json = JSON.stringify(object);
 
@@ -146,7 +149,9 @@ var functions = {
         port,
         path,
         method: 'POST',
-        headers
+        headers, 
+        rejectUnauthorized,
+        requestCert,
       };
 
     } else {
@@ -179,6 +184,8 @@ var functions = {
 
     httpreq.on('error', (err) => {
 
+      console.log(err)
+
     })
 
     httpreq.write(json);
@@ -200,6 +207,8 @@ var functions = {
         host: 'localhost',
         port,
         path,
+        rejectUnauthorized,
+        requestCert,
         method: 'PUT',
         headers
       };
@@ -215,6 +224,8 @@ var functions = {
         host,
         port,
         path,
+        rejectUnauthorized,
+        requestCert,
         method: 'PUT',
         headers
       };
@@ -239,6 +250,10 @@ var functions = {
     httpreq.write(json);
     httpreq.end();
   }
+
+  //Auto Functions//
+
+  //End Auto Functions//
 }
 
 module.exports = functions;
