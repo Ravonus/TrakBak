@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
 uniqueValidator = require("mongoose-unique-validator"),
-bcrypt = require('bcrypt');
+bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -26,16 +26,11 @@ var UserSchema = new mongoose.Schema({
   jwtExpire: Number
 });
 
-
 UserSchema.methods.validPassword = function(password) {
   if(password)
   return bcrypt.compareSync(password, this.passwordHash);
   
 };
-
-
-console.log(this);
-
 
 UserSchema.virtual("password").set(function(value) {
   if(value)
