@@ -26,11 +26,11 @@ var UserSchema = new mongoose.Schema({
   jwtExpire: Number
 });
 
-UserSchema.plugin(uniqueValidator);
 
 UserSchema.methods.validPassword = function(password) {
-
+  if(password)
   return bcrypt.compareSync(password, this.passwordHash);
+  
 };
 
 
@@ -42,7 +42,7 @@ UserSchema.virtual("password").set(function(value) {
   this.passwordHash = bcrypt.hashSync(value, 12);
 });
 
-
+UserSchema.plugin(uniqueValidator);
 var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

@@ -21,7 +21,6 @@ let passportMiddleWare = (app) => {
 
   app.use(passport.session())
  
-  
 }
 
 //Run passport middle where for both app and appSecure.
@@ -31,6 +30,13 @@ passportMiddleWare(app.appSecure);
 //more passport functions ( So we can use passport middlewhere ontop of routes)
 passport.serializeUser((user, done) => {
 
+
+  if(!user.password) {
+    console.log('ran')
+    done({ error: "passwordHash" });
+  }
+
+  console.log('ran')
   //jwt function to generate token on login
 
 
@@ -55,12 +61,16 @@ let jwtToken = (obj) => {
 
 }
 
-  if(!user.passwordHash) {  var username = user.username;
+  if(user.password) {
+  var username = user.username;
   var password = user.password;
   User.findOne({'name.username': username}, function (err, user){
+    
+    console.log(err);
 
     if (!user || !user.validPassword(password)) {
-      done({ error: "Invalid username/password" });
+      console.log(err);
+      done({ error: "loginError" });
     } else {
       user.passwordHash = undefined;
       let newUser = {jwt: jwtToken(user)};
@@ -73,7 +83,8 @@ let jwtToken = (obj) => {
  
   }
 
-  done(null, user._id);
+  return;
+ // done(null, user._id);
 
 });
 

@@ -12,34 +12,25 @@ const express = require('express'),
   startTime = Date.now(),
   config = require('./config/config');
 
-  config.controllers = {};
- 
-  console.log(__dirname);
+config.controllers = {};
 
-  config.functions = require("./controllers/AppFunctions");
-  config.message = require("./controllers/Messenger");
-  require('./webServer/controllers/MongooseCrum');
-function redo() {
-  if(JSON.stringify(config.controllers) !== '{}') {
-  console.log('configz');
-  console.log(config.controllers);
+config.functions = require("./controllers/AppFunctions");
+config.message = require("./controllers/Messenger");
+require('./webServer/controllers/MongooseCrum');
+
+function cb() {
+
+  if (Object.keys(config.controllers).length !== 0) {
+
+    runServer();
   } else {
-    setTimeout(function(){ redo(); },0);
+    setTimeout(function () { cb(); }, 0);
   }
 }
-redo();
+cb();
 
-  console.log('wtf')
-  let functions = config.functions;
-  let message = config.message;
-
-  Object.keys(functions).forEach(function(key) {
-    global[key] = functions[key];
-  });
-
-  Object.keys(message).forEach(function(key) {
-    global[key] = message[key];
-  });
+config.functions.scopeFunctions(config.functions);
+config.functions.scopeFunctions(config.message);
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/TemplateLoop");
 
@@ -63,7 +54,7 @@ let socketClients = new Object();
 //export both app middleware so we can use other files that need it. Such as the passport require right under it.
 module.exports.app = app;
 module.exports.appSecure = appSecure,
-module.exports.serverSecure = serverSecure;
+  module.exports.serverSecure = serverSecure;
 
 //passport setup. Setup session  This is the middle where function. Push both app/ and appSecure to setup both servers.
 require('./passport');
@@ -71,7 +62,7 @@ require('./passport');
 
 
 //Express and sockets start script. This uses express.js and socket.io to gather the router/paths and all the socket scripts.  Might be a better way... This can take a minute so created callback. Once variables are found it runs the start web server scripts.
-cb = () => {
+runServer = () => {
 
   if (io && ioS && socketClients) {
 
@@ -113,9 +104,7 @@ cb = () => {
     require('./webServer/socket.io').socket(io);
   } else {
 
-    setTimeout(() => { cb(); }, 0);
+    setTimeout(() => { runServer(); }, 0);
 
   }
 }
-
-cb();

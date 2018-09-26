@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('path'),
+argv = require('yargs').argv;
 
 
 /*
@@ -61,6 +62,12 @@ environments.share = {
   keyLocation: '/webServer/https/key.pem'
 }
 
+
+
+if (argv.environment || argv.env) {
+  process.env.NODE_ENV = argv.environment || argv.env;
+}
+
 // Determine which enivorment was passed as a command-line argument
 let currentEnvironment = typeof (process.env.NODE_ENV) == 'string' ? process.env.NODE_ENV.toLowerCase() : '';
 
@@ -107,6 +114,8 @@ if(environmentToExport.serverName) {
   process.env.cbSocket = environmentToExport.serverName;
   process.env.cbSocketBack = environmentToExport.serverName;
 }
+
+console.log(process.env.NODE_ENV)
 
 // Export the module
 module.exports = environmentToExport;

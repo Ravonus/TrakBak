@@ -4,15 +4,16 @@ const cookie = require('cookie'),
   User = require('../models/User'),
   DB = require('../mongoose');
 
+
 module.exports = {
 
   me: (req, res, next) => {
     let token = req.headers['x-access-token'];
 
-    if (!token) return next(config.message.apiError({ res: res, type: 'noToken', statusCode: 401 }))
+    if (!token) return next(apiError({ res: res, type: 'noToken', statusCode: 401 }))
 
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
-      if (err) return next(config.message.apiError({ res: res, type: 'badToken', statusCode: 500 }))
+      if (err) return next(apiError({ res: res, type: 'badToken', statusCode: 500 }))
 
       User.findOne({ _id: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
@@ -35,7 +36,7 @@ module.exports = {
 
         console.log(user.error)
 
-        return next(config.message.apiError({ res: res, type: 'loginError', statusCode: 401 }))
+        return next(apiError({ res: res, type: user.error, statusCode: 401 }))
 
       } else {
 
@@ -72,7 +73,7 @@ module.exports = {
 
           if (err.name === "ValidationError") {
 
-            return next(config.message.apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
+            return next(apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
 
           }
         });

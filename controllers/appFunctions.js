@@ -252,7 +252,13 @@ var functions = {
   },
   capFirst: (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  },
+  scopeFunctions: (func) => {
+    Object.keys(func).forEach(function (key) {
+      global[key] = func[key];
+    });
   }
+  
 
   //Auto Functions//
 

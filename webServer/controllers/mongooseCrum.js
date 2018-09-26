@@ -7,17 +7,8 @@ let modelsDir = path.join(__dirname, '../', 'models/'),
   controllerDir = path.join(__dirname, '../', 'Users');
 
 //load config functions into scope for this script. (After this you can access the functions as if they were created here.)
-let functions = config.functions;
-let message = config.message;
+//config.functions.scopeFunctions(config);
 
-function scopeFunction(func) {
-  Object.keys(func).forEach(function (key) {
-    global[key] = func[key];
-  });
-}
-
-scopeFunction(functions);
-scopeFunction(message);
 
 // Loop through all the files in models directory
 fs.readdir(modelsDir, function (err, files) {
@@ -33,7 +24,8 @@ fs.readdir(modelsDir, function (err, files) {
       // Lopp through all files within mongooseCrum
       fs.readdir(mongooseDir, function (err, files) {
         if (err) {
-          return clMessage({ name: 'mongooseCrum', type: 'dirDoesNotExist', path: err.path, close: false, error: err });
+
+          return clMessage({ name: 'mongooseCrum', type: 'dirDoesNotExist', path: err.path, close: true, error: err });
         }
         //foreach files loop (reads each file and does logic for each one the same)
         files.forEach((file) => {
