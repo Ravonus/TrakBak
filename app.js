@@ -16,7 +16,7 @@ const express = require('express'),
   config.message = require("./controllers/Messenger");
   require('./webServer/controllers/MongooseCrum');
 
-
+  console.log('wtf')
   let functions = config.functions;
   let message = config.message;
 
