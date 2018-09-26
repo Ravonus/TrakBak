@@ -32,11 +32,11 @@ passport.serializeUser((user, done) => {
 
 
   if(!user.password) {
-    console.log('ran')
+
     done({ error: "passwordHash" });
   }
 
-  console.log('ran')
+
   //jwt function to generate token on login
 
 
@@ -66,8 +66,6 @@ let jwtToken = (obj) => {
   var password = user.password;
   User.findOne({'name.username': username}, function (err, user){
     
-    console.log(err);
-
     if (!user || !user.validPassword(password)) {
       console.log(err);
       done({ error: "loginError" });
