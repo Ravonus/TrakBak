@@ -11,12 +11,23 @@ const express = require('express'),
   argv = require('yargs').argv,
   startTime = Date.now(),
   config = require('./config/config');
+
+  config.controllers = {};
  
   console.log(__dirname);
 
   config.functions = require("./controllers/AppFunctions");
   config.message = require("./controllers/Messenger");
   require('./webServer/controllers/MongooseCrum');
+function redo() {
+  if(JSON.stringify(config.controllers) !== '{}') {
+  console.log('configz');
+  console.log(config.controllers);
+  } else {
+    setTimeout(function(){ redo(); },0);
+  }
+}
+redo();
 
   console.log('wtf')
   let functions = config.functions;

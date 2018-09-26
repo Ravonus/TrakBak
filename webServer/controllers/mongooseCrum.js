@@ -59,16 +59,29 @@ fs.readdir(modelsDir, function (err, files) {
                   if (err) {
                     return console.log(err);
                   }
+                  config.controllers[capFirst(modelFile).slice(0, -3)] = require(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`)
+                  var test = require(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`);
 
-                  console.log(`Controller ${capFirst(file).slice(0, -3)} created for model ${capFirst(modelFile).slice(0, -3)}.`);
+                  finished()
                 });
 
               });
 
+            } else {
+              finished()
+            }
+            function finished() {
+              console.log(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`);
+              if(!config.controllers[capFirst(modelFile).slice(0, -3)] ) {
+              config.controllers[capFirst(modelFile).slice(0, -3)]  = {}
+              }
+              config.controllers[capFirst(modelFile).slice(0, -3)][file.slice(0, -3)] = require(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`)
+          //    console.log(config.controllers);
             }
 
           }
         })
+        
 
       });
 

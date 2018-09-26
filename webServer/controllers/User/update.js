@@ -1,4 +1,4 @@
-const User = require(__dirname+"../../models/User");
+const User = require('../../models/User');
 
 let update = {
 

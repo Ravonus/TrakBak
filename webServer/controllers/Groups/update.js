@@ -1,4 +1,4 @@
-const Groups = require(__dirname+"../../models/Groups");
+const Groups = require('../../models/Groups');
 
 let update = {
 
