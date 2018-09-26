@@ -108,9 +108,5 @@ if(environmentToExport.serverName) {
   process.env.cbSocketBack = environmentToExport.serverName;
 }
 
-environmentToExport.functions = require("../controllers/appFunctions");
-environmentToExport.message = require("../controllers/messenger");
-
-
 // Export the module
 module.exports = environmentToExport;

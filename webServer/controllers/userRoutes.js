@@ -6,13 +6,13 @@ const cookie = require('cookie'),
 
 module.exports = {
 
-  me: (req, res, next) => { 
+  me: (req, res, next) => {
     let token = req.headers['x-access-token'];
-    
-    if (!token) return next(config.message.apiError({res:res, type:'noToken', statusCode: 401}))
+
+    if (!token) return next(config.message.apiError({ res: res, type: 'noToken', statusCode: 401 }))
 
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
-      if (err) return next(config.message.apiError({res:res, type:'badToken', statusCode: 500}))
+      if (err) return next(config.message.apiError({ res: res, type: 'badToken', statusCode: 500 }))
 
       User.findOne({ _id: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
@@ -24,30 +24,23 @@ module.exports = {
 
   },
 
-  login: (req, res) => {
+  login: (req, res, next) => {
 
     //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
     req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
-   //   var user = user.user;
 
-
-    //  res.setHeader('Content-Type', 'application/json');
       if (user.error) {
-        //  return res.render('login.hbs');
-        console.log(user.error);
-    //    res.sendStatus(500).send({error:user.error});
 
-    res.send({error:user.error});
 
-        } else {
-          res.send(JSON.stringify(user));
-        }
+        console.log(user.error)
 
-      
+        return next(config.message.apiError({ res: res, type: 'loginError', statusCode: 401 }))
 
-      // res.setHeader('Content-Type', 'application/json');
-      // res.send(JSON.stringify(user));
+      } else {
+
+        res.status(200).send(user);
+      }
 
     });
 
@@ -70,17 +63,17 @@ module.exports = {
 
       createUser.save().then(user => {
         user._doc.passwordHash = undefined;
-        res.status(200).send(Object.assign({created: true}, user._doc));
+        res.status(200).send(Object.assign({ created: true }, user._doc));
 
       })
         .catch(err => {
 
-          var key = Object.keys(err.errors)[Object.keys(err.errors).length-1];
+          var key = Object.keys(err.errors)[Object.keys(err.errors).length - 1];
 
           if (err.name === "ValidationError") {
-     
-              return next(config.message.apiError({res:res, type:err.errors[key].path, statusCode: 500}))
-            
+
+            return next(config.message.apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
+
           }
         });
 

@@ -11,11 +11,24 @@ const express = require('express'),
   argv = require('yargs').argv,
   startTime = Date.now(),
   config = require('./config/config');
+ 
+  config.functions = require("./controllers/AppFunctions");
+  config.message = require("./controllers/Messenger");
+  require('./webServer/controllers/MongooseCrum');
 
-  
 
+  let functions = config.functions;
+  let message = config.message;
+
+  Object.keys(functions).forEach(function(key) {
+    global[key] = functions[key];
+  });
+
+  Object.keys(message).forEach(function(key) {
+    global[key] = message[key];
+  });
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
-require("./controllers/templateLoop.js");
+require("./controllers/TemplateLoop");
 
 app.use(cookieParser())
 appSecure.use(cookieParser())

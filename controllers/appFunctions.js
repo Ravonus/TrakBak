@@ -1,11 +1,11 @@
-const config = require('../config/configNoFunc'),
+const config = require('../config/config'),
   http = require('https');
 
 const port = config.httpsPort;
 const host = config.host;
 const ivId = '26ae5cc854e36b6bdfca366848dea6bb',
-rejectUnauthorized =  false,
-requestCert = true
+  rejectUnauthorized = false,
+  requestCert = true
 
 var functions = {
 
@@ -149,7 +149,7 @@ var functions = {
         port,
         path,
         method: 'POST',
-        headers, 
+        headers,
         rejectUnauthorized,
         requestCert,
       };
@@ -249,11 +249,15 @@ var functions = {
 
     httpreq.write(json);
     httpreq.end();
+  },
+  capFirst: (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   //Auto Functions//
 
   //End Auto Functions//
 }
+
 
 module.exports = functions;

@@ -34,47 +34,28 @@ module.exports = {
     }
 
   },
-  login: (req, res) => {
+  login: (req, res, next) => {
 
-    if (req.isUnauthenticated()) {
-      res.render('login.hbs');
+    if (req.cookies && req.cookies.jwt) {
+
+      var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
+
+      if (jwtCookie) {
+        console.log(jwtCookie)
+        jwtCookie = config.functions.jwtUnScramble(jwtCookie);
+        console.log(jwtCookie);
+        var decoded = jwt.verify(jwtCookie.trim(), config.jwtSecret);
+      }
+
+    }
+
+    if (req.cookies && req.cookies.jwt && decoded && decoded.id) {
+      return next(config.message.redirect({res:res, page: '/'}));
     } else {
-      res.render('index.hbs');
+
+      return next(config.message.redirect({res:res, page:'/login'}));
     }
 
-  },
-  callback: (req, res) => {
-
-
-    res.sendFile(public + '/callback.html');
-
-    if (socketClients && socketClients[req.query.sid]) {
-
-      Object.keys(socketClients[req.query.sid]).forEach((key) => {
-        //   socketClients[req.query.sid][key];
-
-        if (socketClients[req.query.sid][key] === req.query.cid) {
-          io.sockets.to(key).emit('socketClikBak', 'test');
-        }
-
-      });
-
-    }
-
-  },
-  cbsockets: (req, res) => {
-
-    res.sendFile(public + '/sockets.html');
-
-  },
-  verify: (req, res) => {
-
-    res.sendFile(public + '/verify.html');
-  },
-
-  template: (req, res) => {
-
-    res.send('accepted');
   },
   catchAll: (req, res) => {
     res.status(404);

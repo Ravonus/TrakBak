@@ -33,11 +33,10 @@ socket.on('me', function (data) {
 socket.on('login', function (data) {
 
   var user = data.user;
-  console.log(user.jwt);
+ 
 
-  if (user.jwt) {
+  if (user && user.jwt) {
 
-    console.log(user.jwt);
     
     setCookie('jwt', user.jwt, 30)
     var jwt = user.jwt;
@@ -58,6 +57,8 @@ socket.on('login', function (data) {
     // }
     window.location.href = '/';
   } else {
+
+    console.log(data)
 
     var options = {
       "closeButton": true,

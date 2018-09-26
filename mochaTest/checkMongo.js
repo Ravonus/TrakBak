@@ -1,7 +1,7 @@
 const fs = require('fs'),
       config = require('./../config/config.js'),
       mongoose = require('mongoose'),
-      User = require('../webServer/models/User'),
+      User = require('../webServer/models/User.js'),
       DB = require('../webServer/mongoose'),
 
       chai = require('chai');

@@ -112,23 +112,6 @@ describe('Check All Server Routes',  () => {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort} /login`, () =>{
-
-        it('Should return 200',  (done) => {
-
-          var options = { method: 'GET', host: `${ip.address()}`, port: config.httpsPort, path: '/login' };
-          var req = https.request(options, (res) => {
-
-            chai.expect(res.statusCode).to.equal(200);
-
-            done();
-          });
-          req.end();
-
-        });
-
-      });
-
     });
 
   });
