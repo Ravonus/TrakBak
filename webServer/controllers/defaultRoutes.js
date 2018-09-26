@@ -13,6 +13,8 @@ module.exports = {
 
   home: (req, res, next) => {
 
+    console.log('test');
+
     if (req.cookies && req.cookies.jwt) {
 
       var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
@@ -34,6 +36,8 @@ module.exports = {
         });
       }
 
+    } else {
+      return next(config.message.render({ res: res, page: 'login.hbs' }));
     }
 
   },
