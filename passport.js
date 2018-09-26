@@ -65,16 +65,30 @@ let jwtToken = (obj) => {
   var username = user.username;
   var password = user.password;
   User.findOne({'name.username': username}, function (err, user){
-    
-    if (!user || !user.validPassword(password)) {
-      console.log(err);
-      done({ error: "loginError" });
-    } else {
+
+    console.log(user);
+
+    if(!user) { return done({ error: "loginError" }); }
+
+    user.validPassword(password, (err, data) => {
+      if(!err) {
       user.passwordHash = undefined;
       let newUser = {jwt: jwtToken(user)};
 
       done({user: Object.assign(newUser, user._doc)});
-    }
+      } else {
+        done({ error: "loginError" });
+      }
+    });
+    // if (!user || !user.validPassword(password), (err, data) => {}) {
+    //   console.log(err);
+    //   done({ error: "loginError" });
+    // } else {
+    //   user.passwordHash = undefined;
+    //   let newUser = {jwt: jwtToken(user)};
+
+    //   done({user: Object.assign(newUser, user._doc)});
+    // }
   });
  
   return;

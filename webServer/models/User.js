@@ -26,9 +26,16 @@ var UserSchema = new mongoose.Schema({
   jwtExpire: Number
 });
 
-UserSchema.methods.validPassword = function (password) {
+UserSchema.methods.validPassword = function (password, cb) {
   if (password)
-    return bcrypt.compareSync(password, this.passwordHash);
+   bcrypt.compare(password, this.passwordHash, (err, data) => {
+      if(err) {
+        console.log(err)
+        return cb(err, data)
+      } else {
+        return cb(null, data)
+      }
+    });
 
 };
 
