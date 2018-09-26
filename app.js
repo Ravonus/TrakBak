@@ -12,9 +12,9 @@ const express = require('express'),
   startTime = Date.now(),
   config = require('./config/config');
  
-  config.functions = require("./controllers/AppFunctions");
-  config.message = require("./controllers/Messenger");
-  require('./webServer/controllers/MongooseCrum');
+  // config.functions = require("./controllers/AppFunctions");
+  // config.message = require("./controllers/Messenger");
+  // require('./webServer/controllers/MongooseCrum');
 
   console.log('wtf')
   let functions = config.functions;
