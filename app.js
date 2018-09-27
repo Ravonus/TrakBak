@@ -17,20 +17,56 @@ config.controllers = {};
 config.functions = require("./controllers/AppFunctions");
 config.message = require("./controllers/Messenger");
 require('./webServer/controllers/MongooseCrum');
+var length = 0;
 
+fs.readdir('./webServer/models/', (err, files) => {
+  files.forEach((file) => {
+    console.log(file.slice(0, -3));
+    if (file.substring(file.length - 3) === '.js') length++
+    cb();
+  });
+
+});
+
+var ranServer = false;
 function cb() {
 
-  if (Object.keys(config.controllers).length !== 0) {
+  if (Object.keys(config.controllers).length === length) {
 
-    runServer();
+    var myIndex = 0;
+    function restart() {
+
+      if (Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length === 4) {
+
+        if (myIndex + 1 === Object.keys(config.controllers).length) {
+    
+          console.log('myIndex', myIndex)
+          config.functions.scopeFunctions(config.controllers);
+       
+          if(!ranServer) runServer();
+          
+          ranServer = true;
+        } else {
+          myIndex++
+          restart()
+        }
+
+      } else {
+        setTimeout(function () { restart(); }, 0);
+      }
+    }
+    restart()
+
   } else {
     setTimeout(function () { cb(); }, 0);
   }
+
 }
-cb();
+
 
 config.functions.scopeFunctions(config.functions);
 config.functions.scopeFunctions(config.message);
+
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
 require("./controllers/TemplateLoop");
 
@@ -84,6 +120,11 @@ runServer = () => {
 
         //this is secure webserver (Same as above but we push the secure server info.)
         webServer(config.httpsPort, config.version, serverSecure, appSecure, () => {
+
+          config.controllers.User.read.find({'name.firstName': 'erg'}, (user) => {
+            if (user.error) console.log(user.error)
+            console.log(user);
+          });
 
         });
 

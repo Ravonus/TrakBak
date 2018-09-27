@@ -1,26 +1,19 @@
 'use strict';
 
 const passport = require("passport"),
-app = require('./app'),
-User = require('./webServer/models/User'),
-jwt = require('jsonwebtoken'),
-config = require('./config/config'),
-session  = require('express-session'),
-LocalStrategy = require("passport-local").Strategy;
+  app = require('./app'),
+  User = require('./webServer/models/User'),
+  jwt = require('jsonwebtoken'),
+  config = require('./config/config'),
+  session = require('express-session'),
+  LocalStrategy = require("passport-local").Strategy;
 
 let passportMiddleWare = (app) => {
 
-  // app.use(session({
-  //   secret:config.jwtSecret,
-  //   resave: true,
-  //   saveUninitialized: true,
-  //   cookie: { secure: false } // Remember to set this
-  // }));
-  // app.set('trust proxy', 1) 
   app.use(passport.initialize());
 
   app.use(passport.session())
- 
+
 }
 
 //Run passport middle where for both app and appSecure.
@@ -31,7 +24,7 @@ passportMiddleWare(app.appSecure);
 passport.serializeUser((user, done) => {
 
 
-  if(!user.password) {
+  if (!user.password) {
 
     done({ error: "passwordHash" });
   }
@@ -40,68 +33,60 @@ passport.serializeUser((user, done) => {
   //jwt function to generate token on login
 
 
-let jwtToken = (obj) => {
+  let jwtToken = (obj) => {
 
 
 
-  if(obj.jwtExpire){
-    console.log(obj.jwtExpire);
-  }
-  // create a token
+    if (obj.jwtExpire) {
+      console.log(obj.jwtExpire);
+    }
+    // create a token
 
 
-  let token = jwt.sign({ id: obj._id }, config.jwtSecret, {
+    let token = jwt.sign({ id: obj._id }, config.jwtSecret, {
 
-    expiresIn : obj.jwtExpire || config.jwtExpire
+      expiresIn: obj.jwtExpire || config.jwtExpire
 
 
-  });
-
-  return token;
-
-}
-
-  if(user.password) {
-  var username = user.username;
-  var password = user.password;
-  User.findOne({'name.username': username}, function (err, user){
-
-    console.log(user);
-
-    if(!user) { return done({ error: "loginError" }); }
-
-    user.validPassword(password, (err, data) => {
-      if(!err) {
-      user.passwordHash = undefined;
-      let newUser = {jwt: jwtToken(user)};
-
-      done({user: Object.assign(newUser, user._doc)});
-      } else {
-        done({ error: "loginError" });
-      }
     });
-    // if (!user || !user.validPassword(password), (err, data) => {}) {
-    //   console.log(err);
-    //   done({ error: "loginError" });
-    // } else {
-    //   user.passwordHash = undefined;
-    //   let newUser = {jwt: jwtToken(user)};
 
-    //   done({user: Object.assign(newUser, user._doc)});
-    // }
-  });
- 
-  return;
- 
+    return token;
+
+  }
+
+  if (user.password) {
+    var username = user.username;
+    var password = user.password;
+    User.findOne({ 'name.username': username }, function (err, user) {
+
+      console.log(user);
+
+      if (!user) { return done({ error: "loginError" }); }
+
+      user.validPassword(password, (err, data) => {
+        if (!err) {
+          user.passwordHash = undefined;
+          let newUser = { jwt: jwtToken(user) };
+
+          done({ user: Object.assign(newUser, user._doc) });
+        } else {
+          done({ error: "loginError" });
+        }
+      });
+
+    });
+
+    return;
+
   }
 
   return;
- // done(null, user._id);
+  // done(null, user._id);
 
 });
 
-passport.deserializeUser(function(userId, done) {
-  
+passport.deserializeUser(function (userId, done) {
+
   User.findById(userId, (err, user) => done(err, user).then());
 });
 
