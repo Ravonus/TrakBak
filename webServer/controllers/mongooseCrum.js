@@ -9,9 +9,10 @@ let modelsDir = path.join(__dirname, '../', 'models/'),
 //load config functions into scope for this script. (After this you can access the functions as if they were created here.)
 //config.functions.scopeFunctions(config);
 
-
+config.controllers.done = false;
 // Loop through all the files in models directory
 fs.readdir(modelsDir, function (err, files) {
+  
   if (err) {
     return clMessage({ name: 'models', type: 'dirDoesNotExist', path: err.path, close: false, error: err });
   }
@@ -65,9 +66,13 @@ fs.readdir(modelsDir, function (err, files) {
             function finished() {
               console.log(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`);
               if(!config.controllers[capFirst(modelFile).slice(0, -3)] ) {
+                
               config.controllers[capFirst(modelFile).slice(0, -3)]  = {}
               }
+             
               config.controllers[capFirst(modelFile).slice(0, -3)][file.slice(0, -3)] = require(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`)
+              
+              
           //    console.log(config.controllers);
             }
 
@@ -79,6 +84,8 @@ fs.readdir(modelsDir, function (err, files) {
 
     }
   })
+  config.controllers.done = true;
+})
 
-});
+
 

@@ -16,13 +16,17 @@ config.controllers = {};
 
 config.functions = require("./controllers/AppFunctions");
 config.message = require("./controllers/Messenger");
-require('./webServer/controllers/MongooseCrum');
-var length = 0;
+let mongCrum = require('./webServer/controllers/MongooseCrum');
+console.log('mongCrum ', mongCrum);
+var length = 1;
 
 fs.readdir('./webServer/models/', (err, files) => {
   files.forEach((file) => {
     console.log(file.slice(0, -3));
-    if (file.substring(file.length - 3) === '.js') length++
+    console.log(file.substring(file.length - 3))
+    if (file.substring(file.length - 3) === '.js') { 
+      length++ 
+    }
     cb();
   });
 
@@ -31,11 +35,13 @@ fs.readdir('./webServer/models/', (err, files) => {
 var ranServer = false;
 function cb() {
 
-  if (Object.keys(config.controllers).length === length) {
-
-    var myIndex = 0;
+  console.log(Object.keys(config.controllers).length);
+  if (config.controllers.done == true && Object.keys(config.controllers).length === length) {
+    console.log(config.controllers.done);
+    var myIndex = 1;
     function restart() {
 
+      console.log(Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]))
       if (Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length === 4) {
 
         if (myIndex + 1 === Object.keys(config.controllers).length) {
@@ -121,10 +127,7 @@ runServer = () => {
         //this is secure webserver (Same as above but we push the secure server info.)
         webServer(config.httpsPort, config.version, serverSecure, appSecure, () => {
 
-          config.controllers.User.read.find({'name.firstName': 'erg'}, (user) => {
-            if (user.error) console.log(user.error)
-            console.log(user);
-          });
+  
 
         });
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
       argv = require('yargs').argv,
       mongoDB = config.mongoDB;
 
-let User = require('./models/User'),
+let modelUser = require('./models/User'),
 prefix = config.envName,
 connection,
 databaseName = config.databaseName;
@@ -32,8 +32,13 @@ mongoose.connect(mongooseConnect, {auth, useNewUrlParser: true } , (err) => {
      }
    };
  
-   connection = 'Yes'
-   console.log('Script Start Took: ', Date.now() - startTime + ' ms');
+   connection = 'Yes';
+   
+   User.read.find({'name.firstName': 'erg'}, (user) => {
+    if (user.error) console.log(user.error)
+    console.log(user);
+    console.log('Script Start Took: ', Date.now() - startTime + ' ms');
+  });
 
 
       //If test was set as argument. Run mocha. (Server won't stay open after test).
@@ -81,5 +86,5 @@ mongoose.set('useCreateIndex', true);
 module.exports = { 
   mongoose,
   connection, 
-  User
+  modelUser
 };
