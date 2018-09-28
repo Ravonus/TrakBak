@@ -73,7 +73,7 @@ config.functions.scopeFunctions(config.functions);
 config.functions.scopeFunctions(config.message);
 
 //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
-require("./controllers/TemplateLoop");
+require("./controllers/templateLoop");
 
 app.use(cookieParser())
 appSecure.use(cookieParser())
