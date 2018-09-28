@@ -1,17 +1,33 @@
 const Groups = require("../../models/Groups");
 
-let deleteReplace = {
+let remove = {
+  
+  byId: (id, done) => {
 
-    find: () => {
+    Groups.findByIdAndRemove(id,
+      
+      // the callback function
+      (err, obj) => {
+      // Handle any possible database errors
+      if (err) done(err);
+      done(obj);
+      }
+  )
+  
+  },
+  byFind: (query, done) => {
 
-    },
-    findOne: () => {
+    Groups.findOneAndRemove(query,
+      // the callback function
+      (err, obj) => {
+      // Handle any possible database errors
+      if (err) done(err);
+      done(obj);
+      }
+  )
+  }
 
-    },
-    where: () => {
-
-    }
 
 }
 
-module.exports = deleteReplace;
+module.exports = remove;

@@ -59,14 +59,12 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
     // console.log('Script Start Took: ', Date.now() - startTime + ' ms');
   });
 
-    // User.create({
-    //   "name.firstName":"ergMon",
-    //   "name.lastName": "testLastzaTits",
-    //   "password": "password",
-    //   "name.username" : "mognoseAuto4"
-    // },{password: false}, (data) => {
-    //   console.log(data);
-    // })
+    Groups.create({
+      "name":"Group-Auto",
+      "permission": 4
+    }, (data) => {
+      console.log(data);
+    })
 
     // User.update.byId('5bad5ed4766ee30c58a94d6b', {biography:'updated foo'}, (data) => {
     //     console.log(data);
