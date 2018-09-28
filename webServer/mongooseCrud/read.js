@@ -18,7 +18,6 @@ function remove$(query) {
   });
 }
 
-
 let read = {
 
   find: (query, keys, done) => {
@@ -42,6 +41,8 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
+    remove$(query);
+
     modelName.findOne(query, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
@@ -57,23 +58,13 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    modelName.findById(query, keys)
+    modelName.findById(id, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
         done(obj);
       }
     );
-
-  },
-  where: (where, operations, done) => {
-
-    console.log('where ', where);
-    modelName.where(where).e(operations.e).gte(operations.gt).lte(operations.lt).exec((err, obj) => {
-      // Do stuff
-      if (err) done(err);
-      done(obj)
-    });
 
   }
 

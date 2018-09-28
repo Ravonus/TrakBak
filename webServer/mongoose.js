@@ -9,6 +9,8 @@ let modelUser = require('./models/User'),
   connection,
   databaseName = config.databaseName;
 
+  mongoose.set('useFindAndModify', false);
+
 let mongooseConnect, auth;
 if (config.mongoUser) {
   mongooseConnect = `mongodb://${config.mongoUser}:${config.mongopw}@${mongoDB}:27017/${prefix}-${databaseName}`;
@@ -35,7 +37,7 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
   connection = 'Yes';
 
   User.read.find(
-   {'name.firstName':'erg2', groups:{lte:6, gt:3}, createdAt:{lte:Date.now()}},{passwordHash:false},
+   {'name.firstName':'ergMon', createdAt:{lte:Date.now()}},{passwordHash:false},
     (user) => {
       if (typeof (user) === 'undefined' || user && user.error) console.log(typeof (user) === 'undefined' ? 'Could not find user' : user.error)
       console.log(user);
@@ -57,6 +59,30 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
     // console.log('Script Start Took: ', Date.now() - startTime + ' ms');
   });
 
+    // User.create({
+    //   "name.firstName":"ergMon",
+    //   "name.lastName": "testLastzaTits",
+    //   "password": "password",
+    //   "name.username" : "mognoseAuto4"
+    // },{password: false}, (data) => {
+    //   console.log(data);
+    // })
+
+    // User.update.byId('5bad5ed4766ee30c58a94d6b', {biography:'updated foo'}, (data) => {
+    //     console.log(data);
+    // });
+
+    User.update.byFind({'name.username': 'mognoseAuto3'}, {'name.lastName':'updated foo from find'}, (data) => {
+      console.log(data);
+  });
+
+//   User.delete.byId('5bad5ed4766ee30c58a94d6b', (data) => {
+//     console.log(data);
+// });
+
+// User.delete.byFind({'name.username': 'mognoseAuto4'}, (data) => {
+//   console.log(data);
+// });
 
 
   //If test was set as argument. Run mocha. (Server won't stay open after test).

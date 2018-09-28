@@ -58,7 +58,6 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-
     User.findById(id, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
@@ -66,16 +65,6 @@ let read = {
         done(obj);
       }
     );
-
-  },
-  where: (where, operations, done) => {
-
-    console.log('where ', where);
-    User.where(where).e(operations.e).gte(operations.gt).lte(operations.lt).exec((err, obj) => {
-      // Do stuff
-      if (err) done(err);
-      done(obj)
-    });
 
   }
 
