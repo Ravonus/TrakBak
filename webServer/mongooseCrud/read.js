@@ -1,4 +1,4 @@
-const User = require("../../models/User");
+const modelName = require("../../models/modelName");
 
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
@@ -18,6 +18,7 @@ function remove$(query) {
   });
 }
 
+
 let read = {
 
   find: (query, keys, done) => {
@@ -28,7 +29,7 @@ let read = {
 
     remove$(query);
 
-    User.find(query, keys).exec((err, obj) => {
+    modelName.find(query, keys).exec((err, obj) => {
       if (err) done(err);
       done(obj);
 
@@ -41,9 +42,7 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
-    remove$(query);
-
-    User.findOne(query, keys)
+    modelName.findOne(query, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -58,8 +57,7 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-
-    User.findById(id, keys)
+    modelName.findById(query, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -71,7 +69,7 @@ let read = {
   where: (where, operations, done) => {
 
     console.log('where ', where);
-    User.where(where).e(operations.e).gte(operations.gt).lte(operations.lt).exec((err, obj) => {
+    modelName.where(where).e(operations.e).gte(operations.gt).lte(operations.lt).exec((err, obj) => {
       // Do stuff
       if (err) done(err);
       done(obj)

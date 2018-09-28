@@ -59,7 +59,8 @@ module.exports = {
           username: req.body.username
         },
         biography: 'Postman post request.',
-        password: req.body.password
+        password: req.body.password,
+        groups: req.body.groups
       })
 
       createUser.save().then(user => {

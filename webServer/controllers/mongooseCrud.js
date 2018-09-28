@@ -3,7 +3,7 @@ const fs = require('fs'),
   path = require('path');
 
 let modelsDir = path.join(__dirname, '../', 'models/'),
-  mongooseDir = path.join(__dirname, '../', 'mongooseCrum'),
+  mongooseDir = path.join(__dirname, '../', 'mongooseCrud'),
   controllerDir = path.join(__dirname, '../', 'Users');
 
 //load config functions into scope for this script. (After this you can access the functions as if they were created here.)
@@ -22,11 +22,11 @@ fs.readdir(modelsDir, function (err, files) {
     if (file.substring(file.length - 3) == ".js") {
       //save modelFile to file so next readdir can access this variable
       let modelFile = file;
-      // Lopp through all files within mongooseCrum
+      // Lopp through all files within mongooseCrud
       fs.readdir(mongooseDir, function (err, files) {
         if (err) {
 
-          return clMessage({ name: 'mongooseCrum', type: 'dirDoesNotExist', path: err.path, close: true, error: err });
+          return clMessage({ name: 'mongooseCrud', type: 'dirDoesNotExist', path: err.path, close: true, error: err });
         }
         //foreach files loop (reads each file and does logic for each one the same)
         files.forEach((file) => {
@@ -35,15 +35,15 @@ fs.readdir(modelsDir, function (err, files) {
             //Create controller directory if it does not exist
             if (!fs.existsSync('./webServer/controllers/' + capFirst(modelFile).slice(0, -3))) {
               var dir = './webServer/controllers/' + capFirst(modelFile).slice(0, -3);
-              console.log(dir);
+            //  console.log(dir);
               fs.mkdirSync(dir);
             }
 
             if (!fs.existsSync('./webServer/controllers/' + capFirst(modelFile).slice(0, -3) + '/' + file)) {
               var filePath = './webServer/controllers/' + capFirst(modelFile).slice(0, -3) + '/' + file.slice(0, -3);
-              console.log(path.join(__dirname, '../../', 'mongooseCrum/' + file));
+            //  console.log(path.join(__dirname, '../../', 'mongooseCrud/' + file));
 
-              fs.readFile(path.join(__dirname, '../../', 'webServer/mongooseCrum/' + file), 'utf8', function (err, data) {
+              fs.readFile(path.join(__dirname, '../../', 'webServer/mongooseCrud/' + file), 'utf8', function (err, data) {
                 if (err) throw err;
 
                 var content = data.replace(/modelName/g, capFirst(modelFile).slice(0, -3));
@@ -64,7 +64,7 @@ fs.readdir(modelsDir, function (err, files) {
               finished()
             }
             function finished() {
-              console.log(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`);
+            //  console.log(`../controllers/${capFirst(modelFile).slice(0, -3)}/${file}`);
               if(!config.controllers[capFirst(modelFile).slice(0, -3)] ) {
                 
               config.controllers[capFirst(modelFile).slice(0, -3)]  = {}

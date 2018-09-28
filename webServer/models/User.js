@@ -11,7 +11,6 @@ var UserSchema = new mongoose.Schema({
   },
   sessionJwt: String,
   biography: String,
-  passwordHash: { type: String, required: true },
   groups: Number,
   permissions: Number,
   profilePicture: Buffer,
@@ -23,7 +22,8 @@ var UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  jwtExpire: Number
+  jwtExpire: Number,
+  passwordHash: { type: String, required: true },
 });
 
 UserSchema.methods.validPassword = function (password, cb) {

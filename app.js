@@ -16,14 +16,13 @@ config.controllers = {};
 
 config.functions = require("./controllers/AppFunctions");
 config.message = require("./controllers/Messenger");
-let mongCrum = require('./webServer/controllers/MongooseCrum');
-console.log('mongCrum ', mongCrum);
+let mongCrum = require('./webServer/controllers/mongooseCrud');
+
 var length = 1;
 
 fs.readdir('./webServer/models/', (err, files) => {
   files.forEach((file) => {
-    console.log(file.slice(0, -3));
-    console.log(file.substring(file.length - 3))
+
     if (file.substring(file.length - 3) === '.js') { 
       length++ 
     }
@@ -35,18 +34,18 @@ fs.readdir('./webServer/models/', (err, files) => {
 var ranServer = false;
 function cb() {
 
-  console.log(Object.keys(config.controllers).length);
-  if (config.controllers.done == true && Object.keys(config.controllers).length === length) {
-    console.log(config.controllers.done);
+
+  if (config.controllers.done == true && Object.keys(config.controllers).length  === length) {
+
     var myIndex = 1;
     function restart() {
 
-      console.log(Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]))
-      if (Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length === 4) {
+      var checkLength = Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length;
+      if (checkLength === Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length) {
 
         if (myIndex + 1 === Object.keys(config.controllers).length) {
     
-          console.log('myIndex', myIndex)
+
           config.functions.scopeFunctions(config.controllers);
        
           if(!ranServer) runServer();
