@@ -1,9 +1,9 @@
-const User = require('../../models/User');
+const Chackos = require('../../models/Chackos');
 
 var update = {
   byId: (id, body, done) => {
 
-    User.findByIdAndUpdate(id, body,
+    Chackos.findByIdAndUpdate(id, body,
   
       
       // an option that asks mongoose to return the updated version 
@@ -14,14 +14,14 @@ var update = {
       (err, obj) => {
       // Handle any possible database errors
       if (err) done(err);
-      done(obj);
+      done(null, obj);
       }
   )
   
   },
   byFind: (query, body, done) => {
 
-    User.findOneAndUpdate(query, body,
+    Chackos.findOneAndUpdate(query, body,
   
       
       // an option that asks mongoose to return the updated version 

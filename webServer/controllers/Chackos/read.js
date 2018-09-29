@@ -1,4 +1,4 @@
-const User = require("../../models/User");
+const Chackos = require("../../models/Chackos");
 
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
@@ -28,7 +28,7 @@ let read = {
 
     remove$(query);
 
-    User.find(query, keys).exec((err, obj) => {
+    Chackos.find(query, keys).exec((err, obj) => {
       if (err) done(err);
       done(null, obj);
 
@@ -43,7 +43,7 @@ let read = {
 
     remove$(query);
 
-    User.findOne(query, keys)
+    Chackos.findOne(query, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -58,7 +58,7 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    User.findById(id, keys)
+    Chackos.findById(id, keys)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

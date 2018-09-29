@@ -4,7 +4,6 @@ const cookie = require('cookie'),
   User = require('../models/User');
   DB = require('../mongoose');
 
-
 module.exports = {
 
   me: (req, res, next) => {
@@ -33,9 +32,6 @@ module.exports = {
 
       if (user.error) {
 
-
-        console.log(user.error)
-
         return next(apiError({ res: res, type: user.error, statusCode: 401 }))
 
       } else {
@@ -49,35 +45,35 @@ module.exports = {
   createUser: (req, res, next) => {
 
 
-  
 
-      let createUser = new DB.User({
-        _id: new DB.mongoose.Types.ObjectId(),
-        name: {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          username: req.body.username
-        },
-        biography: 'Postman post request.',
-        password: req.body.password,
-        groups: req.body.groups
-      })
 
-      createUser.save().then(user => {
-        user._doc.passwordHash = undefined;
-        res.status(200).send(Object.assign({ created: true }, user._doc));
+    let createUser = new DB.User({
+      _id: new DB.mongoose.Types.ObjectId(),
+      name: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username
+      },
+      biography: 'Postman post request.',
+      password: req.body.password,
+      groups: req.body.groups
+    })
 
-      })
-        .catch(err => {
+    createUser.save().then(user => {
+      user._doc.passwordHash = undefined;
+      res.status(200).send(Object.assign({ created: true }, user._doc));
 
-          var key = Object.keys(err.errors)[Object.keys(err.errors).length - 1];
+    })
+      .catch(err => {
 
-          if (err.name === "ValidationError") {
+        var key = Object.keys(err.errors)[Object.keys(err.errors).length - 1];
 
-            return next(apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
+        if (err.name === "ValidationError") {
 
-          }
-        });
+          return next(apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
+
+        }
+      });
 
 
   },

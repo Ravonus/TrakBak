@@ -32,7 +32,7 @@ var update = {
       (err, obj) => {
       // Handle any possible database errors
       if (err) done(err);
-      done(obj);
+      done(null, obj);
       }
   )
   }

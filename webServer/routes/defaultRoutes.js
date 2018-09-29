@@ -8,7 +8,7 @@ const path = require("path"),
   jwt = require('jsonwebtoken'),
   userRoutes = require('./userRoutes');
 
-  let api;
+let api;
 
 module.exports = {
 

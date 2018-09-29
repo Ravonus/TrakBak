@@ -18,14 +18,20 @@ console.log(User.api);
 
 function cb() {
   if(global.trakbak.controllers) {
-
-    console.log(global.trakbak.controllers)
     
     controllerNames.forEach((controller) => {
 
+      if(controller.type === 'update'){
+        router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
+      }
+      if(controller.type === 'remove'){
+        console.log(controller)
+        router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
+      }
+
       router.route(`/${controller.name}`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
     })
-    router.route('/test').post(bodyParser, User.api.create);
+
 
   } else {
     console.log('asd')

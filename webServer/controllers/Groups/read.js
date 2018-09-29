@@ -30,7 +30,7 @@ let read = {
 
     Groups.find(query, keys).exec((err, obj) => {
       if (err) done(err);
-      done(obj);
+      done(null, obj);
 
     })
 
