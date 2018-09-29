@@ -1,7 +1,7 @@
 const cookie = require('cookie'),
   jwt = require('jsonwebtoken'),
   config = require('../../config/config'),
-  User = require('../models/User'),
+  User = require('../models/User');
   DB = require('../mongoose');
 
 
@@ -49,7 +49,7 @@ module.exports = {
   createUser: (req, res, next) => {
 
 
-    if (req.isUnauthenticated()) {
+  
 
       let createUser = new DB.User({
         _id: new DB.mongoose.Types.ObjectId(),
@@ -79,9 +79,6 @@ module.exports = {
           }
         });
 
-    } else {
-      res.redirect("/login");
-    }
 
   },
   getUser: (req, res) => {

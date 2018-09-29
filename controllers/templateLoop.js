@@ -2,7 +2,7 @@ const fs = require('fs'),
   path = require('path'),
   ip = require('ip'),
   config = require('../config/config'),
-  UglifyJS = require('uglify-js'),
+  // UglifyJS = require('uglify-js'),
   templatePath = path.join(__dirname, '../templates');
 
 

@@ -18,7 +18,6 @@ let remove = {
   byFind: (query, done) => {
 
     User.findOneAndRemove(query,
-
       // the callback function
       (err, obj) => {
       // Handle any possible database errors

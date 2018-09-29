@@ -1,7 +1,7 @@
 const express = require('express'),
-  routes = require('./controllers/defaultRoutes'),
+  routes = require('./defaultRoutes'),
   bodyParser = require('body-parser').json(),
-  config = require('../config/config'),
+  config = require('../../config/config'),
   next = (string) => { },
   router = express.Router();
   
@@ -9,11 +9,30 @@ const express = require('express'),
 
 //User Routes
 
+console.log(User.api);
+
 //User Create Route
-router.route('/user').post(bodyParser, routes.user.createUser, next);
+//router.route('/user').post(bodyParser, routes.user.createUser, next);
 
 //User Login Route
 
+function cb() {
+  if(global.trakbak.controllers) {
+
+    console.log(global.trakbak.controllers)
+    
+    controllerNames.forEach((controller) => {
+
+      router.route(`/${controller.name}`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
+    })
+    router.route('/test').post(bodyParser, User.api.create);
+
+  } else {
+    console.log('asd')
+    setTimeout(function () { cb(); }, 0);
+  }
+}
+cb()
 
 
 

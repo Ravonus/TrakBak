@@ -3,7 +3,7 @@
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const express = require('express');
-const routes = require('./routes'),
+const routes = require('./routes/routes'),
 config = require('./../config/config.js');
 let started, callback , start;
 

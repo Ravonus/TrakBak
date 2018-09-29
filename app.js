@@ -12,13 +12,19 @@ const express = require('express'),
   startTime = Date.now(),
   config = require('./config/config');
 
+  global.trakbak = {
+    name: 'trakbak',
+    finished: false,
+  }
+
 config.controllers = {};
 
 config.functions = require("./controllers/appFunctions");
 config.message = require("./controllers/messenger");
-let mongCrum = require('./webServer/controllers/mongooseCrud');
+let mongCrum = require('./webServer/mongooseCrud/mongooseCrud');
 
 var length = 1;
+var oneRun = false;
 
 fs.readdir('./webServer/models/', (err, files) => {
   files.forEach((file) => {
@@ -26,48 +32,33 @@ fs.readdir('./webServer/models/', (err, files) => {
     if (file.substring(file.length - 3) === '.js') { 
       length++ 
     }
-    cb();
+    controllerStart();
   });
 
 });
 
-var ranServer = false;
-function cb() {
 
+    function controllerStart() {
 
-  if (config.controllers.done == true && Object.keys(config.controllers).length  === length) {
+     
 
-    var myIndex = 1;
-    function restart() {
-
-      var checkLength = Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length;
-      if (checkLength === Object.keys(config.controllers[Object.keys(config.controllers)[myIndex]]).length) {
-
-        if (myIndex + 1 === Object.keys(config.controllers).length) {
+        if (global.trakbak.controllers) {
     
 
           config.functions.scopeFunctions(config.controllers);
        
-          if(!ranServer) runServer();
-          
-          ranServer = true;
-        } else {
-          myIndex++
-          restart()
+        if(oneRun === false) {
+          oneRun = true;
+        runServer();
         }
+          
+   
 
       } else {
-        setTimeout(function () { restart(); }, 0);
+        setTimeout(function () { controllerStart(); }, 0);
       }
-    }
-    restart()
-
-  } else {
-    setTimeout(function () { cb(); }, 0);
-  }
-
+    
 }
-
 
 config.functions.scopeFunctions(config.functions);
 config.functions.scopeFunctions(config.message);
