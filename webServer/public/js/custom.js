@@ -1,14 +1,21 @@
 //This auto feels backend server ip and port.
 var clikbakSocket = 'https://www.trakbak.tk:5001';
+var trakbak = {};
 
 //public table variable.
 var t;
 
+if(localStorage.trakbak) {
+
+  trakbak = JSON.parse(localStorage.trakbak);
+
+}
+
+
 //Logout function
 function logout() {
-  localStorage.removeItem("clikbak");
+  localStorage.removeItem("trakbak");
   window.location.href = "/";
-
 }
 
 //Set cookie function

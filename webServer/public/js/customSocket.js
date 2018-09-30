@@ -1,5 +1,6 @@
 var socket = io('https://www.trakbak.tk:5001');
 var trakbakSocket = 'https://www.trakbak.tk:5001';
+var trakbak = {};
 
 function login() {
 
@@ -31,6 +32,7 @@ socket.on('me', function (data) {
 });
 
 socket.on('login', function (data) {
+  console.log('wtf');
 
   var user = data.user;
  
@@ -41,7 +43,7 @@ socket.on('login', function (data) {
     setCookie('jwt', user.jwt, 30)
     var jwt = user.jwt;
     // Save data to sessionStorage
-    localStorage.setItem('trakbak', jwt);
+    localStorage.setItem('trakbak', JSON.stringify( {user: data.user}));
 
     // if (user.registrationKey !== null) {
 

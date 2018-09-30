@@ -23,7 +23,7 @@ var message = {
 
   },
   render: (obj) => {
-    obj.res.render(obj.page);
+    obj.res.render(obj.page, obj);
   },
   redirect: (obj) => {
     obj.res.redirect(obj.page);

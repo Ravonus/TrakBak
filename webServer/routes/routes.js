@@ -14,6 +14,10 @@ router.route('/user/login').post(bodyParser, routes.user.login);
 //User Create Route
 //router.route('/user').post(bodyParser, routes.user.createUser, next);
 
+//User Me route (Check jwt token);
+router.route('/user/me').get(bodyParser, routes.user.me, next);
+
+
 //User Login Route
 
 function cb() {
@@ -38,8 +42,6 @@ cb()
 
 
 
-//User Me route (Check jwt token);
-router.route('/user/me').get(bodyParser, routes.user.me, next);
 
 
 //default Routes

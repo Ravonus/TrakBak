@@ -264,8 +264,6 @@ var functions = {
 
   isAuthenticated : (req, done) => {
 
-
-
     if (req.cookies && req.cookies.jwt) {
 
       var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
@@ -290,13 +288,50 @@ var functions = {
         });
       }
   
-    } else if (req.decoded) {
-
+    } else if (req.headers['x-access-token']) {
+      functions.me(req).then( (data) => {
+        console.log(data)
+        return done(null, data)
+      }).catch(err => {
+        done(err);
+      })
     }
     else {
       req.userObj = undefined;
       done('notAuthenticated');
     }
+
+  },
+
+  me: (req) => {
+
+    return new Promise((response, rej) => {
+      
+      var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
+
+    
+      var jwtToken = jwtUnScramble(token);
+
+    console.log(jwtToken)
+
+    if (!jwtToken) return rej('noToken')
+
+    jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
+      if (err) return rej('badToken')
+
+      User.findOne({ _id: decoded.id }, function (err, user) {
+        user.passwordHash = undefined;
+        decoded.id = undefined;
+
+        response(Object.assign({decoded ,user}));
+
+      //  done(Object.assign({token:decoded ,user:user._doc}));
+
+      });
+
+    });
+
+  });
 
   }
   

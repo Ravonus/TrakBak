@@ -16,7 +16,6 @@ module.exports = {
 
   home: (req, res, next) => {
 
-    console.log('test');
 
     if (req.cookies && req.cookies.jwt) {
 
@@ -28,7 +27,7 @@ module.exports = {
 
         jwt.verify(jwtCookie.trim(), config.jwtSecret, (err, decoded) => {
           if (err) {
-            return next(config.message.render({ res: res, page: 'login.hbs' }));
+            return next(config.message.render({ res: res, page: 'login.hbs'}));
           } else {
             // if everything is good, save to request for use in other routes
             req.decoded;
@@ -51,9 +50,9 @@ module.exports = {
       var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
 
       if (jwtCookie) {
-        console.log(jwtCookie)
+
         jwtCookie = config.functions.jwtUnScramble(jwtCookie);
-        console.log(jwtCookie);
+
         var decoded = jwt.verify(jwtCookie.trim(), config.jwtSecret);
       }
 
