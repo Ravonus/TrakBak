@@ -1,9 +1,10 @@
+let authentication = (req, done) => {
 
-
-let isAuthenticated = (done) => {
-
-  setTimeout(function(){ return done(null,'still should be 5 seconds'); }, 5000);
-
+  if(req.userObj){
+  done(null, req.userObj);
+  } else {
+    done('notAuthenticated')
+  }
 }
 
-module.exports = isAuthenticated;
+module.exports = authentication;

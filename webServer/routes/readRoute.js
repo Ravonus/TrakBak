@@ -1,5 +1,5 @@
 
-let policyConfig;
+let policyConfig, promises;
 try {
   policyConfig = require(`./config/modelName/routeType.json`).policies;
 }
@@ -8,12 +8,13 @@ catch (e) {
 var promiseFunctions = require('./controllers/promiseBuilder');
 
 var routeType = (req, res) => {
-  
-  let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['findById', 'find'], req);
+  isAuthenticated(req, (err, data) => {
+    req.userObj = data;
 
-  var promises = promiseFunctions.grabPromises(policyConfig);
+    let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['findById', 'find'], req);
+    promises = promiseFunctions.grabPromises(policyConfig, req);
 
-  Promise.all(promises)
+    Promise.all(promises)
     .then(data => {
 
       return mongoosePromise()
@@ -21,7 +22,19 @@ var routeType = (req, res) => {
     })
     .then(data => {
       return res.status(200).send(data);
-    }).catch(err => apiError({ res: res, type: 'fucc', statusCode: 500 }))
+    }).catch(err => {
+      
+    console.log('errbody', err)
+
+    apiError({ res: res, type:err, statusCode: 500 })
+    
+  })
+
+  })
+ 
+
+
+
 
 }
 

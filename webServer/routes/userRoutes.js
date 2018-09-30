@@ -42,41 +42,7 @@ module.exports = {
     });
 
   },
-  createUser: (req, res, next) => {
 
-
-
-
-    let createUser = new DB.User({
-      _id: new DB.mongoose.Types.ObjectId(),
-      name: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        username: req.body.username
-      },
-      biography: 'Postman post request.',
-      password: req.body.password,
-      groups: req.body.groups
-    })
-
-    createUser.save().then(user => {
-      user._doc.passwordHash = undefined;
-      res.status(200).send(Object.assign({ created: true }, user._doc));
-
-    })
-      .catch(err => {
-
-        var key = Object.keys(err.errors)[Object.keys(err.errors).length - 1];
-
-        if (err.name === "ValidationError") {
-
-          return next(apiError({ res: res, type: err.errors[key].path, statusCode: 500 }))
-
-        }
-      });
-
-
-  },
   getUser: (req, res) => {
 
   },

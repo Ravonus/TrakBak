@@ -1,5 +1,8 @@
 const config = require('../config/config'),
-  http = require('https');
+  http = require('https'),
+  cookie = require('cookie-signature'),
+  User = require('../webServer/models/User');
+  jwt = require('jsonwebtoken');
 
 const port = config.httpsPort;
 const host = config.host;
@@ -257,6 +260,44 @@ var functions = {
     Object.keys(func).forEach(function (key) {
       global[key] = func[key];
     });
+  },
+
+  isAuthenticated : (req, done) => {
+
+
+
+    if (req.cookies && req.cookies.jwt) {
+
+      var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
+  
+      if (jwtCookie) {
+  
+        jwtCookie = jwtUnScramble(jwtCookie);
+  
+        jwt.verify(jwtCookie.trim(), config.jwtSecret, (err, decoded) => {
+          if (err) {
+            return done(err);
+          } else {
+            req.decoded = decoded;
+        
+              User.findOne({ _id: decoded.id }, function (err, user) {
+                delete user._doc.passwordHash;
+                delete decoded.id;
+                return done(null, Object.assign(decoded, user._doc));
+              });
+        
+          }
+        });
+      }
+  
+    } else if (req.decoded) {
+
+    }
+    else {
+      req.userObj = undefined;
+      done('notAuthenticated');
+    }
+
   }
   
 

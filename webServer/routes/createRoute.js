@@ -6,9 +6,12 @@ var promiseFunctions = require('./controllers/promiseBuilder');
 
 var routeType = (req, res) => {
   
+  isAuthenticated(req, (err, data) => {
+        
+    req.userObj = data;
 
-  let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', [''], req);
-
+  let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['erg'], req);
+})
 
 
   var promises = promiseFunctions.grabPromises(policyConfig);

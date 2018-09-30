@@ -2,20 +2,27 @@
 let policies = require('../webServer/routes/policies/policies');
 let config = require('../config/config');
 
-function runPolicy(policyConfig) {
+function runPolicy(policyConfig, req) {
   let promises = [];
 
   if (policyConfig) {
 
+
+     // console.log('data dawg', data);
+     /// req.user = data;
+
     policyConfig.forEach((policyName) => {
+      
 
       let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
+
+      
 
       if (active)
         promises.push(
           new Promise((response, rej) => {
 
-            policies[Object.keys(policyName)]((err, data) => {
+            policies[Object.keys(policyName)](req, (err, data) => {
 
               if (err) rej(err);
               else response(data);
@@ -34,7 +41,6 @@ function runPolicy(policyConfig) {
 
 var mongoosePromise = (modelName, routeType, modelFunction, req) => {
 
-
   if (Object.keys(req.body).length === 0) {
 
     console.log(req.query);
@@ -47,6 +53,12 @@ var mongoosePromise = (modelName, routeType, modelFunction, req) => {
     () => {
       return new Promise((response, rej) => {
 
+
+        isAuthenticated(req, (err, data) => {
+        
+        req.userObj = data;
+
+   //     console.log(req.userObj);
         
         if (req.url.split('/').length >= 3 && routeType !== 'create') {
 
@@ -82,6 +94,8 @@ var mongoosePromise = (modelName, routeType, modelFunction, req) => {
 
           config.controllers[modelName][routeType](req.body,{}, (err, data) => {
 
+            console.log(err);
+
             if (err) rej(err)
             response(data)
           });
@@ -97,6 +111,7 @@ var mongoosePromise = (modelName, routeType, modelFunction, req) => {
           });
 
         }
+      })
       })
     }
 

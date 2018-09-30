@@ -1,7 +1,7 @@
 {
   "policies": [
-      {"isAuthenticated": {"groups":[],"permissions":[], "timing":"before", "active": false}},
-      {"isTest": {"groups":[],"permissions":[], "timing":"before", "active": false}}
+      {"isAuthenticated": {"groups":[],"permissions":[], "timing":"before", "active": true}},
+      {"isTest": {"groups":[],"permissions":[], "timing":"before", "active": true}}
     
   ]
 }
