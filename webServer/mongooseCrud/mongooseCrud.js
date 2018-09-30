@@ -103,7 +103,7 @@ fs.readdir(modelsDir, function (err, files) {
                 //    console.log('myFIle!! ', config.controllers[capFirst(modelFile).slice(0, -3)]);
 
                 console.log(`${myFile.slice(0, -3)}Route.js`);
-                fs.readFile(path.join(__dirname, '../../', 'webServer/routes/', `${myFile.slice(0, -3)}Route.js`), 'utf8', function (err, fileString) {
+                fs.readFile(path.join(__dirname, '../../', 'webServer/routes/', 'apiRoute.js'), 'utf8', function (err, fileString) {
                   if(err) return err;
 
                   
@@ -133,8 +133,6 @@ fs.readdir(modelsDir, function (err, files) {
                   }
 
                 });
-
-
 
               }
 

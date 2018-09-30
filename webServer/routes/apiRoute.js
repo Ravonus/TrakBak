@@ -1,40 +1,46 @@
 
-var url = require('url');
+let policyConfig, promises;
+try {policyConfig = require(`./config/modelName/routeType.json`);}catch (e) {}
+var promiseFunctions = require('./controllers/promiseBuilder');
 
+var functionNames = {
+  read : ['findById', 'find'],
+  create : [''],
+  update : ['byId', 'byFind'],
+  remove : ['byId', 'byFind']
+}
 
+var routeType = (req, res) => {
 
-    var routeType = (req, res) => {
-     
-      if(Object.keys(req.body).length === 0) {
-        req.body = req.query;
-      }
-      modelName.create(
-      req.body,
-     { passwordHash: false }, routePromise = text => {
+  let authPromise = promiseFunctions.checkAuth(req, policyConfig.isAuthenticated);
 
-      return new Promise( (resolve, reject) => {
-        if (err) reject(err);
-        else resolve();
-      })
+  authPromise
+    .then(data => {
+      req.userObj = data;
 
-        // if(err) return apiError({ res: res, type: Object.keys( err )[0], statusCode: 500 })
+      let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', functionNames.routeType, req);
 
-        //   return  res.status(200).send(Object.assign({ created: true }, data._doc));
-        
- 
-      })
+      promises = promiseFunctions.grabPromises(policyConfig.policies, req);
 
-      routePromise.then(data => {
-        return res.status(200).send(Object.assign({ created: true }, data._doc));
-      }).catch(err => {
-        return apiError({ res: res, type: Object.keys( err )[0], statusCode: 500 })
-      })
+      Promise.all(promises)
+        .then(data => {
 
-    }
+          return mongoosePromise()
 
-  
+        })
+        .then(data => {
+          return res.status(200).send(data);
+        }).catch(err => {
 
+          apiError({ res: res, type: err, statusCode: 500 })
 
+        })
+    }).catch(err => {
 
+      apiError({ res: res, type: err, statusCode: 500 })
+
+    })
+
+}
 
 module.exports = routeType;
