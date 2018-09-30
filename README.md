@@ -1,6 +1,7 @@
 # TrakBak
 Node.JS and socket.JS web analyzer and tracker.
 
+Full API route creation for easy access and updating to tracker.
 
 # Travis/Mocha Testing(Discord build send)
 
