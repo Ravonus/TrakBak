@@ -1,31 +1,27 @@
+var policyConfig;
 
-var url = require('url');
+try {policyConfig= require(`./config/modelName/routeType.json`).policies;} catch (e) { }
 
-
+var promiseFunctions = require('./controllers/promiseBuilder');
 
 var routeType = (req, res) => {
 
-  if (Object.keys(req.query).length === 0) {
+  let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['byId', 'byFind'], req);
 
-    let url = req.url.split('/');
+  var promises = promiseFunctions.grabPromises(policyConfig);
 
-    modelName.remove.byId(url[2], (err, data) => {
+  Promise.all(promises)
+    .then(data => {
 
-      if (err) return apiError({ res: res, type: Object.keys(err)[0], statusCode: 500 })
+      return mongoosePromise()
+
+    })
+    .then(data => {
       return res.status(200).send(data);
-    });
-
-  } else {
-
-    modelName.remove.byFind(req.query, (err, data) => {
-
-      if (err) return apiError({ res: res, type: Object.keys(err)[0], statusCode: 500 })
-      return res.status(200).send(data);
-    });
-
-  }
+    }).catch(err =>{ 
+      console.log('erg', err);
+      apiError({ res: res, type: 'fucc', statusCode: 500 })})
 
 }
-
 
 module.exports = routeType;

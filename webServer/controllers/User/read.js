@@ -28,7 +28,7 @@ let read = {
 
     remove$(query);
 
-    User.find(query, keys).exec((err, obj) => {
+    User.find(query, keys, done).exec((err, obj) => {
       if (err) done(err);
       done(null, obj);
 
@@ -43,7 +43,7 @@ let read = {
 
     remove$(query);
 
-    User.findOne(query, keys)
+    User.findOne(query, keys, done)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -54,11 +54,13 @@ let read = {
   },
   findById: (id, keys, done) => {
 
+   
+
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    User.findById(id, keys)
+    User.findById(id, keys, done)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

@@ -12,6 +12,8 @@ const express = require('express'),
   startTime = Date.now(),
   config = require('./config/config');
 
+  // global.policies = require('./webServer/routes/policies/policies');
+
   global.trakbak = {
     name: 'trakbak',
     finished: false,

@@ -3,6 +3,8 @@ var url = require('url');
 
 var routeType = (req, res) => {
 
+
+
   if (Object.keys(req.query).length === 0) {
 
     let url = req.url.split('/');

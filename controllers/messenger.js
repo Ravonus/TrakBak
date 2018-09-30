@@ -8,7 +8,8 @@ let messages = {
   'name.username': { created: false, message: 'Sorry, that username is already taken.' },
   loginError: { auth: false, message: 'There was a probleming Logging in. Please check Username and Password.' },
   passwordHash: { created: false, message: 'Password is a required field' },
-  dirDoesNotExist: {message:'Directory'.white+':'.yellow + 'NAME'.grey+ ' Does not exist within'.red+' path'.white+':'.yellow+'PATH\n\r'.grey}
+  dirDoesNotExist: {message:'Directory'.white+':'.yellow + 'NAME'.grey+ ' Does not exist within'.red+' path'.white+':'.yellow+'PATH\n\r'.grey},
+  fucc: 'fuccc you got an error'
 };
 
 var message = {

@@ -29,9 +29,6 @@ fs.readdir(modelsDir, function (err, files) {
 
     fs.readFile(path.join(__dirname, '../../', 'webServer/routes/', 'apiRoute.js'), 'utf8', function (err, apiRoute) {
 
-
-
-
       //if file has .js for file extension
       if (file !== 'mongooseCrus.js' && file.substring(file.length - 3) == ".js") {
 

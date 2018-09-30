@@ -5,9 +5,21 @@ function create(obj, keys, done) {
   obj._id = new DB.mongoose.Types.ObjectId();
   const modelObj = new Groups(obj);
 
-  modelObj.save(keys, (err, obj) => {
-    if (err) done(err);
-    done(obj)
+  modelObj.save( (err, data) => {
+
+    
+    if (err) return done(err.errors);
+
+    if(keys){
+      Object.keys(keys).forEach(function(key) {
+
+       data[key] = undefined;
+      
+      });
+      
+    }
+      
+    return done(null, data)
 
   })
 

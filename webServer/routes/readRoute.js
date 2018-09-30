@@ -1,22 +1,27 @@
 
-var url = require('url');
+let policyConfig;
+try {
+  policyConfig = require(`./config/modelName/routeType.json`).policies;
+}
+catch (e) {
+}
+var promiseFunctions = require('./controllers/promiseBuilder');
 
 var routeType = (req, res) => {
 
-  if (Object.keys(req.body).length === 0) {
-    req.body = req.query;
-    console.log(req.body);
-  }
+  let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['findById', 'find'], req);
 
-  modelName.read.find(req.body, { passwordHash: false },
-    (err, obj) => {
-      console.log('ran')
-      console.log(err);
-      if (err) return apiError({ res: res, type: Object.keys(err)[0], statusCode: 500 })
-      return res.status(200).send(obj);
+  var promises = promiseFunctions.grabPromises(policyConfig);
 
-      // console.log('Script Start Took: ', Date.now() - startTime + ' ms');
-    });
+  Promise.all(promises)
+    .then(data => {
+
+      return mongoosePromise()
+
+    })
+    .then(data => {
+      return res.status(200).send(data);
+    }).catch(err => apiError({ res: res, type: 'fucc', statusCode: 500 }))
 
 }
 

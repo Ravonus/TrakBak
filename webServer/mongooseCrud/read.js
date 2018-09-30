@@ -28,7 +28,9 @@ let read = {
 
     remove$(query);
 
-    modelName.find(query, keys).exec((err, obj) => {
+    
+
+    modelName.find(query, keys, done).exec((err, obj) => {
       if (err) done(err);
       done(null, obj);
 
@@ -43,7 +45,7 @@ let read = {
 
     remove$(query);
 
-    modelName.findOne(query, keys)
+    modelName.findOne(query, keys, done)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -58,7 +60,7 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    modelName.findById(id, keys)
+    modelName.findById(id, keys, done)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
