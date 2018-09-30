@@ -8,7 +8,7 @@ catch (e) {
 var promiseFunctions = require('./controllers/promiseBuilder');
 
 var routeType = (req, res) => {
-
+  
   let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', ['findById', 'find'], req);
 
   var promises = promiseFunctions.grabPromises(policyConfig);

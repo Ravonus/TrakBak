@@ -1,9 +1,9 @@
-const Groups = require('../../models/Groups');
+const modelName = require('../../models/modelName');
 
 var update = {
   byId: (id, body, done) => {
 
-    Groups.findByIdAndUpdate(id, body,
+    modelName.findByIdAndUpdate(id, body,
   
       
       // an option that asks mongoose to return the updated version 
@@ -13,7 +13,7 @@ var update = {
       // the callback function
       (err, obj) => {
       // Handle any possible database errors
-      if (err) return done(err);
+      if (err) done(err);
       done(null, obj);
       }
   )
@@ -21,7 +21,7 @@ var update = {
   },
   byFind: (query, body, done) => {
 
-    Groups.findOneAndUpdate(query, body,
+    modelName.findOneAndUpdate(query, body,
   
       
       // an option that asks mongoose to return the updated version 

@@ -1,4 +1,4 @@
-var policyConfig;
+let policyConfig;
 
 try {policyConfig= require(`./config/modelName/routeType.json`).policies;} catch (e) { }
 
