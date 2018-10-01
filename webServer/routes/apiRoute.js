@@ -3,6 +3,9 @@ let policyConfig, promises;
 try {policyConfig = require(`./config/modelName/routeType.json`);}catch (e) {}
 var promiseFunctions = require('./controllers/promiseBuilder');
 
+
+console.log(policyConfig)
+
 var functionNames = {
   read : ['findById', 'find'],
   create : [''],

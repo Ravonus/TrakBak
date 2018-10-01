@@ -3,6 +3,7 @@ let policies = require('../webServer/routes/policies/policies');
 let config = require('../config/config');
 
 
+
 let policy = {
   grabPromises: (policyConfig, req) => {
 
@@ -49,7 +50,7 @@ let policy = {
         return new Promise((response, rej) => {
 
 
-            //     console.log(req.userObj);
+           
 
             if (req.url.split('/').length >= 3 && routeType !== 'create') {
 

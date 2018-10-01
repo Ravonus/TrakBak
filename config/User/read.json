@@ -1,7 +1,26 @@
 {
-  "isAuthenticated" : {"groups":[],"permissions":[], "timing":"before", "active": true},
-  "policies": [
-      {"isTest": {"groups":[],"permissions":[], "timing":"before", "active": false}},
-      {"checkUser": {"groups":[],"permissions":[], "timing":"before", "active": true}}
-  ]
+	"isAuthenticated": {
+		"groups": [],
+		"permissions": [],
+		"timing": "before",
+		"active": false
+	},
+	"policies": [
+		{
+			"checkUser": {
+				"groups": [],
+				"permissions": [],
+				"timing": "before",
+				"active": false
+			}
+		},
+		{
+			"isTest": {
+				"groups": [],
+				"permissions": [],
+				"timing": "before",
+				"active": false
+			}
+		}
+	]
 }
