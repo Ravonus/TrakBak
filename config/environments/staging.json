@@ -1,0 +1,12 @@
+{
+  "httpPort": 3002,
+  "httpsPort": 3003,
+  "envName": "staging",
+  "databaseName": "trakbak",
+  "mongoDB": "localhost",
+  "hashingSecret": "thisIsASecret",
+  "threads": 8,
+  "ignoreSSL": true,
+  "jwtSecret": "thisIsSecretStaging",
+  "mongoAdmin": true
+}

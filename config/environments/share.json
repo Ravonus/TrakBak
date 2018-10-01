@@ -1,0 +1,7 @@
+{
+  "version": "0.0.2 Alpha",
+  "cookieSecret": "theyBeS3crets!",
+  "host": "localhost",
+  "certLocation": "/webServer/https/cert.pem",
+  "keyLocation": "/webServer/https/key.pem"
+}

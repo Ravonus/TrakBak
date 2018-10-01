@@ -1,0 +1,11 @@
+{
+  "httpPort": 3002,
+  "httpsPort": 3003,
+  "envName": "development",
+  "databaseName": "trakbak",
+  "mongoDB": "localhost",
+  "hashingSecret": "thisIsASecret",
+  "threads": "softwareOff",
+  "ignoreSSL": true,
+  "jwtSecret": "thisIsSecretDevelopment"
+}

@@ -1,5 +1,5 @@
 const path = require('path'),
-argv = require('yargs').argv;
+  argv = require('yargs').argv;
 
 
 /*
@@ -10,59 +10,10 @@ argv = require('yargs').argv;
 //Container for all the environments
 let environments = {};
 
-// Staging (default environment)
-environments.staging = {
-  'httpPort': 3002,
-  'httpsPort': 3003,
-  'envName': 'staging',
-  'databaseName': 'trakbak',
-  'mongoDB': 'localhost',
-  'hashingSecret': 'thisIsASecret',
-  'threads': 8,
-  "ignoreSSL": true,
-  "jwtSecret": 'thisIsSecretStaging',
-  "mongoAdmin" : true
-};
+require("fs").readdirSync(__dirname + '/environments/').forEach(function (file) {
 
-// Staging (default environment)
-environments.development = {
-  'httpPort': 3002,
-  'httpsPort': 3003,
-  'envName': 'development',
-  'databaseName': 'trakbak',
-  'mongoDB': 'localhost',
-  'hashingSecret': 'thisIsASecret',
-  'threads': 'softwareOff',
-  "ignoreSSL": true,
-  "jwtSecret": 'thisIsSecretDevelopment',
-
-
-};
-
-//Production environment
-environments.production = {
-  'httpPort': 5000,
-  'httpsPort': 5001,
-  'envName': 'production',
-  'serverName': 'https://www.trakbak.tk:5001',
-  'databaseName': 'trakbak',
-  'mongoDB': 'localhost',
-  'hashingSecret': 'thisIsAProductionSecret',
-  'threads': 'auto',
-  "ignoreSSL": false,
-  "jwtSecret": 'thisIsSecretProduction'
-};
-
-// Shared variables - These will write to any environment (Keep in mind these will over right in common variable.)
-environments.share = {
-  version: '0.0.2 Alpha',
-  cookieSecret: 'theyBeS3crets!',
-  host: 'localhost',
-  certLocation: '/webServer/https/cert.pem',
-  keyLocation: '/webServer/https/key.pem'
-}
-
-
+  environments[file.slice(0, -5)] = require(__dirname + "/environments/" + file);
+});
 
 if (argv.environment || argv.env) {
   process.env.NODE_ENV = argv.environment || argv.env;
@@ -92,25 +43,23 @@ if (environmentToExport.threads === 'auto') {
 if (environmentToExport.ignoreSSL) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
-console.log(typeof(environmentToExport.certLocation));
-if(typeof(environmentToExport.certLocation) === 'string') {
-  
-  process.env.NODE_EXTRA_CA_CERTS =  path.join(__dirname, '../',  environmentToExport.certLocation);
+console.log(typeof (environmentToExport.certLocation));
+if (typeof (environmentToExport.certLocation) === 'string') {
 
- 
+  process.env.NODE_EXTRA_CA_CERTS = path.join(__dirname, '../', environmentToExport.certLocation);
+
+
   console.log(process.env.NODE_EXTRA_CA_CERTS);
 }
 
 //Combine share environment variables with current envioronment.
-
-
 
 if (!environmentToExport.jwtExpire) {
 
   environmentToExport.jwtExpire = 86400
 }
 
-if(environmentToExport.serverName) {
+if (environmentToExport.serverName) {
   process.env.cbSocket = environmentToExport.serverName;
   process.env.cbSocketBack = environmentToExport.serverName;
 }

@@ -1,7 +1,7 @@
 const config = require('../config/config'),
   http = require('https'),
   cookie = require('cookie-signature'),
-  User = require('../webServer/models/User');
+  User = require('../webServer/models/User'),
   jwt = require('jsonwebtoken');
 
 const port = config.httpsPort;
@@ -279,6 +279,9 @@ var functions = {
             req.decoded = decoded;
         
               User.findOne({ _id: decoded.id }, function (err, user) {
+                
+                if(!err && !user) return done('fucc');
+                console.log(user)
                 delete user._doc.passwordHash;
                 delete decoded.id;
                 return done(null, Object.assign(decoded, user._doc));

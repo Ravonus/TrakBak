@@ -39,7 +39,6 @@ let policy = {
 
     if (Object.keys(req.body).length === 0) {
 
-      console.log(req.query);
       req.body = req.query;
 
     }
@@ -50,69 +49,63 @@ let policy = {
         return new Promise((response, rej) => {
 
 
-           
-
-            if (req.url.split('/').length >= 3 && routeType !== 'create') {
 
 
-              let url = req.url.split('/');
+          if (req.url.split('/').length >= 3 && routeType !== 'create') {
 
-              if (routeType !== 'update') {
 
-   
+            let url = req.url.split('/');
 
-                config.controllers[modelName][routeType][modelFunction[0]](url[2], (err, data) => {
-                  if (err) {
-                    //     console.log(err);
-                    rej(err)
-                  };
-                  response(data);
-                });
+            if (routeType !== 'update') {
 
-              } else {
 
-                console.log(`${modelName} ${routeType} ${routeType} ${modelFunction[1]} ${url[2]}`)
-                  console.log(config.controllers[modelName][routeType])
 
-                config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
-                  
-                  if (err) {
-                         console.log(err);
-                    rej(err)
-                  };
-       
-                  response(data);
-                });
-
-              }
-
-            } else if (routeType === 'create') {
-            
-
-              config.controllers[modelName][routeType](req.body, {}, (err, data) => {
-
-                console.log(err);
-
-                if (err) rej(err)
-                response(data)
+              config.controllers[modelName][routeType][modelFunction[0]](url[2], (err, data) => {
+                if (err) {
+                  //     console.log(err);
+                  rej(err)
+                };
+                response(data);
               });
-            }
-            else if(routeType === 'update')  {
-              config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
-
-                if (err) rej(err)
-                response(data)
-              });
-
 
             } else {
 
-              config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
+              config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
 
-                if (err) rej(err)
-                response(data)
+                if (err) {
+                  rej(err)
+                };
+
+                response(data);
               });
+
             }
+
+          } else if (routeType === 'create') {
+
+
+            config.controllers[modelName][routeType](req.body, {}, (err, data) => {
+
+              if (err) rej(err)
+              response(data)
+            });
+          }
+          else if (routeType === 'update') {
+            config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
+
+              if (err) rej(err)
+              response(data)
+            });
+
+
+          } else {
+
+            config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
+
+              if (err) rej(err)
+              response(data)
+            });
+          }
 
         })
       }
@@ -121,20 +114,20 @@ let policy = {
 
   },
   checkAuth: (req, str) => {
-    console.log(str);
+
     return new Promise((response, rej) => {
 
-    if(str.active) {
-     
-      isAuthenticated(req, (err, data) => {
-        if (err) rej(err)
-        response(data)
+      if (str.active) {
 
-      })
-    } else {
-      response('noAuth');
-    }
-  })
+        isAuthenticated(req, (err, data) => {
+          if (err) rej(err)
+          response(data)
+
+        })
+      } else {
+        response('noAuth');
+      }
+    })
   }
 }
 

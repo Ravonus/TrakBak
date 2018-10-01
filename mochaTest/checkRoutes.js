@@ -1,20 +1,20 @@
 const isReachable = require('is-reachable'),
-      fs = require('fs')
-      ip = require('ip'),
-      http = require('http'),
-      https = require('https'),
-      config = require('./../config/config.js'),
-      chai = require('chai');
+  fs = require('fs')
+ip = require('ip'),
+  http = require('http'),
+  https = require('https'),
+  config = require('./../config/config.js'),
+  chai = require('chai');
 
-describe('Check All Server Routes',  () => {
+describe('Check All Server Routes', () => {
 
-  describe('Check Node Route and Ports', () =>{
+  describe('Check Node Route and Ports', () => {
 
-    describe('Check Unsecure Routes', () =>{
+    describe('Check Unsecure Routes', () => {
 
-      describe(`Check http ${ip.address()} with port ${config.httpPort}`, () =>{
+      describe(`Check http ${ip.address()} with port ${config.httpPort}`, () => {
 
-        it('Should return true', () =>{
+        it('Should return true', () => {
 
           return isReachable(`${ip.address()}:${config.httpPort}`).then(reachable => {
 
@@ -26,7 +26,7 @@ describe('Check All Server Routes',  () => {
 
       });
 
-      describe(`Check http//${ip.address()}:${config.httpPort}/page/not/found. Catch all`, () =>{
+      describe(`Check http//${ip.address()}:${config.httpPort}/page/not/found. Catch all`, () => {
 
         it('Should return 404', (done) => {
 
@@ -43,7 +43,7 @@ describe('Check All Server Routes',  () => {
 
       });
 
-      describe(`Check http//${ip.address()}:${config.httpPort}/`, () =>{
+      describe(`Check http//${ip.address()}:${config.httpPort}/`, () => {
 
         it('Should return 404', (done) => {
 
@@ -61,11 +61,11 @@ describe('Check All Server Routes',  () => {
 
     });
 
-    describe('Check Secure Routes', () =>{
+    describe('Check Secure Routes', () => {
 
-      describe(`Check https secure ${ip.address()} with port ${config.httpsPort}`, () =>{
+      describe(`Check https secure ${ip.address()} with port ${config.httpsPort}`, () => {
 
-        it('Should return true', () =>{
+        it('Should return true', () => {
 
           return isReachable(`https://${ip.address()}:${config.httpsPort}`).then(reachable => {
 
@@ -77,7 +77,7 @@ describe('Check All Server Routes',  () => {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort}/page/not/found Catch all`, () =>{
+      describe(`Check https//${ip.address()}:${config.httpsPort}/page/not/found Catch all`, () => {
 
         it('Should return 404', (done) => {
 
@@ -95,7 +95,7 @@ describe('Check All Server Routes',  () => {
 
       });
 
-      describe(`Check https//${ip.address()}:${config.httpsPort} /`, () =>{
+      describe(`Check https//${ip.address()}:${config.httpsPort} /`, () => {
 
         it('Should return 200', (done) => {
 

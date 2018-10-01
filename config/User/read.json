@@ -3,7 +3,7 @@
 		"groups": [],
 		"permissions": [],
 		"timing": "before",
-		"active": false
+		"active": true
 	},
 	"policies": [
 		{

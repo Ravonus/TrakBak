@@ -1,0 +1,12 @@
+{
+  "httpPort": 5000,
+  "httpsPort": 5001,
+  "envName": "production",
+  "serverName": "https://www.trakbak.tk:5001",
+  "databaseName": "trakbak",
+  "mongoDB": "localhost",
+  "hashingSecret": "thisIsAProductionSecret",
+  "threads": "auto",
+  "ignoreSSL": false,
+  "jwtSecret": "thisIsSecretProduction"
+}
