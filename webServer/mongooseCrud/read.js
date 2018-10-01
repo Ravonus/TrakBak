@@ -1,5 +1,15 @@
 const modelName = require("../../models/modelName");
 
+var populate ='';
+Object.keys(modelName.schema.obj).forEach(function(key) {
+  var val = modelName.schema.obj[key];
+//  console.log(key)
+if (typeof val === 'object' && val[0] && val[0].ref) {
+ // console.log(key, typeof val, val[0]);
+  populate += ` ${val[0].ref.toLowerCase()}`
+
+}
+});
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
@@ -28,9 +38,9 @@ let read = {
 
     remove$(query);
 
-    
-
-    modelName.find(query, keys, done).exec((err, obj) => {
+    modelName.find(query, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    .exec((err, obj) => {
       if (err) done(err);
       done(null, obj);
 
@@ -46,6 +56,7 @@ let read = {
     remove$(query);
 
     modelName.findOne(query, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -61,6 +72,7 @@ let read = {
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
     modelName.findById(id, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

@@ -1,5 +1,15 @@
 const Groups = require("../../models/Groups");
 
+var populate ='';
+Object.keys(Groups.schema.obj).forEach(function(key) {
+  var val = Groups.schema.obj[key];
+//  console.log(key)
+if (typeof val === 'object' && val[0] && val[0].ref) {
+ // console.log(key, typeof val, val[0]);
+  populate += ` ${val[0].ref.toLowerCase()}`
+
+}
+});
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
@@ -28,7 +38,9 @@ let read = {
 
     remove$(query);
 
-    Groups.find(query, keys).exec((err, obj) => {
+    Groups.find(query, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    .exec((err, obj) => {
       if (err) done(err);
       done(null, obj);
 
@@ -43,7 +55,8 @@ let read = {
 
     remove$(query);
 
-    Groups.findOne(query, keys)
+    Groups.findOne(query, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
@@ -58,7 +71,8 @@ let read = {
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    Groups.findById(id, keys)
+    Groups.findById(id, keys, done)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

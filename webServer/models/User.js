@@ -5,13 +5,13 @@ const mongoose = require('mongoose'),
 var UserSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: {
-    firstName: String,
-    lastName: String,
+    first: String,
+    last: String,
     username: { type: String, required: true, unique: true },
   },
+  groups: [{ type: mongoose.Schema.ObjectId, ref:'Groups' }],
   sessionJwt: String,
   biography: String,
-  groups: Number,
   permissions: Number,
   profilePicture: Buffer,
   createdAt: {

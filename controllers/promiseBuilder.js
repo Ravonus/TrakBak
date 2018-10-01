@@ -73,6 +73,7 @@ let policy = {
 
                 console.log(`${modelName} ${routeType} ${routeType} ${modelFunction[1]} ${url[2]}`)
                   console.log(config.controllers[modelName][routeType])
+
                 config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
                   
                   if (err) {
@@ -86,6 +87,7 @@ let policy = {
               }
 
             } else if (routeType === 'create') {
+            
 
               config.controllers[modelName][routeType](req.body, {}, (err, data) => {
 
@@ -95,14 +97,21 @@ let policy = {
                 response(data)
               });
             }
-            else {
+            else if(routeType === 'update')  {
+              config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
+
+                if (err) rej(err)
+                response(data)
+              });
+
+
+            } else {
 
               config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
 
                 if (err) rej(err)
                 response(data)
               });
-
             }
 
         })

@@ -7,7 +7,7 @@
 	},
 	"policies": [
 		{
-			"checkUser": {
+			"isTest": {
 				"groups": [],
 				"permissions": [],
 				"timing": "before",
@@ -15,7 +15,7 @@
 			}
 		},
 		{
-			"isTest": {
+			"checkUser": {
 				"groups": [],
 				"permissions": [],
 				"timing": "before",

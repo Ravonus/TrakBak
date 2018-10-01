@@ -13,7 +13,7 @@ var update = {
       // the callback function
       (err, obj) => {
       // Handle any possible database errors
-      if (err) done(err);
+      if (err) return done(err);
       done(null, obj);
       }
   )
@@ -31,7 +31,7 @@ var update = {
       // the callback function
       (err, obj) => {
       // Handle any possible database errors
-      if (err) done(err);
+      if (err) return done(err);
       done(null, obj);
       }
   )
