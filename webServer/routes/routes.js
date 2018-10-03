@@ -22,15 +22,11 @@ router.route('/user/me').get(bodyParser, routes.user.me, next);
 function cb() {
   if(global.trakbak.controllers) {
 
-    console.log('running')
-    
     controllerNames.forEach((controller) => {
     
-      
       if(controller.type  !== 'create') {
 
-        console.log(config.controllers[controller.name].api[controller.type])
-
+   
       router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
       }
       router.route(`/${controller.name}`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);

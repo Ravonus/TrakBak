@@ -17,10 +17,12 @@ let policy = {
 
       
 
-      policyConfig.forEach((policyName) => {
+      policyConfig.forEach((policyName, index) => {
         
 
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
+
+ 
 
         let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
 
@@ -30,8 +32,8 @@ let policy = {
 
               policies[Object.keys(policyName)](req, (err, data) => {
 
-                if (err) rej(err);
-                else response(data);
+                if (err) rej({err:err, index:index});
+                else response({data:data, index:index});
               });
 
             })
@@ -70,7 +72,7 @@ let policy = {
               config.controllers[modelName][routeType][modelFunction[0]](url[2], (err, data) => {
                 if (err) {
                   //     console.log(err);
-                  rej(err)
+                  rej({err:err, index:index})
                 };
                 response(data);
               });
@@ -80,7 +82,7 @@ let policy = {
               config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
 
                 if (err) {
-                  rej(err)
+                  rej({err:err, index:index})
                 };
 
                 response(data);
@@ -93,14 +95,14 @@ let policy = {
 
             config.controllers[modelName][routeType](req.body, {}, (err, data) => {
 
-              if (err) rej(err)
+              if (err) rej({err:err, index:index})
               response(data)
             });
           }
           else if (routeType === 'update') {
             config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
 
-              if (err) rej(err)
+              if (err) rej({err:err, index:index})
               response(data)
             });
 
@@ -109,7 +111,7 @@ let policy = {
 
             config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
 
-              if (err) rej(err)
+              if (err) rej({err:err, index:index})
               response(data)
             });
           }

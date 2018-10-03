@@ -9,7 +9,7 @@
 				"groups": [],
 				"permissions": 1,
 				"timing": "before",
-				"active": false
+				"active": true
 			}
 		},
 		{

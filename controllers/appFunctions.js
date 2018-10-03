@@ -344,13 +344,20 @@ var functions = {
 
       promise: (userObj, policies) => {
 
-
         //  console.log('cry??' + isSet);
         return new Promise((response, rej) => {
 
           if (policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)].active) {
+            var weight = 0;
+            var permission;
+            if(typeof policies[Object.keys(policies)].permissions === 'object') {
+              weight = policies[Object.keys(policies)].permissions.weight;
+              permission = policies[Object.keys(policies)].permissions.value;
+            } else {
+              permission = policies[Object.keys(policies)].permissions;
+            }
 
-
+            
 
             function getBinary(num) {
 
@@ -376,20 +383,24 @@ var functions = {
               }
             }
             var userPerms = getBinary(num);
-            var policyPerms = getBinary(policies[Object.keys(policies)].permissions);
+            var policyPerms = getBinary(permission);
 
             var promises = [];
             Object.keys(policyPerms).forEach((key, index) => {
               promises.push(new Promise((response, rej) => {
 
                 if (userPerms[key]) {
-                  response('true')
+                  response('done')
                 } else {
 
-                  rej('fucc');
+                  rej({err:'fucc', index:key});
                 }
 
-              }));
+              }).catch(function(err){
+                //return error;
+               console.log('erg', err)
+                return err;
+            }));
               if (index >= Object.keys(policyPerms).length - 1) {
 
                 promise(promises);
@@ -403,7 +414,8 @@ var functions = {
 
                   response('true')
                 }).catch(err => {
-                  rej(err)
+                  console.log(err);
+                  rej({err:err.err, index:err.index})
                 })
             }
 
@@ -421,7 +433,8 @@ var functions = {
           return promise.promise().then((data) => {
             return done(null, data)
           }).catch(err => {
-            done(err);
+            console.log('diz err', err)
+            done(err.err);
           })
         }
       }
