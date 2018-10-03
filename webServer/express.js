@@ -28,6 +28,8 @@ start = (port, version, server, app, cb) => {
   app.set('views', __dirname + '/views');
   hbs.registerPartials(__dirname + '/views/partials');
 
+  app.use(express.static(__dirname + '/shared'));
+
   if(port === config.httpsPort) {
     app.use(express.static(__dirname + '/securePublic'));
 

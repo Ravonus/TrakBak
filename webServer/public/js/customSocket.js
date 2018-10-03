@@ -1,5 +1,5 @@
-var socket = io('192.168.0.169:3002');
-var trakbakSocket = '192.168.0.169:3002';
+var socket = io('https://www.trakbak.tk:5001');
+var trakbakSocket = 'https://www.trakbak.tk:5001';
 var trakbak = {};
 
 function login() {

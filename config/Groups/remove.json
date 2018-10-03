@@ -1,7 +1,5 @@
 {
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
 		"active": false
 	},

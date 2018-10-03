@@ -2,6 +2,7 @@ const mongoose = require('mongoose'),
   config = require('./../config/config'),
   startTime = require('../app').startTime,
   argv = require('yargs').argv,
+  autoIncrement = require('mongoose-auto-increment'),
   mongoDB = config.mongoDB;
 
 let modelUser = require('./models/User'),
@@ -14,7 +15,7 @@ let modelUser = require('./models/User'),
 let mongooseConnect, auth;
 if (config.mongoUser) {
   mongooseConnect = `mongodb://${config.mongoUser}:${config.mongopw}@${mongoDB}:27017/${prefix}-${databaseName}`;
-  console.log(mongooseConnect);
+
   if (config.mongoAdmin) {
     auth = { authdb: "admin" };
 
@@ -23,7 +24,7 @@ if (config.mongoUser) {
   mongooseConnect = `mongodb://${mongoDB}/${prefix}-${databaseName}`;
 }
 
-mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
+mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err, data) => {
 
   if (err) {
     connection = 'No';
@@ -34,11 +35,29 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
     }
   };
 
-  connection = 'Yes';
-  console.log(global.trakbak)
+  connection = data;
+
+  function done(data) {
+    console.log(data)
+  }
+
+  permissions(254+ 256 + 512+ +1024+ 274877906945+2251799813685248).pf((err, data) => {
+
+    console.log(permissions(254).promise())
+    console.log(data);
+
+  });
+
+  console.log('^^^ FUCCC ^^^^^')
+
+
   function cb() {
+
+
+
+    
   if(global.trakbak.controller) {
-    console.log(User.read.api)
+  
     User.read.find(
       {'name.firstName':'ergMon', createdAt:{lte:Date.now()}},{passwordHash:false},
        (user) => {
@@ -71,7 +90,7 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
        //   console.log(data);
        // })
    
-   
+
        // Groups.create({
        //   "name":"Group-Auto",
        //   "permission": 4
@@ -101,7 +120,7 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err) => {
 
 }
 
-cb();
+//cb();
 
 
 

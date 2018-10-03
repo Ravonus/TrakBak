@@ -262,37 +262,37 @@ var functions = {
     });
   },
 
-  isAuthenticated : (req, done) => {
+  isAuthenticated: (req, done) => {
 
     if (req.cookies && req.cookies.jwt) {
 
       var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
-  
+
       if (jwtCookie) {
-  
+
         jwtCookie = jwtUnScramble(jwtCookie);
-  
+
         jwt.verify(jwtCookie.trim(), config.jwtSecret, (err, decoded) => {
           if (err) {
             return done(err);
           } else {
             req.decoded = decoded;
-        
-              User.findOne({ _id: decoded.id }, function (err, user) {
-                
-                if(!err && !user) return done('fucc');
-                console.log(user)
-                delete user._doc.passwordHash;
-                delete decoded.id;
-                return done(null, Object.assign(decoded, user._doc));
-              });
-        
+
+            User.findOne({ _id: decoded.id }, function (err, user) {
+
+              if (!err && !user) return done('fucc');
+              console.log(user)
+              delete user._doc.passwordHash;
+              delete decoded.id;
+              return done(null, Object.assign(decoded, user._doc));
+            });
+
           }
         });
       }
-  
+
     } else if (req.headers['x-access-token']) {
-      functions.me(req).then( (data) => {
+      functions.me(req).then((data) => {
         console.log(data)
         return done(null, data)
       }).catch(err => {
@@ -309,40 +309,127 @@ var functions = {
   me: (req) => {
 
     return new Promise((response, rej) => {
-      
+
       var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
 
-    
+
       var jwtToken = jwtUnScramble(token);
 
-    console.log(jwtToken)
+      console.log(jwtToken)
 
-    if (!jwtToken) return rej('noToken')
+      if (!jwtToken) return rej('noToken')
 
-    jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
-      if (err) return rej('badToken')
+      jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
+        if (err) return rej('badToken')
 
-      User.findOne({ _id: decoded.id }, function (err, user) {
-        user.passwordHash = undefined;
-        decoded.id = undefined;
+        User.findOne({ _id: decoded.id }, function (err, user) {
+          user.passwordHash = undefined;
+          decoded.id = undefined;
 
-        response(Object.assign({decoded ,user}));
+          response(Object.assign({ decoded, user }));
 
-      //  done(Object.assign({token:decoded ,user:user._doc}));
+          //  done(Object.assign({token:decoded ,user:user._doc}));
+
+        });
 
       });
 
     });
 
-  });
+  },
+
+  permissions: (num) => {
+    // console.log('wtf',isSet);
+    return promise = {
+
+      promise: (userObj, policies) => {
+
+
+        //  console.log('cry??' + isSet);
+        return new Promise((response, rej) => {
+
+          if (policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions) {
+
+
+
+            function getBinary(num) {
+
+              var binaries = num.toString(2);
+
+              var binaryArray = {}
+              for (i = 1; i <= binaries.length; i++) {
+
+                var binary = binaries.substr(binaries.length - i);
+                var boolean = !!+binary.charAt(0);
+                if (boolean) {
+
+                  var number = '1'.padEnd(i, '0');
+
+                  binaryArray[parseInt(number, 2)] = true;
+                }
+                if (i === binaries.length) {
+                  //    console.log(binaryArray);
+                  //   response(binaryArray);
+                  return binaryArray;
+
+                }
+              }
+            }
+            var userPerms = getBinary(num);
+            var policyPerms = getBinary(policies[Object.keys(policies)].permissions);
+
+            var promises = [];
+            Object.keys(policyPerms).forEach((key, index) => {
+              promises.push(new Promise((response, rej) => {
+
+                if (userPerms[key]) {
+                  response('true')
+                } else {
+
+                  rej('fucc');
+                }
+
+              }));
+              if (index >= Object.keys(policyPerms).length - 1) {
+
+                promise(promises);
+              }
+            })
+
+            function promise(promises) {
+
+              Promise.all(promises)
+                .then(data => {
+
+                  response('true')
+                }).catch(err => {
+                  rej(err)
+                })
+            }
+
+          } else {
+            response('no perms');
+          }
+        })
+
+      },
+
+      pf: (done) => {
+        if (promise.promise()) {
+
+          console.log(promise.promise())
+          return promise.promise().then((data) => {
+            return done(null, data)
+          }).catch(err => {
+            done(err);
+          })
+        }
+      }
+
+    }
 
   }
-  
 
-  //Auto Functions//
-
-  //End Auto Functions//
 }
-
 
 module.exports = functions;

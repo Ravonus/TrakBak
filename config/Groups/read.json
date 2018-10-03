@@ -1,15 +1,13 @@
 {
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
-		"active": false
+		"active":	false
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 12,
 				"timing": "before",
 				"active": false
 			}

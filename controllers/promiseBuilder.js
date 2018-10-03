@@ -8,10 +8,17 @@ let policy = {
   grabPromises: (policyConfig, req) => {
 
     let promises = [];
-
+    
     if (policyConfig) {
 
+
+
+
+      
+
       policyConfig.forEach((policyName) => {
+
+        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
         let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
 
@@ -47,8 +54,6 @@ let policy = {
 
       () => {
         return new Promise((response, rej) => {
-
-
 
 
           if (req.url.split('/').length >= 3 && routeType !== 'create') {

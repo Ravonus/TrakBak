@@ -20,11 +20,11 @@ var routeType = (req, res) => {
   authPromise
     .then(data => {
       req.userObj = data;
-
+      
       let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', functionNames.routeType, req);
 
       promises = promiseFunctions.grabPromises(policyConfig.policies, req);
-
+    
       Promise.all(promises)
         .then(data => {
 
