@@ -1,10 +1,28 @@
 
-let policyConfig, promises;
+let policyConfig, promises,
+watch = require('node-watch');
+
 try {policyConfig = require(`./config/modelName/routeType.json`);}catch (e) {}
 var promiseFunctions = require('./controllers/promiseBuilder');
 
+//const refresh = require('./webServer/express').refresh;
 
-console.log(policyConfig)
+const mongooseCrud = require('./webServer/mongooseCrud/mongooseCrud')
+
+
+watch('./config/', { recursive: true }, function(evt, name) {
+  console.log('%s changed.', name);
+
+  delete require.cache[require.resolve('./config/modelName/routeType.json')]
+  delete require.cache[require.resolve('./webServer/routes/routes')]
+  let router = require('./webServer/routes/routes');
+  policyConfig = require(`./config/modelName/routeType.json`);
+  //let refresh = require('./webServer/express').refresh;
+ // mongooseCrud();
+  router.refresh()
+
+});
+
 
 var functionNames = {
   read : ['findById', 'find'],
@@ -14,6 +32,26 @@ var functionNames = {
 }
 
 var routeType = (req, res) => {
+  // delete require.cache[require.resolve('./config/modelName/routeType.json')]
+  // policyConfig = require(`./config/modelName/routeType.json`);
+  // let router = require('./webServer/routes/routes');
+
+  // //let refresh = require('./webServer/express').refresh;
+  // mongooseCrud();
+  // router.refresh()
+//  console.log(require('./webServer/express'))
+//console.log(require('./app').appSecure)
+ // refresh(require('./app').appSecure)
+
+
+  
+  //  // refreshApiRoutes();
+
+   
+  //   policyConfig = require(`./config/modelName/routeType.json`);
+  //   console.log(policyConfig.policies, ' ddda fucc')
+
+  // mongooseCrud('update');
 
   let authPromise = promiseFunctions.checkAuth(req, policyConfig.isAuthenticated);
 

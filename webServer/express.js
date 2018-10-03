@@ -3,8 +3,12 @@
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const express = require('express');
-const routes = require('./routes/routes'),
+const routes = require('./routes/routes').router,
 config = require('./../config/config.js');
+
+
+var refreshable = require("express-route-refresh");
+
 let started, callback , start;
 
 start = (port, version, server, app, cb) => {
@@ -20,6 +24,8 @@ start = (port, version, server, app, cb) => {
 
     cb('test');
   });
+
+
 
   app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -40,6 +46,12 @@ start = (port, version, server, app, cb) => {
   
   //set up routes
   app.use('/', routes);
+
+
+  
+
+
+
 }
 
 let webServer = () => {
@@ -54,7 +66,38 @@ let webServer = () => {
 
 webServer();
 
-module.exports = (cb) => {
+module.exports.refresh = function(app) {
+ 
+  console.log(app._router)
+  // var refresh_middleware = [
+  //   refreshable(app, '/groups')
+  // ];
+
+  console.log(refreshable(app._rotuer))
+  // now /api is registered
+ 
+  // you can refresh just one
+
+    // notice: require is synchronous... so this will be!!
+    // refresh_middleware.forEach(function(v) {
+    //   v(); // do not send params if you are going to refresh more than one
+    // });
+
+    app.use('/refresh', function(req, res, next) {
+      // notice: require is synchronous... so this will be!!
+      refresh_middleware.forEach(function(v) {
+        v(); // do not send params if you are going to refresh more than one
+      });
+      res.send('ok');
+    });
+
+}
+
+// module.exports.refresh = (cb) => {
+//   console.log('test')
+// }
+
+module.exports.cb = (cb) => {
   if (typeof started != 'undefined') {
     cb(start); // If foo is already define, I don't wait.
   } else {

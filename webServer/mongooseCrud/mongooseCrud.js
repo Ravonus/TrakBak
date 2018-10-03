@@ -5,6 +5,8 @@ const fs = require('fs'),
 _ = require('lodash'),
   config = require(path.join(__dirname, '../../', 'config/', 'config'));
 
+
+function mongooseCrud(update) {
 let policies = {}
 
 config.controllers.controllerNames = []
@@ -15,10 +17,14 @@ let modelsDir = path.join(__dirname, '../', 'models/'),
 
 config.controllers.api = {};
 
+
+
 //load config functions into scope for this script. (After this you can access the functions as if they were created here.)
 //config.functions.scopeFunctions(config);
 
 // Loop through all the files in models directory
+
+
 
 fs.readdir(modelsDir, function (err, files) {
 
@@ -57,14 +63,14 @@ fs.readdir(modelsDir, function (err, files) {
               //Create controller directory if it does not exist
               if (!fs.existsSync('./webServer/controllers/' + capFirst(modelFile).slice(0, -3))) {
                 var dir = './webServer/controllers/' + capFirst(modelFile).slice(0, -3);
-                //  console.log(dir);
+          
                 fs.mkdirSync(dir);
               }
 
               if (!fs.existsSync('./webServer/controllers/' + capFirst(modelFile).slice(0, -3) + '/' + file)) {
                 var myFile = file
                 var filePath = './webServer/controllers/' + capFirst(modelFile).slice(0, -3) + '/' + file.slice(0, -3);
-                //  console.log(path.join(__dirname, '../../', 'mongooseCrud/' + file));
+             
 
                 fs.readFile(path.join(__dirname, '../../', 'webServer/mongooseCrud/' + file), 'utf8', function (err, data) {
                   if (err) throw err;
@@ -141,7 +147,8 @@ fs.readdir(modelsDir, function (err, files) {
                   fs.readFile(`./config/${modelFile.slice(0, -3)}/${file.slice(0, -3)}.json`, 'utf8', function (err, data) {
                     if (err) throw err;
                     var obj = JSON.parse(data);
-                    //  console.log('dattta', data)
+                 
+                    
 
 
                     var newPolicies = (policies, fileList) => {
@@ -168,7 +175,7 @@ fs.readdir(modelsDir, function (err, files) {
 
                             delete arr2[index];
 
-                            console.log(arr2[index])
+                       
                             var newArr = arr2;
                             arr2 = newArr
 
@@ -205,12 +212,12 @@ fs.readdir(modelsDir, function (err, files) {
 
                       merge(policies, obj.policies, fileList, (policy, found) => {
 
-                        //    console.log('fucc', policy)
+                     
 
                         obj.policies = policy;
-                        if (found) {
+                        if (found || update) {
 
-                          console.log('fouuund!!')
+             
 
 
                           var options = {
@@ -218,11 +225,12 @@ fs.readdir(modelsDir, function (err, files) {
                           };
 
                           var print_to_file = JSON.stringify(obj, null, "\t")
+                      
                           fs.writeFile(`./config/${modelFile.slice(0, -3)}/${file.slice(0, -3)}.json`, print_to_file, function (err) {
                             if (err) {
                               console.log(err);
                             } else {
-                              //    console.log("JSON saved to " + outputFilename);
+                              
                             }
                           });
 
@@ -268,6 +276,8 @@ fs.readdir(modelsDir, function (err, files) {
 
                 if (err) return err;
 
+                console.log("RRRROOOOOOAR")
+
                 config.controllers[capFirst(modelFile).slice(0, -3)].api[myFile.slice(0, -3)] = requireFromString(apiRoute.replace(/modelName/g, modelFile.slice(0, -3)).replace(/routeType/g, myFile.slice(0, -3)))
 
                 if (myFile.slice(0, -3) === 'create') {
@@ -288,7 +298,17 @@ fs.readdir(modelsDir, function (err, files) {
                 if (index === directories.length - 1 && indexTwo === files.length - 1) {
 
 
-                  setTimeout(function () { global.trakbak.controllers = true; }, 0);
+                  setTimeout(function () { 
+                    
+                    console.log('DONNNE DAWG');
+
+                    if(update && config.controllers) {
+                    console.log(config.controllers.Groups.api);
+                    global.controllers = config.controllers;
+                    }
+                    
+                    global.trakbak.controllers = true; 
+                  }, 0);
 
 
                 }
@@ -305,3 +325,9 @@ fs.readdir(modelsDir, function (err, files) {
   });
 
 });
+
+}
+
+mongooseCrud();
+
+module.exports = mongooseCrud;

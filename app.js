@@ -21,6 +21,10 @@ const express = require('express'),
 
 config.controllers = {};
 
+
+
+
+
 config.functions = require("./controllers/appFunctions");
 config.message = require("./controllers/messenger");
 let mongCrum = require('./webServer/mongooseCrud/mongooseCrud');
@@ -76,8 +80,17 @@ let httpsServerOptions = {
   'cert': fs.readFileSync('./webServer/https/cert.pem', 'ascii')
 }
 
+
+
+
+
 //setup constant for secure server. We can't start it like above because we need the options we created for the secure server
-const serverSecure = https.createServer(httpsServerOptions, appSecure),
+const serverSecure = https.createServer(httpsServerOptions, appSecure);
+
+module.exports.secureApp = appSecure;
+  
+
+module.exports.app = app;
 
   // we also need a seperate socket tunnel for the secure server ( Can't use the unsecure one).
   ioS = require('socket.io')(serverSecure);
@@ -106,7 +119,7 @@ runServer = () => {
     //this is used to figure out how long the program takes to start.
     module.exports.startTime = startTime;
 
-    require('./webServer/express.js')((webServer) => {
+    require('./webServer/express.js').cb((webServer) => {
 
       //start express server and then do callback after started (Mocha testing if test argument was provided)
       if (config.httpPort) {

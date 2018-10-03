@@ -7,6 +7,7 @@ let config = require('../config/config');
 let policy = {
   grabPromises: (policyConfig, req) => {
 
+   
     let promises = [];
     
     if (policyConfig) {
@@ -17,6 +18,7 @@ let policy = {
       
 
       policyConfig.forEach((policyName) => {
+        
 
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
