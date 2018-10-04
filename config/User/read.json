@@ -1,23 +1,24 @@
 {
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
-		"active": false
+		"groups": [],
+		"permissions": 0,
+		"active": true
 	},
 	"policies": [
 		{
 			"checkUser": {
-				"groups": [],
-				"permissions": [],
+				"groups": ["administrator", "ChackoFour2"],
+				"match" : true,
+				"permissions": 1,
 				"timing": "before",
-				"active": false
+				"active": true
 			}
 		},
 		{
 			"isTest": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 2,
 				"timing": "before",
 				"active": false
 			}

@@ -38,7 +38,7 @@ let read = {
 
     remove$(query);
 
-    
+
 
     User.find(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
@@ -51,6 +51,8 @@ let read = {
   },
   findOne: (query, keys, done) => {
 
+   
+
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
@@ -62,7 +64,9 @@ let read = {
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
-        done(obj);
+        console.log('fUUUC')
+        delete obj.passwordHash;
+        done(null, obj);
       }
     );
 

@@ -264,6 +264,7 @@ var functions = {
 
   isAuthenticated: (req, done) => {
 
+
     if (req.cookies && req.cookies.jwt) {
 
       var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
@@ -278,14 +279,49 @@ var functions = {
           } else {
             req.decoded = decoded;
 
-            User.findOne({ _id: decoded.id }, function (err, user) {
+         
 
-              if (!err && !user) return done('fucc');
-              console.log(user)
-              delete user._doc.passwordHash;
-              delete decoded.id;
-              return done(null, Object.assign(decoded, user._doc));
-            });
+            config.controllers.User.read.findOne({ _id: decoded.id }, (err, user) => {
+
+
+         
+              if (err) {
+                 return done('fucc');
+              } 
+             //  console.log(user.passwordHash)
+             
+               user.passwordHash = undefined;
+               
+                delete decoded.id;
+             //   console.log('is it me', user)
+             // console.log(decoded);
+                done(null, Object.assign(decoded, user._doc));
+              
+       
+
+            })
+
+    //             User.findOne(query, keys, done)
+    // .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    //     // callback function (call exec incase where mongoose variables.)
+    // .exec((err, obj) => {
+    //     if (err) done(err);
+    //     console.log('fUUUC')
+    //     delete obj.passwordHash;
+    //     done(null, obj);
+    //   }
+    // );
+
+
+            // User.findOne({ _id: decoded.id }, function (err, user) {
+
+            //   if (!err && !user) return done('fucc');
+            //   console.log(user)
+            //   delete user._doc.passwordHash;
+            //   delete decoded.id;
+
+            //   return done(null, Object.assign(decoded, user._doc));
+            // });
 
           }
         });
@@ -343,11 +379,12 @@ var functions = {
     return promise = {
 
       promise: (userObj, policies) => {
-
+        
         //  console.log('cry??' + isSet);
         return new Promise((response, rej) => {
-
+          
           if (policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)].active) {
+         
             var weight = 0;
             var permission;
             if(typeof policies[Object.keys(policies)].permissions === 'object') {
@@ -387,20 +424,40 @@ var functions = {
 
             var promises = [];
             Object.keys(policyPerms).forEach((key, index) => {
+           
+
+              if(policies[Object.keys(policies)].match && policies[Object.keys(policies)].groups && policies[Object.keys(policies)].groups.length > 0) {
+           
+                  var groups = policies[Object.keys(policies)].groups;
+    
+                  userObj.groups.forEach( (group, index) => {
+
+                    console.log(group.name, 'ppppplllease', groups)
+
+                    if(groups.includes(group.name)){
+                      console.log('cry')
+                      promisePush(userPerms[key]);
+                    }
+                  })
+              } else {
+                promisePush(userPerms[key])
+              }
+
+              function promisePush(perms) {
+               
               promises.push(new Promise((response, rej) => {
 
-                if (userPerms[key]) {
+                if (perms) {
+           
                   response('done')
                 } else {
-
-                  rej({err:'fucc', index:key});
+                 
+                  rej('fucc');
                 }
 
-              }).catch(function(err){
-                //return error;
-               console.log('erg', err)
-                return err;
-            }));
+              }));
+            }
+            
               if (index >= Object.keys(policyPerms).length - 1) {
 
                 promise(promises);
@@ -411,11 +468,10 @@ var functions = {
 
               Promise.all(promises)
                 .then(data => {
-
                   response('true')
                 }).catch(err => {
-                  console.log(err);
-                  rej({err:err.err, index:err.index})
+                  console.log('wtd perms')
+                  rej('fucc')
                 })
             }
 
@@ -434,7 +490,7 @@ var functions = {
             return done(null, data)
           }).catch(err => {
             console.log('diz err', err)
-            done(err.err);
+            done(err);
           })
         }
       }

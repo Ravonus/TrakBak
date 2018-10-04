@@ -13,16 +13,9 @@ let policy = {
     if (policyConfig) {
 
 
-
-
-      
-
       policyConfig.forEach((policyName, index) => {
         
-
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
-
- 
 
         let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
 
@@ -31,9 +24,9 @@ let policy = {
             new Promise((response, rej) => {
 
               policies[Object.keys(policyName)](req, (err, data) => {
-
-                if (err) rej({err:err, index:index});
-                else response({data:data, index:index});
+                
+                if (err) rej({err, index});
+                else response(data);
               });
 
             })
@@ -72,7 +65,7 @@ let policy = {
               config.controllers[modelName][routeType][modelFunction[0]](url[2], (err, data) => {
                 if (err) {
                   //     console.log(err);
-                  rej({err:err, index:index})
+                  rej(err)
                 };
                 response(data);
               });
@@ -82,7 +75,7 @@ let policy = {
               config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
 
                 if (err) {
-                  rej({err:err, index:index})
+                  rej(err)
                 };
 
                 response(data);
@@ -95,14 +88,14 @@ let policy = {
 
             config.controllers[modelName][routeType](req.body, {}, (err, data) => {
 
-              if (err) rej({err:err, index:index})
+              if (err) rej(err)
               response(data)
             });
           }
           else if (routeType === 'update') {
             config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
 
-              if (err) rej({err:err, index:index})
+              if (err) rej({err:err})
               response(data)
             });
 
@@ -111,7 +104,7 @@ let policy = {
 
             config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
 
-              if (err) rej({err:err, index:index})
+              if (err) rej({err:err})
               response(data)
             });
           }
@@ -129,6 +122,7 @@ let policy = {
       if (str.active) {
 
         isAuthenticated(req, (err, data) => {
+
           if (err) rej(err)
           response(data)
 
