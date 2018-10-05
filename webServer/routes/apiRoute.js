@@ -31,6 +31,8 @@ var functionNames = {
 }
 
 var routeType = (req, res) => {
+
+  
   // delete require.cache[require.resolve('./config/modelName/routeType.json')]
   // policyConfig = require(`./config/modelName/routeType.json`);
   // let router = require('./webServer/routes/routes');

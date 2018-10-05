@@ -3,7 +3,7 @@
 		"timing": "before",
 		"groups": [],
 		"permissions": 0,
-		"active": true
+		"active": false
 	},
 	"policies": [
 		{
@@ -17,10 +17,11 @@
 		},
 		{
 			"isTest": {
-				"groups": [],
-				"permissions": 2,
+				"groups": ["public", "administrator"],
+				"match" : true,
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": true
 			}
 		}
 	]

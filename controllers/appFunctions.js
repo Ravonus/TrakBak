@@ -264,6 +264,8 @@ var functions = {
 
   isAuthenticated: (req, done) => {
 
+    
+
 
     if (req.cookies && req.cookies.jwt) {
 
@@ -336,8 +338,15 @@ var functions = {
       })
     }
     else {
-      req.userObj = undefined;
+      req.userObj = {
+        _id: 'public',
+        name: 'public',
+        groups: [{name:'public'}]
+      }
+      console.log('cry')
+
       done('notAuthenticated');
+     // return done(null, req.userObj)
     }
 
   },
@@ -429,16 +438,21 @@ var functions = {
               if(policies[Object.keys(policies)].match && policies[Object.keys(policies)].groups && policies[Object.keys(policies)].groups.length > 0) {
            
                   var groups = policies[Object.keys(policies)].groups;
-    
-                  userObj.groups.forEach( (group, index) => {
+                  var userGroups = userObj.groups;
+                  var i;
+                  for (i = 0; i < userObj.groups.length; i++) { 
 
-                    console.log(group.name, 'ppppplllease', groups)
 
-                    if(groups.includes(group.name)){
+                   console.log(userGroups[i].name, 'ppppplllease', groups)
+
+                    if(groups.includes(userGroups[i].name)){
                       console.log('cry')
                       promisePush(userPerms[key]);
+                      i = userObj.groups.length + 1;
+                    } else {
+                      console.log('mah group ', userGroups[i].name, ' real group ', groups)
                     }
-                  })
+                  }
               } else {
                 promisePush(userPerms[key])
               }
@@ -460,6 +474,7 @@ var functions = {
             
               if (index >= Object.keys(policyPerms).length - 1) {
 
+                console.log('be promsies', promises)
                 promise(promises);
               }
             })

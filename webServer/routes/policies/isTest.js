@@ -1,6 +1,6 @@
 module.exports = (req, done) => {
-console.log(req.userObj);
 
-done(null, 'fucc') 
+  setTimeout(function(){ done(null, 'fucc') }, 5000);
+
   
 }

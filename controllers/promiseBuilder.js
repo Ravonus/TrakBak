@@ -9,6 +9,8 @@ let policy = {
 
    
     let promises = [];
+
+    console.log(req.userObj)
     
     if (policyConfig) {
 
@@ -19,7 +21,8 @@ let policy = {
 
         let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
 
-        if (active)
+        if (active && !policyName[Object.keys(policyName)].match) {
+        console.log('fuc dawg', policyName[Object.keys(policyName)].groups.length)
           promises.push(
             new Promise((response, rej) => {
 
@@ -31,8 +34,33 @@ let policy = {
 
             })
           )
+        } else {
+
+          if(req.userObj && req.userObj.groups) {
+            var groups = policyName[Object.keys(policyName)].groups;
+            req.userObj.groups.forEach( (group) => {
+              console.log('grouo', group.name, 'wtf', groups)
+              if(groups.includes(group.name)) {
+                console.log('bat man');
+                promises.push(
+                  new Promise((response, rej) => {
+      
+                    policies[Object.keys(policyName)](req, (err, data) => {
+                      
+                      if (err) rej({err, index});
+                      else response(data);
+                    });
+      
+                  })
+                )
+              }
+            })
+          }
+        }
 
       })
+
+     
 
       return promises;
 
@@ -128,7 +156,13 @@ let policy = {
 
         })
       } else {
-        response('noAuth');
+        req.userObj = {
+          _id: 'public',
+          name: 'public',
+          groups: [{name:'public'}]
+        }
+
+        response(req.userObj);
       }
     })
   }
