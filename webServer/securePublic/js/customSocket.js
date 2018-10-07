@@ -1,5 +1,5 @@
-var socket = io('https://www.trakbak.tk:5001');
-var trakbakSocket = 'https://www.trakbak.tk:5001';
+var socket = io('192.168.0.117:3003');
+var trakbakSocket = '192.168.0.117:3003';
 var trakbak = {};
 
 socket.on('connected', function (data) {
