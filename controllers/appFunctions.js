@@ -512,6 +512,40 @@ var functions = {
 
     }
 
+  },
+  // Options = name,groups,server,model,extras
+  createSocket: (options, socket, route) => {
+
+    if(!options.server) {
+      options.server = config.serverName;
+    }
+
+    socket.on(options.name, (data) => {
+
+
+
+      [option.model](options.extra, `${options.server}/${route}`, data, function (data) {
+
+        var obj = JSON.parse(data);
+
+        if (obj.user) {
+
+          var cookie = require('cookie-signature');
+
+          //create siganture for jwt cookie - push via sockets and have client save cookie.
+          var signature = cookie.sign(config.functions.jwtScramble(obj.user._id, obj.user.jwt), config.cookieSecret);
+
+          obj.user.jwt = signature;
+
+          socket.emit('login', obj);
+        } else {
+          socket.emit('login', obj);
+        }
+      });
+
+
+    });
+
   }
 
 }

@@ -2,19 +2,9 @@ var socket = io('https://www.trakbak.tk:5001');
 var trakbakSocket = 'https://www.trakbak.tk:5001';
 var trakbak = {};
 
-function login() {
-
-  socket.emit('login', {
-    url: window.location.href,
-    form: [loginApp.login,loginApp.password]
-  });
-
-}
-
 socket.on('connected', function (data) {
   console.log('dawgs n shit on connect.');
-})
-
+});
 
 socket.on('me', function (data) {
   if (!JSON.parse(data.msg).error) {
@@ -31,32 +21,28 @@ socket.on('me', function (data) {
   }
 });
 
+//Don't edit after this line. Edit inside of clients folder.//
+
+function login() {
+
+  socket.emit('login', {
+    url: window.location.href,
+    form: [loginApp.login,loginApp.password]
+  });
+
+};
+
 socket.on('login', function (data) {
-  console.log('wtf');
 
   var user = data.user;
  
-
   if (user && user.jwt) {
 
-    
     setCookie('jwt', user.jwt, 30)
     var jwt = user.jwt;
     // Save data to sessionStorage
     localStorage.setItem('trakbak', JSON.stringify( {user: data.user}));
 
-    // if (user.registrationKey !== null) {
-
-    //   var options = {
-    //     closeButton: true,
-    //     preventDuplicates: true,
-    //     positionClass: 'toast-top-full-width'
-
-    //   }
-
-    //   alerts('error', 'Email Verification', 'You still need to verify your email before you can access application.', options)
-
-    // }
     window.location.href = '/';
   } else {
 
@@ -82,10 +68,5 @@ socket.on('login', function (data) {
       "hideMethod": "fadeOut",
     };
 
-   // var error = JSON.parse(data.msg);
-
-   // Command: toastr["error"](error.message, error.error, options)
-
   }
 });
-

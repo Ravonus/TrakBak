@@ -1,23 +1,21 @@
 {
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
 		"active": false
 	},
 	"policies": [
 		{
-			"isTest": {
+			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
 				"active": false
 			}
 		},
 		{
-			"checkUser": {
+			"isTest": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
 				"active": false
 			}

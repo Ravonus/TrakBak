@@ -1,29 +1,4 @@
-var socket = io('https://www.trakbak.tk:5001');
-var trakbakSocket = 'https://www.trakbak.tk:5001';
-var trakbak = {};
-
-socket.on('connected', function (data) {
-  console.log('dawgs n shit on connect.');
-});
-
-socket.on('me', function (data) {
-  if (!JSON.parse(data.msg).error) {
-
-    trakbak.user = JSON.parse(data.msg);
-    checkRegistration();
-    sideNav();
-    //  selectSocket(['domains', 'paths', 'postbacks']);
-  } else {
-
-    localStorage.removeItem("trakbak");
-    window.location.href = "/";
-
-  }
-});
-
-//Don't edit after this line. Edit inside of clients folder.//
-
-function login() {
+function login() {
 
   socket.emit('login', {
     url: window.location.href,

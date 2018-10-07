@@ -69,8 +69,7 @@ fs.readdir('./webServer/models/', (err, files) => {
 config.functions.scopeFunctions(config.functions);
 config.functions.scopeFunctions(config.message);
 
-//run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
-require("./controllers/templateLoop");
+
 
 app.use(cookieParser())
 appSecure.use(cookieParser())
@@ -149,8 +148,11 @@ runServer = () => {
     });
 
     // require the socket scripts now that io and ios are finished loading. ()
-    require('./webServer/socket.io').socket(ioS);
-    require('./webServer/socket.io').socket(io);
+    require('./webServer/sockets/socket.io').socket(ioS);
+    require('./webServer/sockets/socket.io').socket(io);
+    
+    //run template loop script within controllers(Might be able to make a script that finds all controller scripts and runs them... right now only 1 some does not matter.)
+
   } else {
 
     setTimeout(() => { runServer(); }, 0);

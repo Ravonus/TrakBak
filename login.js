@@ -1,5 +1,5 @@
-var socket = io('https://www.trakbak.tk:5001');
-var trakbakSocket = 'https://www.trakbak.tk:5001';
+var socket = io('{{server}}');
+var trakbakSocket = '{{serverBack}}';
 var trakbak = {};
 
 socket.on('connected', function (data) {
@@ -20,6 +20,7 @@ socket.on('me', function (data) {
 
   }
 });
+
 
 //Don't edit after this line. Edit inside of clients folder.//
 

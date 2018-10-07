@@ -6,16 +6,17 @@
 	"policies": [
 		{
 			"checkUser": {
-				"groups": [],
-				"permissions": 1,
+				"groups": ["administratorz"],
+				"permissions": 2,
 				"timing": "before",
 				"active": true
 			}
 		},
 		{
 			"isTest": {
-				"groups": [],
-				"permissions": 2,
+				"groups": ["fuckers", "administrato"],
+				"match" : true,
+				"permissions": 0,
 				"timing": "before",
 				"active": true
 			}
