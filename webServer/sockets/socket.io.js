@@ -45,16 +45,36 @@ module.exports = {
       // })
 
       require('../../config/routeConfig')((obj, files) => {
-       // console.log(files)
+      
         Object.keys(obj).forEach( (configName) => {
-          files.forEach( (file) => {
-              var name = file.split('.')[0];
+          // files.forEach( (file) => {
+          //     var name = file.split('.')[0];
         
-              //else logic if main authentication not set.
-                console.log(obj)
+          //     //else logic if main authentication not set.
+          //  //     console.log(obj[configName])
               
 
+          // })
+
+          Object.keys(obj[configName]).forEach( (policy) => {
+            let policyObj = obj[configName][policy];
+            
+            if(policyObj.active || policyObj.active === undefined) {
+            
+              if(policyObj.isAuthenticated && policyObj.isAuthenticated.active || policyObj.isAuthenticated && policyObj.isAuthenticated.active === undefined) {
+               
+                  policyObj.policies.forEach( (policyLogic, index) => {
+                      if(policyLogic[Object.keys(policyLogic)].active) {
+                        console.log(true)
+                      }
+                  })
+              } else {
+                //just because authentication is set to not active - doesn't mean each route doesn't have auth policy attached (Check here)
+              }
+            }
           })
+
+
           // console.log(config.controllers.controllerNames)
        //   console.log(obj[configName].policies)
           if(!socket._events.testRoute){

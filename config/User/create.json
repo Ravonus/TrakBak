@@ -1,7 +1,8 @@
 {
+	"active" : true,
 	"isAuthenticated": {
 		"timing": "before",
-		"active": true
+		"active": false
 	},
 	"policies": [
 		{

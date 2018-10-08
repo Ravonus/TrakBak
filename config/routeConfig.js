@@ -3,7 +3,7 @@ var configs = {}
 
 
 module.exports =  (done) => {
-    
+    console.log('ran')
 
 config.controllers.controllerNames.forEach((name) => {
     console.log(name.name)
@@ -23,6 +23,7 @@ config.controllers.controllerNames.forEach((name) => {
             files.forEach(function(file, index) {
 
                 if(file !== 'environments'){
+                
 
                 fs.readFile(`${__dirname}/${model}/${file}`, 'utf8', function read(err, data) {
                     if (err) {
@@ -30,7 +31,12 @@ config.controllers.controllerNames.forEach((name) => {
                     }
                     content = JSON.parse(data);
 
-                    configs[model] = content;
+                    if(!configs[model]) {
+                        configs[model] = {};
+                        
+                    }
+
+                    configs[model][file.split('.')[0]] = content;
     
                     if (index === files.length - 1 && indexFirst === dirLength) { 
                       //  module.exports = 'cry fuck';

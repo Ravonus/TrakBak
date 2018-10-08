@@ -14,15 +14,16 @@ let policy = {
     
     if (policyConfig) {
 
-
-      policyConfig.forEach((policyName, index) => {
+  
         
-        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
+      Object.keys(policyConfig).forEach((policyName, index) => {
 
-        let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
+        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyConfig[policyName]));
+        // console.log('dis it', policyConfig[policyName])
+        let active = (typeof policyConfig[policyName].active === "undefined" ? true : policyConfig[policyName].active);
 
-        if (active && !policyName[Object.keys(policyName)].match) {
-        console.log('fuc dawg', policyName[Object.keys(policyName)].groups.length)
+        if (active && !policyConfig[policyName].match) {
+        console.log('fuc dawg', policyConfig[policyName].groups.length)
           promises.push(
             new Promise((response, rej) => {
 
@@ -35,9 +36,10 @@ let policy = {
             })
           )
         } else {
+          console.log('pilicuy', policyConfig.isTest, 'pasd')
 
           if(req.userObj && req.userObj.groups) {
-            var groups = policyName[Object.keys(policyName)].groups;
+            var groups = policyConfig[policyName].groups;
             req.userObj.groups.forEach( (group) => {
               console.log('grouo', group.name, 'wtf', groups)
               if(groups.includes(group.name)) {
@@ -65,7 +67,7 @@ let policy = {
       return promises;
 
     }
-
+ 
   },
   mongoosePromise: (modelName, routeType, modelFunction, req) => {
 
@@ -74,6 +76,8 @@ let policy = {
       req.body = req.query;
 
     }
+
+    
 
     var promise =
 
@@ -139,6 +143,8 @@ let policy = {
 
         })
       }
+
+      console.log(promise)
 
     return promise;
 
