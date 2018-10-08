@@ -279,19 +279,20 @@ fs.readdir(modelsDir, function (err, files) {
                 console.log("RRRROOOOOOAR")
 
                 config.controllers[capFirst(modelFile).slice(0, -3)].api[myFile.slice(0, -3)] = requireFromString(apiRoute.replace(/modelName/g, modelFile.slice(0, -3)).replace(/routeType/g, myFile.slice(0, -3)))
-
+                var request = 'get'
                 if (myFile.slice(0, -3) === 'create') {
-                  var request = 'post'
+                  request = 'post'
                 }
                 if (myFile.slice(0, -3) === 'read') {
-                  var request = 'get'
+                  request = 'get'
                 }
                 if (myFile.slice(0, -3) === 'remove') {
-                  var request = 'delete'
+                  request = 'delete'
                 }
                 if (myFile.slice(0, -3) === 'update') {
-                  var request = 'put'
+                  request = 'put'
                 }
+
                 config.controllers.controllerNames.push({ name: (modelFile).slice(0, -3), type: myFile.slice(0, -3), request })
 
 

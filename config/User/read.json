@@ -6,20 +6,18 @@
 	"policies": [
 		{
 			"checkUser": {
-				"match" : false,
-				"groups": ["administrator"],
-				"permissions": 2,
+				"groups": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": true
+				"active": false
 			}
 		},
 		{
 			"isTest": {
-				"groups": ["public", "ChackoFour2"],
-				"match": true,
+				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"active": true
+				"active": false
 			}
 		}
 	]

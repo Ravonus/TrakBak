@@ -10,6 +10,19 @@ const ivId = '26ae5cc854e36b6bdfca366848dea6bb',
   rejectUnauthorized = false,
   requestCert = true
 
+
+  //functions for this page.
+
+
+  //camelize function.
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+      return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
+  
+
+
 var functions = {
 
   reverse: (str) => {
@@ -514,40 +527,26 @@ var functions = {
 
   },
   // Options = name,groups,server,model,extras
-  createSocket: (options, socket, route) => {
+  createSocket: (socket, route, options) => {
+
+    if(!options) {
+      options = {};
+    }
 
     if(!options.server) {
       options.server = config.serverName;
     }
 
-    socket.on(options.name, (data) => {
+    socket.on(route, (data) => {
 
+          socket.emit(route, data);
 
-
-      [option.model](options.extra, `${options.server}/${route}`, data, function (data) {
-
-        var obj = JSON.parse(data);
-
-        if (obj.user) {
-
-          var cookie = require('cookie-signature');
-
-          //create siganture for jwt cookie - push via sockets and have client save cookie.
-          var signature = cookie.sign(config.functions.jwtScramble(obj.user._id, obj.user.jwt), config.cookieSecret);
-
-          obj.user.jwt = signature;
-
-          socket.emit('login', obj);
-        } else {
-          socket.emit('login', obj);
-        }
-      });
-
-
+          console.log(data);
+        
     });
 
-  }
-
+  }, 
+  
 }
 
 module.exports = functions;

@@ -27,7 +27,8 @@ var functionNames = {
   read : ['findById', 'find'],
   create : [''],
   update : ['byId', 'byFind'],
-  remove : ['byId', 'byFind']
+  remove : ['byId', 'byFind'],
+  put : ['byId', 'byFind'],
 }
 
 var routeType = (req, res) => {
