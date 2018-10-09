@@ -1,6 +1,8 @@
 {
 	"isAuthenticated": {
 		"timing": "before",
+		"sockets": true,
+		"webApi": true,
 		"active": true
 	},
 	"policies": [
@@ -9,6 +11,7 @@
 				"groups": ["administratorz"],
 				"permissions": 2,
 				"timing": "before",
+				"sockets": true,
 				"active": true
 			}
 		},
@@ -18,6 +21,7 @@
 				"match" : true,
 				"permissions": 0,
 				"timing": "before",
+				"sockets": false,
 				"active": true
 			}
 		}

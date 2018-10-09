@@ -171,6 +171,9 @@ let policy = {
         response(req.userObj);
       }
     })
+  },
+  socketPromise: () => {
+    
   }
 }
 

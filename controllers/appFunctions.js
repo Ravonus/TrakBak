@@ -294,12 +294,8 @@ var functions = {
           } else {
             req.decoded = decoded;
 
-         
-
             config.controllers.User.read.findOne({ _id: decoded.id }, (err, user) => {
 
-
-         
               if (err) {
                  return done('fucc');
               } 
@@ -310,39 +306,18 @@ var functions = {
                 delete decoded.id;
              //   console.log('is it me', user)
              // console.log(decoded);
-                done(null, Object.assign(decoded, user._doc));
+            
+                return done(null, Object.assign(decoded, user._doc));
               
        
 
             })
 
-    //             User.findOne(query, keys, done)
-    // .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-    //     // callback function (call exec incase where mongoose variables.)
-    // .exec((err, obj) => {
-    //     if (err) done(err);
-    //     console.log('fUUUC')
-    //     delete obj.passwordHash;
-    //     done(null, obj);
-    //   }
-    // );
-
-
-            // User.findOne({ _id: decoded.id }, function (err, user) {
-
-            //   if (!err && !user) return done('fucc');
-            //   console.log(user)
-            //   delete user._doc.passwordHash;
-            //   delete decoded.id;
-
-            //   return done(null, Object.assign(decoded, user._doc));
-            // });
-
           }
         });
       }
 
-    } else if (req.headers['x-access-token']) {
+    } else if (req.headers && req.headers['x-access-token'] || typeof req === 'string') {
       functions.me(req).then((data) => {
         console.log(data)
         return done(null, data)
@@ -368,12 +343,16 @@ var functions = {
 
     return new Promise((response, rej) => {
 
-      var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
+      if(typeof req === 'string'){
+        var token = req;
+      } else {
+        var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
+      }
+      
 
 
       var jwtToken = jwtUnScramble(token);
 
-      console.log(jwtToken)
 
       if (!jwtToken) return rej('noToken')
 

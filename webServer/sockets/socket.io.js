@@ -2,7 +2,9 @@
 const config = require('../../config/config'),
 policies = require('../routes/policies/policies');
 let sockets = [];
+let activeClients = {};
 
+global.sockets = {};
 
 
 
@@ -30,22 +32,48 @@ module.exports = {
 
   
 
-    let activeClients = {};
+    
+
+   
 
     io.on('connection', (socket) => {
+      
+
+      activeClients[socket.id] = {};
+    
+
+    socket.handshake.headers.cookies  = {};
+    if(socket.handshake.headers.cookie ){
+      activeClients[socket.id].cookie = socket.handshake.headers.cookie;
+
+    socket.handshake.headers.cookie.split(/\s*;\s*/).forEach(function(pair) {
+    pair = pair.split(/\s*=\s*/);
+    socket.handshake.headers.cookies[pair[0]] = pair.splice(1).join('=');
+    });
+
+    isAuthenticated(socket.handshake.headers, (err, data) => {
+        
+      activeClients[socket.id].user = data;
+  })
+
+  } else {
+    console.log('ran')
+    console.log(activeClients[socket.id].user)
+  }
+
+    
 
 
 
-  
       console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
 
       // config.controllers.controllerNames.forEach((model) => {
       //       createSocket(socket, 'testRoute')
       // })
-
+      if(Object.keys(global.sockets).length === 0) {
       require('../../config/routeConfig')((obj, files) => {
-      
+        
         Object.keys(obj).forEach( (configName) => {
           // files.forEach( (file) => {
           //     var name = file.split('.')[0];
@@ -58,14 +86,25 @@ module.exports = {
 
           Object.keys(obj[configName]).forEach( (policy) => {
             let policyObj = obj[configName][policy];
+
             
             if(policyObj.active || policyObj.active === undefined) {
             
               if(policyObj.isAuthenticated && policyObj.isAuthenticated.active || policyObj.isAuthenticated && policyObj.isAuthenticated.active === undefined) {
-               
-                  policyObj.policies.forEach( (policyLogic, index) => {
+                createSocket(socket, configName+capFirst(policy))
+                  policyObj.policies.forEach( (policyLogic) => {
+
                       if(policyLogic[Object.keys(policyLogic)].active) {
-                        console.log(true)
+                        console.log(configName, policy)
+                       
+                        if(!global.sockets[configName]) {
+                          global.sockets[configName] = {};
+                          global.sockets[configName][policy] = []
+                        }
+      
+                        global.sockets[configName][policy].push(policyLogic);
+                        
+                    
                       }
                   })
               } else {
@@ -83,6 +122,11 @@ module.exports = {
         })
 
       });
+
+    } else {
+      console.log('dis be it')
+      console.log(global.sockets)
+    }
 
       // createSocket(socket, 'testRoute')
 

@@ -66,7 +66,7 @@ let read = {
         if (err) done(err);
         console.log('fUUUC')
         delete obj.passwordHash;
-        done(null, obj);
+     //   return done(null, obj);
       }
     );
 
