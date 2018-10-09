@@ -8,21 +8,21 @@
 	"policies": [
 		{
 			"checkUser": {
-				"groups": ["administratorz"],
-				"permissions": 2,
+				"groups": ["administrator"],
+				"permissions": 0,
 				"timing": "before",
 				"sockets": true,
-				"active": true
+				"active": false
 			}
 		},
 		{
 			"isTest": {
-				"groups": ["fuckers", "administrato"],
-				"match" : true,
+				"groups": ["fuckers", "administrator"],
+				"match" : false,
 				"permissions": 0,
 				"timing": "before",
 				"sockets": false,
-				"active": true
+				"active": false
 			}
 		}
 	]

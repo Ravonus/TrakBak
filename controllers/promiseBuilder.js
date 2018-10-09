@@ -10,20 +10,19 @@ let policy = {
    
     let promises = [];
 
-    console.log(req.userObj)
+  
     
     if (policyConfig) {
 
-  
+
+      policyConfig.forEach((policyName, index) => {
         
-      Object.keys(policyConfig).forEach((policyName, index) => {
+        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
-        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyConfig[policyName]));
-        // console.log('dis it', policyConfig[policyName])
-        let active = (typeof policyConfig[policyName].active === "undefined" ? true : policyConfig[policyName].active);
+        let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
 
-        if (active && !policyConfig[policyName].match) {
-        console.log('fuc dawg', policyConfig[policyName].groups.length)
+        if (active && !policyName[Object.keys(policyName)].match) {
+        console.log('fuc dawg', policyName[Object.keys(policyName)].groups.length)
           promises.push(
             new Promise((response, rej) => {
 
@@ -36,10 +35,9 @@ let policy = {
             })
           )
         } else {
-          console.log('pilicuy', policyConfig.isTest, 'pasd')
 
           if(req.userObj && req.userObj.groups) {
-            var groups = policyConfig[policyName].groups;
+            var groups = policyName[Object.keys(policyName)].groups;
             req.userObj.groups.forEach( (group) => {
               console.log('grouo', group.name, 'wtf', groups)
               if(groups.includes(group.name)) {
@@ -171,9 +169,6 @@ let policy = {
         response(req.userObj);
       }
     })
-  },
-  socketPromise: () => {
-    
   }
 }
 

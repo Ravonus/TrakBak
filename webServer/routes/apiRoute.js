@@ -65,8 +65,9 @@ var routeType = (req, res) => {
       req.userObj = data;
       
       let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', functionNames.routeType, req);
-
+   
       promises = promiseFunctions.grabPromises(policyConfig.policies, req);
+      console.log(promises, 'woot?');
     function promiseAll() {
       Promise.all(promises)
         .then(data => {

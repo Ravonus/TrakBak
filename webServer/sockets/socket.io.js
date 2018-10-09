@@ -95,7 +95,9 @@ module.exports = {
                   policyObj.policies.forEach( (policyLogic) => {
 
                       if(policyLogic[Object.keys(policyLogic)].active) {
-                        console.log(configName, policy)
+                        console.log('testzz')
+                        console.log(activeClients[socket.id].user)
+
                        
                         if(!global.sockets[configName]) {
                           global.sockets[configName] = {};

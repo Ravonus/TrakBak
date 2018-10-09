@@ -41,10 +41,11 @@ let read = {
 
     remove$(query);
 
+   
     Groups.find(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
     .exec((err, obj) => {
-      if (err) done(err);
+      if (err) return done(err);
       done(null, obj);
 
     })

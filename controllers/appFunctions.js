@@ -383,6 +383,8 @@ var functions = {
         
         //  console.log('cry??' + isSet);
         return new Promise((response, rej) => {
+
+          console.log('wtf perms', policies)
           
           if (policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)].active) {
          
