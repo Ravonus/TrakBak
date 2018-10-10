@@ -23,21 +23,6 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-function testRoute() {
-
-  socket.emit('testRoute', {
-    url: 'testURL',
-    form: 'da form'
-  });
-
-};
-
-socket.on('testRoute', function (data) {
-
-console.log(data)
-
-});
-
 function login() {
 
   socket.emit('login', {
@@ -48,6 +33,8 @@ console.log(data)
 };
 
 socket.on('login', function (data) {
+
+  console.log(data)
 
   var user = data.user;
  
@@ -84,4 +71,18 @@ socket.on('login', function (data) {
     };
 
   }
+});
+function testRoute() {
+
+  socket.emit('testRoute', {
+    url: 'testURL',
+    form: 'da form'
+  });
+
+};
+
+socket.on('testRoute', function (data) {
+
+console.log(data)
+
 });

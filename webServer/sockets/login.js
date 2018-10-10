@@ -4,9 +4,17 @@ module.exports = (socket) => {
 
   socket.on('login', (data) => {
 
+  
+
+    if(config.serverName) {
+
+    } else {
+      
+    }
     
     config.functions.postRequest('nojwt', `${config.serverName}/user/login`, { username: data.form[0], password: data.form[1] }, function (data) {
 
+ 
       var obj = JSON.parse(data);
 
       if (obj.user) {

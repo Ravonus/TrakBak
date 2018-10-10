@@ -5,7 +5,9 @@ const fs = require('fs'),
   // UglifyJS = require('uglify-js'),
   templatePath = path.join(__dirname, '../templates');
 
-
+  if(!config.serverName) {
+    config.serverName = `${ip.address()}:${config.httpsPort}`;
+  }
 //Read file function - Replace all static variables with regex words - Place within public client folder. This function is used within the file loop. Used to look at template files and put correct URL for sockets and API within.
 processFile = (myPath, file, word, replace) => {
   

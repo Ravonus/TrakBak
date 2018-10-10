@@ -54,6 +54,7 @@ module.exports = {
     isAuthenticated(socket.handshake.headers, (err, data) => {
         
       activeClients[socket.id].user = data;
+      console.log(data);
   })
 
   } else {
