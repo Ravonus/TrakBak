@@ -29,21 +29,12 @@ module.exports = {
 
   socket: (io) => {
 
-
-  
-
-    
-
-   
-
     io.on('connection', (socket) => {
       
-
       activeClients[socket.id] = {};
     
-
     socket.handshake.headers.cookies  = {};
-    if(socket.handshake.headers.cookie ){
+    if(socket.handshake.headers.cookie){
       activeClients[socket.id].cookie = socket.handshake.headers.cookie;
 
     socket.handshake.headers.cookie.split(/\s*;\s*/).forEach(function(pair) {
@@ -54,17 +45,10 @@ module.exports = {
     isAuthenticated(socket.handshake.headers, (err, data) => {
         
       activeClients[socket.id].user = data;
-      console.log(data);
+    
   })
 
-  } else {
-    console.log('ran')
-    console.log(activeClients[socket.id].user)
   }
-
-    
-
-
 
       console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
@@ -92,11 +76,11 @@ module.exports = {
             if(policyObj.active || policyObj.active === undefined) {
             
               if(policyObj.isAuthenticated && policyObj.isAuthenticated.active || policyObj.isAuthenticated && policyObj.isAuthenticated.active === undefined) {
-                createSocket(socket, configName+capFirst(policy))
+              
                   policyObj.policies.forEach( (policyLogic) => {
-
+                    createSocket(socket, configName+capFirst(policy), policyLogic)
                       if(policyLogic[Object.keys(policyLogic)].active) {
-                        console.log('testzz')
+
                         console.log(activeClients[socket.id].user)
 
                        
@@ -107,7 +91,6 @@ module.exports = {
       
                         global.sockets[configName][policy].push(policyLogic);
                         
-                    
                       }
                   })
               } else {
@@ -128,7 +111,7 @@ module.exports = {
 
     } else {
       console.log('dis be it')
-      console.log(global.sockets)
+   //   console.log(global.sockets)
     }
 
       // createSocket(socket, 'testRoute')
@@ -139,9 +122,6 @@ module.exports = {
       }
 
     });
-
-
-
 
   }
 }

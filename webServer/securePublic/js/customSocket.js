@@ -1,9 +1,9 @@
-var socket = io('https://10.0.0.85:3003');
-var trakbakSocket = 'https://10.0.0.85:3003';
+var socket = io('https://www.trakbak.tk:5001');
+var trakbakSocket = 'https://www.trakbak.tk:5001';
 var trakbak = {};
 
 socket.on('connected', function (data) {
-  console.log('dawgs n shit on connect.');
+  console.log('dawgs n shit on connects.');
 });
 
 socket.on('me', function (data) {
@@ -86,3 +86,4 @@ socket.on('testRoute', function (data) {
 console.log(data)
 
 });
+data to appenddata to appenddata to appenddata to appenddata to appenddata to appenddata to append

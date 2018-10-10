@@ -3,7 +3,7 @@ var trakbakSocket = '{{serverBack}}';
 var trakbak = {};
 
 socket.on('connected', function (data) {
-  console.log('dawgs n shit on connect.');
+  console.log('dawgs n shit on connects.');
 });
 
 socket.on('me', function (data) {
@@ -23,7 +23,8 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-function login() {
+
+function login() {
 
   socket.emit('login', {
     url: window.location.href,
@@ -72,7 +73,8 @@ socket.on('login', function (data) {
 
   }
 });
-function testRoute() {
+
+function testRoute() {
 
   socket.emit('testRoute', {
     url: 'testURL',

@@ -2,6 +2,7 @@ const config = require('../config/config'),
   http = require('https'),
   cookie = require('cookie-signature'),
   User = require('../webServer/models/User'),
+  fs = require('fs'),
   jwt = require('jsonwebtoken');
 
 const port = config.httpsPort;
@@ -508,7 +509,7 @@ var functions = {
 
   },
   // Options = name,groups,server,model,extras
-  createSocket: (socket, route, options) => {
+  createSocket: (socket, route, policies, options) => {
 
     if(!options) {
       options = {};
@@ -518,15 +519,28 @@ var functions = {
       options.server = config.serverName;
     }
 
+    console.log(policies, 'diz be policy')
+    functions.clientSocket();
+
     socket.on(route, (data) => {
 
           socket.emit(route, data);
 
           console.log(data);
         
+        
     });
 
-  }, 
+  },
+  clientSocket: (javascript) => {
+
+    fs.appendFile(`./templates/customSocket.js`, javascript, (err, data) => {
+      console.log('ran')
+  //need to add this to end of loop not here... Or else next file add will mess up    
+      require("../controllers/templateLoop"); 
+    });
+    
+  }
   
 }
 

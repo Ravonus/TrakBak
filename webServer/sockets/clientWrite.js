@@ -49,7 +49,7 @@ module.exports = function (text) {
           `${customSocket}\n\r${result}`,
 
         )
-          .then(result => require("../../controllers/templateLoop"))
+          .then(result => console.log(result))
 
           .catch(error => console.log(error));
 
