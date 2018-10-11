@@ -30,6 +30,7 @@ module.exports = {
   socket: (io) => {
 
     io.on('connection', (socket) => {
+      console.log(socket)
       
       activeClients[socket.id] = {};
     
@@ -56,7 +57,7 @@ module.exports = {
       // config.controllers.controllerNames.forEach((model) => {
       //       createSocket(socket, 'testRoute')
       // })
-      if(Object.keys(global.sockets).length === 0) {
+     
       require('../../config/routeConfig')((obj, files) => {
         
         Object.keys(obj).forEach( (configName) => {
@@ -103,16 +104,13 @@ module.exports = {
           // console.log(config.controllers.controllerNames)
        //   console.log(obj[configName].policies)
           if(!socket._events.testRoute){
-          createSocket(socket, 'testRoute')
+      //    createSocket(socket, 'testRoute')
           }
         })
 
       });
 
-    } else {
-      console.log('dis be it')
-   //   console.log(global.sockets)
-    }
+    
 
       // createSocket(socket, 'testRoute')
 

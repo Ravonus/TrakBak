@@ -23,8 +23,7 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-
-function login() {
+function login() {
 
   socket.emit('login', {
     url: window.location.href,
@@ -72,19 +71,308 @@ socket.on('login', function (data) {
     };
 
   }
-});
-
-function testRoute() {
-
-  socket.emit('testRoute', {
-    url: 'testURL',
-    form: 'da form'
-  });
-
-};
-
-socket.on('testRoute', function (data) {
-
-console.log(data)
-
-});
+});function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function GroupsRead(data) {
+      console.log(data)
+    socket.emit('GroupsRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('GroupsRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   function UserRemove(data) {
+      console.log(data)
+    socket.emit('UserRemove', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRemove', function (data) {console.log(data)})
+   function UserRead(data) {
+      console.log(data)
+    socket.emit('UserRead', 
+      {data:data}
+    );
+  
+    };
+   socket.on('UserRead', function (data) {console.log(data)})
+   

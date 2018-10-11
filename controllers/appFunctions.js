@@ -12,16 +12,16 @@ const ivId = '26ae5cc854e36b6bdfca366848dea6bb',
   requestCert = true
 
 
-  //functions for this page.
+//functions for this page.
 
 
-  //camelize function.
-  function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
-      return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
-    }).replace(/\s+/g, '');
-  }
-  
+//camelize function.
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (letter, index) {
+    return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+  }).replace(/\s+/g, '');
+}
+
 
 
 var functions = {
@@ -278,7 +278,7 @@ var functions = {
 
   isAuthenticated: (req, done) => {
 
-    
+
 
 
     if (req.cookies && req.cookies.jwt) {
@@ -298,19 +298,19 @@ var functions = {
             config.controllers.User.read.findOne({ _id: decoded.id }, (err, user) => {
 
               if (err) {
-                 return done('fucc');
-              } 
-             //  console.log(user.passwordHash)
-             
-               user.passwordHash = undefined;
-               
-                delete decoded.id;
-             //   console.log('is it me', user)
-             // console.log(decoded);
-            
-                return done(null, Object.assign(decoded, user._doc));
-              
-       
+                return done('fucc');
+              }
+              //  console.log(user.passwordHash)
+
+              user.passwordHash = undefined;
+
+              delete decoded.id;
+              //   console.log('is it me', user)
+              // console.log(decoded);
+
+              return done(null, Object.assign(decoded, user._doc));
+
+
 
             })
 
@@ -330,12 +330,12 @@ var functions = {
       req.userObj = {
         _id: 'public',
         name: 'public',
-        groups: [{name:'public'}]
+        groups: [{ name: 'public' }]
       }
       console.log('cry')
 
       done('notAuthenticated');
-     // return done(null, req.userObj)
+      // return done(null, req.userObj)
     }
 
   },
@@ -344,12 +344,12 @@ var functions = {
 
     return new Promise((response, rej) => {
 
-      if(typeof req === 'string'){
+      if (typeof req === 'string') {
         var token = req;
       } else {
         var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
       }
-      
+
 
 
       var jwtToken = jwtUnScramble(token);
@@ -381,24 +381,24 @@ var functions = {
     return promise = {
 
       promise: (userObj, policies) => {
-        
+
         //  console.log('cry??' + isSet);
         return new Promise((response, rej) => {
 
           console.log('wtf perms', policies)
-          
+
           if (policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)].active) {
-         
+
             var weight = 0;
             var permission;
-            if(typeof policies[Object.keys(policies)].permissions === 'object') {
+            if (typeof policies[Object.keys(policies)].permissions === 'object') {
               weight = policies[Object.keys(policies)].permissions.weight;
               permission = policies[Object.keys(policies)].permissions.value;
             } else {
               permission = policies[Object.keys(policies)].permissions;
             }
 
-            
+
 
             function getBinary(num) {
 
@@ -428,45 +428,45 @@ var functions = {
 
             var promises = [];
             Object.keys(policyPerms).forEach((key, index) => {
-           
-
-              if(policies[Object.keys(policies)].match && policies[Object.keys(policies)].groups && policies[Object.keys(policies)].groups.length > 0) {
-           
-                  var groups = policies[Object.keys(policies)].groups;
-                  var userGroups = userObj.groups;
-                  var i;
-                  for (i = 0; i < userObj.groups.length; i++) { 
 
 
-                   console.log(userGroups[i].name, 'ppppplllease', groups)
+              if (policies[Object.keys(policies)].match && policies[Object.keys(policies)].groups && policies[Object.keys(policies)].groups.length > 0) {
 
-                    if(groups.includes(userGroups[i].name)){
-                      console.log('cry')
-                      promisePush(userPerms[key]);
-                      i = userObj.groups.length + 1;
-                    } else {
-                      console.log('mah group ', userGroups[i].name, ' real group ', groups)
-                    }
+                var groups = policies[Object.keys(policies)].groups;
+                var userGroups = userObj.groups;
+                var i;
+                for (i = 0; i < userObj.groups.length; i++) {
+
+
+                  console.log(userGroups[i].name, 'ppppplllease', groups)
+
+                  if (groups.includes(userGroups[i].name)) {
+                    console.log('cry')
+                    promisePush(userPerms[key]);
+                    i = userObj.groups.length + 1;
+                  } else {
+                    console.log('mah group ', userGroups[i].name, ' real group ', groups)
                   }
+                }
               } else {
                 promisePush(userPerms[key])
               }
 
               function promisePush(perms) {
-               
-              promises.push(new Promise((response, rej) => {
 
-                if (perms) {
-           
-                  response('done')
-                } else {
-                 
-                  rej('fucc');
-                }
+                promises.push(new Promise((response, rej) => {
 
-              }));
-            }
-            
+                  if (perms) {
+
+                    response('done')
+                  } else {
+
+                    rej('fucc');
+                  }
+
+                }));
+              }
+
               if (index >= Object.keys(policyPerms).length - 1) {
 
                 console.log('be promsies', promises)
@@ -511,37 +511,44 @@ var functions = {
   // Options = name,groups,server,model,extras
   createSocket: (socket, route, policies, options) => {
 
-    if(!options) {
+    if (!options) {
       options = {};
     }
 
-    if(!options.server) {
+    if (!options.server) {
       options.server = config.serverName;
     }
 
-    console.log(policies, 'diz be policy')
-    functions.clientSocket();
-
+    console.log(route, 'diz be route')
+    functions.clientSocket(`function ${route}(data) {
+      console.log(data)
+    socket.emit('${route}', 
+      {data:data}
+    );
+  
+    };
+   socket.on('${route}', function (data) {console.log(data)})
+   `);
+   console.log(socket._events)
+   if(!socket._events[route]) {
+     console.log('test')
     socket.on(route, (data) => {
-
-          socket.emit(route, data);
-
-          console.log(data);
-        
-        
+      console.log(data)
+      socket.emit(route, data);
     });
-
+  
+  }
   },
   clientSocket: (javascript) => {
 
     fs.appendFile(`./templates/customSocket.js`, javascript, (err, data) => {
       console.log('ran')
-  //need to add this to end of loop not here... Or else next file add will mess up    
-      require("../controllers/templateLoop"); 
+      //need to add this to end of loop not here... Or else next file add will mess up    
+      require("../controllers/templateLoop");
     });
-    
+
   }
-  
+
 }
 
 module.exports = functions;
