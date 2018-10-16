@@ -3,7 +3,7 @@ const file = './templates/customSocket.js';
 let firstRun = false;
 let secondRun = false;
 
-module.exports = function (text) {
+module.exports = function (done) {
 
   const readFilePromise = (file, done) => {
     return new Promise((resolve, reject) => {
@@ -25,6 +25,7 @@ module.exports = function (text) {
 
       readFilePromise('./webServer/sockets/clients/' + fileName, (result) => {
 
+        console.log('FUCKER RAN NOW')
         const writeFilePromise = (file, text) => {
 
           return new Promise((resolve, reject) => {
@@ -49,7 +50,7 @@ module.exports = function (text) {
           `${customSocket}\n\r${result}`,
 
         )
-          .then(result => console.log(result))
+          .then(result =>  done())
 
           .catch(error => console.log(error));
 
@@ -57,5 +58,8 @@ module.exports = function (text) {
     })
 
   })
+
+  console.log('THIS IS DONE')
+ 
 
 }

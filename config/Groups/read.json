@@ -1,28 +1,27 @@
 {
+	"sockets": false,
+	"active": false,
 	"isAuthenticated": {
 		"timing": "before",
-		"sockets": true,
-		"webApi": true,
-		"active": true
+		"active": false
 	},
 	"policies": [
 		{
 			"checkUser": {
-				"groups": ["administrator"],
+				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"sockets": true,
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		},
 		{
 			"isTest": {
-				"groups": ["fuckers", "administrator"],
-				"match" : false,
+				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"sockets": false,
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		}
 	]

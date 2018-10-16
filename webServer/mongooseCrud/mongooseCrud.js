@@ -119,25 +119,29 @@ fs.readdir(modelsDir, function (err, files) {
                   var dir = `./config/${modelFile.slice(0, -3)}/`
                   fs.mkdirSync(dir)
                   var str = {
-                    "isAuthenticated": { "timing": "before", "active": false }, policies: []
+                    "sockets": false,
+                    "active": false,
+                    "isAuthenticated": { "timing": "before", "active": false, "sockets": false }, policies: []
                   }
 
                   getPolicies((arr) => {
                     arr.forEach((policy) => {
                       var policyName = policy.slice(0, -3);
-                      str.policies.push({ [policyName]: { "groups": [], "permissions": 0, "timing": "before", "active": false } })
+                      str.policies.push({ [policyName]: { "groups": [], "permissions": 0, "timing": "before", "active": false, "sockets": false } })
                     })
                   })
                   fs.writeFileSync(`${dir}${file.slice(0, -3)}.json`, JSON.stringify(str, null, "\t"))
                 } else if (!fs.existsSync(`./config/${modelFile.slice(0, -3)}/${file.slice(0, -3)}.json`)) {
                   var str = {
+                    "sockets": false,
+                    "active": false,
                     "isAuthenticated": { "timing": "before", "active": false },
                     policies: []
                   }
                   getPolicies((arr) => {
                     arr.forEach((policy) => {
                       var policyName = policy.slice(0, -3);
-                      str.policies.push({ [policyName]: { "groups": [], "permissions": 0, "timing": "before", "active": false } })
+                      str.policies.push({ [policyName]: { "groups": [], "permissions": 0, "timing": "before", "active": false, "sockets": false } })
                     })
                   })
 
@@ -247,7 +251,7 @@ fs.readdir(modelsDir, function (err, files) {
                       arr.forEach((policy, index) => {
 
 
-                        policiyArr.push({ [policy.substring(0, policy.length - 3)]: { "groups": [], "permissions": [], "timing": "before", "active": false } })
+                        policiyArr.push({ [policy.substring(0, policy.length - 3)]: { "groups": [], "permissions": [], "timing": "before", "active": false, "sockets": false } })
 
                         if (arr.length >= index + 1) {
 

@@ -1,7 +1,11 @@
 {
+	"sockets": true,
+	"active": false,
 	"isAuthenticated": {
 		"timing": "before",
-		"active": true
+		"groups": [],
+		"permissions": 0,
+		"active": false
 	},
 	"policies": [
 		{
@@ -9,7 +13,8 @@
 				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"active": true
+				"active": false,
+				"sockets": true
 			}
 		},
 		{
@@ -17,7 +22,8 @@
 				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		}
 	]

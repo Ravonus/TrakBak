@@ -1,5 +1,5 @@
-const appendSockets = require('./clientWrite')
-appendSockets();
+
+
 module.exports = (socket) => {
 
   socket.on('login', (data) => {

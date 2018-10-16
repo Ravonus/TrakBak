@@ -509,7 +509,7 @@ var functions = {
 
   },
   // Options = name,groups,server,model,extras
-  createSocket: (socket, route, policies, options) => {
+  createSocket: (socket, route, object, user, options) => {
 
     if (!options) {
       options = {};
@@ -519,32 +519,57 @@ var functions = {
       options.server = config.serverName;
     }
 
-    console.log(route, 'diz be route')
-    functions.clientSocket(`function ${route}(data) {
-      console.log(data)
-    socket.emit('${route}', 
-      {data:data}
-    );
-  
-    };
-   socket.on('${route}', function (data) {console.log(data)})
-   `);
-   console.log(socket._events)
-   if(!socket._events[route]) {
-     console.log('test')
-    socket.on(route, (data) => {
-      console.log(data)
-      socket.emit(route, data);
-    });
-  
-  }
+
+    //   functions.clientSocket(`function ${route}(data) {
+    //     console.log(data)
+    //   socket.emit('${route}', 
+    //     {data:data}
+    //   );
+
+    //   };
+    //  socket.on('${route}', function (data) {console.log(data)})
+    //  `);
+
+
+    if (Object.keys(object.policies).length > 0) {
+      object.policies.forEach((policy) => {
+
+        if (policy.sockets || policy.sockets === undefined) {
+          if (object.isAuthenticated) {
+            if (user) {
+              //push to promise array
+              console.log('RAAAAAN')
+            } else {
+
+            }
+          }
+        }
+      });
+    } else {
+      if (object.isAuthenticated) {
+        console.log(object.policies)
+      }
+    }
+
+    if (!socket._events || socket._events && !socket._events[route]) {
+
+
+      socket.on(route, (data) => {
+
+        console.log('diz data', data)
+
+        socket.emit(route, data);
+      });
+
+    }
   },
   clientSocket: (javascript) => {
 
+
     fs.appendFile(`./templates/customSocket.js`, javascript, (err, data) => {
-      console.log('ran')
+
       //need to add this to end of loop not here... Or else next file add will mess up    
-      require("../controllers/templateLoop");
+
     });
 
   }
