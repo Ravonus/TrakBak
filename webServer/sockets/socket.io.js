@@ -5,6 +5,8 @@ const config = require('../../config/config'),
 let sockets = [];
 let activeClients = {};
 
+console.log(policies, 'fuccccc')
+
 global.sockets = {};
 
 // setup socket scripts. Loops through sockets and sets an array up. Socket.io does a for loop to load each connection.
@@ -44,7 +46,8 @@ require('./clientWrite')(() => {
 
               policyObj.policies.forEach((policy, index) => {
 
-                if (!policy[Object.keys(policy)].sockets) {
+                if (policy[Object.keys(policy)].sockets !== undefined && !policy[Object.keys(policy)].sockets) {
+         
                   delete policyObj.policies[index];
                 }
               })
@@ -110,7 +113,8 @@ module.exports = {
 
           policyObject.forEach((policyObj) => {
 
-            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, activeClients[socket.id].user)
+      
+            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, activeClients[socket.id].user, policies)
    
         });
   
@@ -118,7 +122,11 @@ module.exports = {
         })
 
       } else {
-        createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, {})
+        policyObject.forEach((policyObj) => {
+        
+        createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj,  policies, {})
+        });
+        
       }
 
 
@@ -129,10 +137,10 @@ module.exports = {
   
 
 
-      // var i;
-      // for (i = 0; i < sockets.length; i++) {
-      //   sockets[i](socket)
-      // }
+      var i;
+      for (i = 0; i < sockets.length; i++) {
+        sockets[i](socket)
+      }
 
     });
 

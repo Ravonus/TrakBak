@@ -169,6 +169,12 @@ let policy = {
         response(req.userObj);
       }
     })
+  }, 
+  socketPromise: (policies) => {
+    let sockets = [];
+    return new Promise((response, reject) =>{ 
+
+    })
   }
 }
 

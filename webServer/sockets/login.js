@@ -5,6 +5,7 @@ module.exports = (socket) => {
   socket.on('login', (data) => {
 
   
+    console.log(data);
 
     if(config.serverName) {
 

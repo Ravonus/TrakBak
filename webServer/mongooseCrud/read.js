@@ -42,7 +42,6 @@ let read = {
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
     .exec((err, obj) => {
       if (err) return done(err);
-      return done(null, obj);
 
     })
 
@@ -60,7 +59,6 @@ let read = {
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) return done(err);
-        return done(obj);
       }
     );
 
@@ -76,7 +74,6 @@ let read = {
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) return done(err);
-        return done(obj);
       }
     );
 

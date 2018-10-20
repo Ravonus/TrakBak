@@ -43,30 +43,24 @@ let read = {
     User.find(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
     .exec((err, obj) => {
-      if (err) done(err);
-      done(null, obj);
+      if (err) return done(err);
 
     })
 
   },
   findOne: (query, keys, done) => {
 
-   
-
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
     remove$(query);
-
+    console.log('query DAWG', query);
     User.findOne(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
-        if (err) done(err);
-        console.log('fUUUC')
-        delete obj.passwordHash;
-      // return done(null, obj);
+        if (err) return done(err);
       }
     );
 

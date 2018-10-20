@@ -5,7 +5,7 @@
 		"timing": "before",
 		"groups": [],
 		"permissions": 0,
-		"active": false
+		"active": true
 	},
 	"policies": [
 		{
@@ -22,8 +22,7 @@
 				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"active": false,
-				"sockets": false
+				"active": true
 			}
 		}
 	]
