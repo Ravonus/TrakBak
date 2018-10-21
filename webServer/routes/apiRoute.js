@@ -33,29 +33,6 @@ var functionNames = {
 
 var routeType = (req, res) => {
 
-  
-  // delete require.cache[require.resolve('./config/modelName/routeType.json')]
-  // policyConfig = require(`./config/modelName/routeType.json`);
-  // let router = require('./webServer/routes/routes');
-
-  // //let refresh = require('./webServer/express').refresh;
-  // mongooseCrud();
-  // router.refresh()
-//  console.log(require('./webServer/express'))
-//console.log(require('./app').appSecure)
- // refresh(require('./app').appSecure)
-
-
-  
-  //  // refreshApiRoutes();
-
-   
-  //   policyConfig = require(`./config/modelName/routeType.json`);
-  //   console.log(policyConfig.policies, ' ddda fucc')
-
-  // mongooseCrud('update');
-
-
   let authPromise = promiseFunctions.checkAuth(req, policyConfig.isAuthenticated);
 
   authPromise
@@ -66,8 +43,10 @@ var routeType = (req, res) => {
       
       let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', functionNames.routeType, req);
    
+      if(policyConfig.api === undefined || policyConfig.api) {
       promises = promiseFunctions.grabPromises(policyConfig.policies, req);
-      console.log(promises, 'woot?');
+      }
+
     function promiseAll() {
       Promise.all(promises)
         .then(data => {
@@ -79,8 +58,7 @@ var routeType = (req, res) => {
 
           return res.status(200).send(data);
         }).catch(err => {
-         console.log('dizzz be error ', promises);
-         console.log('dizzz be error ', err.index);
+
         //  promises[err.index+1] = undefined;
          apiError({ res: res, type: err.err, statusCode: 500 })
 

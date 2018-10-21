@@ -19,10 +19,12 @@ let policy = {
         
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
-        let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
+        let active = (typeof policyName[Object.keys(policyName)].api === "undefined" ? true : policyName[Object.keys(policyName)].api);
+
+
 
         if (active && !policyName[Object.keys(policyName)].match) {
-        console.log('fuc dawg', policyName[Object.keys(policyName)].groups.length)
+
           promises.push(
             new Promise((response, rej) => {
 
@@ -39,7 +41,6 @@ let policy = {
           if(req.userObj && req.userObj.groups) {
             var groups = policyName[Object.keys(policyName)].groups;
             req.userObj.groups.forEach( (group) => {
-              console.log('grouo', group.name, 'wtf', groups)
               if(groups.includes(group.name)) {
                 console.log('bat man');
                 promises.push(
@@ -142,7 +143,7 @@ let policy = {
         })
       }
 
-      console.log(promise)
+  
 
     return promise;
 
@@ -151,11 +152,12 @@ let policy = {
 
     return new Promise((response, rej) => {
 
-      if (str.active) {
+      if (str.api) {
 
         isAuthenticated(req, (err, data) => {
 
-          if (err) rej(err)
+          if (err) return rej(err)
+          console.log('diz data', data);
           response(data)
 
         })

@@ -5,6 +5,10 @@ const config = require('../../config/config'),
 let sockets = [];
 let activeClients = {};
 
+console.log(config, 'CONFIG')
+
+config.functions.test('fuck you')
+
 console.log(policies, 'fuccccc')
 
 global.sockets = {};
