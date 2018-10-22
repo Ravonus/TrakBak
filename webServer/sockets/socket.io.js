@@ -5,12 +5,6 @@ const config = require('../../config/config'),
 let sockets = [];
 let activeClients = {};
 
-console.log(config, 'CONFIG')
-
-config.functions.test('fuck you')
-
-console.log(policies, 'fuccccc')
-
 global.sockets = {};
 
 // setup socket scripts. Loops through sockets and sets an array up. Socket.io does a for loop to load each connection.
@@ -38,6 +32,8 @@ require('./clientWrite')(() => {
         let policyObj = obj[configName][route];
         if (typeof policyObj === 'object') {
           obj[configName].route = route;
+
+  
 
           if (policyObj.sockets) {
 
@@ -98,6 +94,7 @@ module.exports = {
 
     io.on('connection', (socket) => {
 
+
       var t0 = new Date().getTime();
 
       activeClients[socket.id] = {};
@@ -111,14 +108,27 @@ module.exports = {
           socket.handshake.headers.cookies[pair[0]] = pair.splice(1).join('=');
         });
 
+ 
+
         isAuthenticated(socket.handshake.headers, (err, data) => {
 
           activeClients[socket.id].user = data;
 
+         
+
           policyObject.forEach((policyObj) => {
 
+            var options = {};
+
+            if(policyObj.groups && policyObj.groups.length !== 0) {
+              options.groups = policyObj.groups;
+            }
+
+            if(policyObj.permissions && policyObj.permissions !== 0) {
+              options.permissions = policyObj.permissions;
+            }
       
-            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, activeClients[socket.id].user, policies)
+            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, activeClients[socket.id].user, policies, options)
    
         });
   

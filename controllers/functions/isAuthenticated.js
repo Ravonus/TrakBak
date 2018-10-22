@@ -5,6 +5,8 @@ module.exports = (req, done) => {
 
   if (req.cookies && req.cookies.jwt) {
 
+    console.log('ran???')
+
     var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
 
     if (jwtCookie) {
