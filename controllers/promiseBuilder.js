@@ -17,6 +17,7 @@ let policy = {
 
       policyConfig.forEach((policyName, index) => {
         
+  
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
         let active = (typeof policyName[Object.keys(policyName)].api === "undefined" ? true : policyName[Object.keys(policyName)].api);

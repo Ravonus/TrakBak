@@ -58,10 +58,22 @@ module.exports = (socket, route, object, user, functions, options) => {
         return el != null;
       });
 
+      
+      if(object.permissions && object.permissions > 0 ) {
+        console.log(object.permissions, 'fucc arays');
+        promises.push(config.functions.permissions(user.permissions).promise(user, object, 'sockets'));
+      }
+      
+
       if (Object.keys(array).length > 0) {
 
         array.forEach((policy, index) => {
-          
+
+
+
+          promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
+
+          console.log(promise)        
      
 
           var obj = policy[Object.keys(policy)];
@@ -83,10 +95,9 @@ module.exports = (socket, route, object, user, functions, options) => {
     options.permissions = 0;
   }
 
-
   var permissions = options.permissions + obj.permissions;
 
-  console.log(permissions)
+  
 
   // if(options.groups) {
   //   options.groups.forEach( (group) => {

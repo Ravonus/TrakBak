@@ -8,13 +8,14 @@
 		"groups": [],
 		"permissions": 0,
 		"api": true,
-		"sockets": false
+		"sockets": true
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": ["dock"],
-				"permissions": 4,
+				"match": ["administrator",14],
+				"permissions": 8,
 				"timing": "before",
 				"api": false,
 				"sockets": true
@@ -23,9 +24,10 @@
 		{
 			"isTest": {
 				"groups": ["chock"],
-				"permissions": 0,
+				"permissions": 2,
 				"timing": "before",
-				"api": false
+				"api": false,
+				"sockets": true
 			}
 		}
 	]
