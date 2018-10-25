@@ -14,8 +14,8 @@
 		{
 			"checkUser": {
 				"groups": ["dock"],
-				"match": ["administrator",14],
-				"permissions": 8,
+				"match": ["administrato", 2],
+				"permissions": 2,
 				"timing": "before",
 				"api": false,
 				"sockets": true
@@ -27,7 +27,7 @@
 				"permissions": 2,
 				"timing": "before",
 				"api": false,
-				"sockets": true
+				"sockets": false
 			}
 		}
 	]
