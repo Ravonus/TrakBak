@@ -9,7 +9,7 @@ function login() {
 
 socket.on('login', function (data) {
 
-  console.log(data)
+  console.log(data,'FICCCCL')
 
   var user = data.user;
  

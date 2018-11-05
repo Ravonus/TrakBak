@@ -27,8 +27,14 @@ module.exports = {
   login: (req, res, next) => {
 
     //setup authentication for passport. This will let us attach passport checks ontop of express route calls.
+    console.log(req.body);
+    if(req.body && !req.body.username && req.body['name.username']) {
+      req.body.username = req.body['name.username'];
+    }
+    console.log(';pgon', req.body.username, 'fuck pw', req.body.password)
     req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
+      console.log(user);
 
       if (user.error) {
 

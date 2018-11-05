@@ -1,9 +1,9 @@
 {
 	"sockets": true,
-	"active": false,
+	"api": true,
 	"isAuthenticated": {
 		"timing": "before",
-		"active": false,
+		"api": false,
 		"sockets": false
 	},
 	"policies": [
@@ -12,7 +12,7 @@
 				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"active": true,
+				"api": false,
 				"sockets": false
 			}
 		},

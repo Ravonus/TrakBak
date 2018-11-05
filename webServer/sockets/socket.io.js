@@ -153,6 +153,7 @@ module.exports = {
 
       var i;
       for (i = 0; i < sockets.length; i++) {
+     
         sockets[i](socket)
       }
 

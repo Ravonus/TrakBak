@@ -1,5 +1,5 @@
-var socket = io('https://www.trakbak.tk:5001');
-var trakbakSocket = 'https://www.trakbak.tk:5001';
+var socket = io('10.0.0.85:3003');
+var trakbakSocket = '10.0.0.85:3003';
 var trakbak = {};
 
 socket.on('connected', function (data) {
@@ -34,7 +34,7 @@ socket.on('me', function (data) {
 
 socket.on('login', function (data) {
 
-  console.log(data)
+  console.log(data,'FICCCCL')
 
   var user = data.user;
  
@@ -71,20 +71,4 @@ socket.on('login', function (data) {
     };
 
   }
-});function userCreate(data) {
-          console.log(data)
-        socket.emit('userCreate', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userCreate', function (data) {console.log(data)})
-       function userRead(data) {
-          console.log(data)
-        socket.emit('userRead', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userRead', function (data) {console.log(data)})
-       
+});

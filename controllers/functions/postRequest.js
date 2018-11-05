@@ -7,7 +7,7 @@ host = config.host;
 
 module.exports =   (jwt, path, object, _callback) => {
 
-    console.log('ran')
+    console.log('ranz', host, port, path)
 
     let json = JSON.stringify(object);
 
