@@ -19,16 +19,18 @@ require('./clientWrite')(() => {
     if (file !== 'socket.io.js' && file !== 'clientWrite.js' && file !== 'clients') {
 
       sockets.push(require(`./${file}`));
+      console.log(sockets);
     }
-    capFirst
+    
   });
 
-
+  
   require('../../config/routeConfig')((obj, files) => {
-
+   
     Object.keys(obj).forEach((configName, index) => {
 
       Object.keys(obj[configName]).forEach((route) => {
+        
         let policyObj = obj[configName][route];
         if (typeof policyObj === 'object') {
           obj[configName].route = route;

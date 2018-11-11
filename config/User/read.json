@@ -1,33 +1,34 @@
 {
 	"sockets": true,
 	"api": true,
-	"permissions": 2,
-	"groups": ["fuck"],
+	"permissions": 0,
+	"groups": [],
 	"isAuthenticated": {
 		"timing": "before",
 		"groups": [],
 		"permissions": 0,
 		"api": true,
-		"sockets": true
+		"sockets": false
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": ["dock"],
-				"match": ["administrato", 2],
-				"permissions": 2,
-				"timing": "before",
-				"api": false,
-				"sockets": true
-			}
-		},
-		{
-			"isTest": {
-				"groups": ["chock"],
+				"match": ["administrato"],
 				"permissions": 2,
 				"timing": "before",
 				"api": false,
 				"sockets": false
+			}
+		},
+		{
+			"isTest": {
+				"groups": ["public"],
+				"match": ["public"],
+				"permissions": 0,
+				"timing": "before",
+				"api": false,
+				"sockets": true
 			}
 		}
 	]

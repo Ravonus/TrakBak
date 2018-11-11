@@ -71,4 +71,28 @@ socket.on('login', function (data) {
     };
 
   }
-});
+});function userCreate(data) {
+          console.log(data)
+        socket.emit('userCreate', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userCreate', function (data) {console.log(data)})
+       function userRead(data) {
+          console.log(data)
+        socket.emit('userRead', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRead', function (data) {console.log(data)})
+       function userRemove(data) {
+          console.log(data)
+        socket.emit('userRemove', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRemove', function (data) {console.log(data)})
+       

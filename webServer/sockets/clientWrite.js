@@ -19,13 +19,13 @@ module.exports = function (done) {
   }
 
   readFilePromise(file, (customSocket) => {
+
     customSocket = `${customSocket.replace(/\/\/Don't edit after this line\. Edit inside of clients folder\.\/\/(.*)/s, '')}//Don't edit after this line. Edit inside of clients folder.//\n`;
 
     fs.readdirSync(__dirname + '/clients/').forEach(function (fileName, index) {
 
       readFilePromise('./webServer/sockets/clients/' + fileName, (result) => {
 
-        console.log('FUCKER RAN NOW')
         const writeFilePromise = (file, text) => {
 
           return new Promise((resolve, reject) => {
@@ -58,8 +58,5 @@ module.exports = function (done) {
     })
 
   })
-
-  console.log('THIS IS DONE')
- 
 
 }

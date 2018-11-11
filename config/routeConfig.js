@@ -2,16 +2,18 @@ const fs = require("fs");
 var configs = {}
 
 
-module.exports =  (done) => {
+module.exports = (done) => {
 
+    
 
 config.controllers.controllerNames.forEach((name) => {
-    console.log(name.name)
+
+ //   console.log(name.name)
 })
 
     var dirLength = fs.readdirSync(__dirname).length;
     fs.readdirSync(__dirname).forEach(function(file, indexFirst) {
-        
+     
         if(!file.split('.')[1]) 
         var model = file;
         if(config.controllers[model]){
@@ -39,9 +41,9 @@ config.controllers.controllerNames.forEach((name) => {
                     }
 
                     configs[model][file.split('.')[0]] = content;
-                    
+                  //  console.log(indexFirst, dirLength - 1)
                     if (index === files.length - 1 && indexFirst === dirLength - 1) { 
-                      
+                        console.log('I FUCKING RAN HOMEZ')
                       //  module.exports = 'cry fuck';
                       console.log('runnnn??',   fs.readdirSync(__dirname).length)
                         exportRun(configs, files);
@@ -54,7 +56,7 @@ config.controllers.controllerNames.forEach((name) => {
 
         });
         } else {
-            dirLength--;
+         //   dirLength--;
         }
       });
 

@@ -2,7 +2,7 @@ module.exports = (req, done) => {
 
 
 
-  setTimeout(function(){ done(null, 'fucc') }, 5000);
+  setTimeout(function(){ done(null, 'fucc') }, 20000);
 
   
 }

@@ -1,6 +1,18 @@
 const config = require('../../config/config');
 
 
+Array.prototype.remove = function() {
+  var what, a = arguments, L = a.length, ax;
+  while (L && this.length) {
+      what = a[--L];
+      while ((ax = this.indexOf(what)) !== -1) {
+          this.splice(ax, 1);
+      }
+  }
+  return this;
+};
+
+
 // Options = name,groups,server,model,extras
 module.exports = (socket, route, object, user, functions, options) => {
 
@@ -60,7 +72,7 @@ module.exports = (socket, route, object, user, functions, options) => {
 
       
       if(object.permissions && object.permissions > 0 ) {
-        console.log(object.permissions, 'fucc arays');
+
         promises.push(config.functions.permissions(user.permissions).promise(user, object, 'sockets'));
       }
       
@@ -69,22 +81,48 @@ module.exports = (socket, route, object, user, functions, options) => {
 
         array.forEach((policy, index) => {
 
+          var myPolicy = policy[Object.keys(policy)];
 
+          if(!myPolicy.match || myPolicy.match.length === 0){
+            myPolicy.match = [];
+          }
+
+          if(!myPolicy.groups || myPolicy.groups.length === 0){
+            myPolicy.groups = [];
+          }
+
+          console.log(myPolicy.match.includes(JSON.stringify(myPolicy.groups)));
+          if(myPolicy.match.length > 0) {
+            myPolicy.match.forEach( (match,index) => {
+              if(myPolicy.groups.length > 0 && myPolicy.groups.includes(match)) {
+
+                myPolicy.groups.remove(match);
+                console.log(myPolicy.groups, 'and match?', myPolicy.match)
+                if(index === myPolicy.match.length - 1) {
+                    myPolicy.groups = [...myPolicy.groups, ...myPolicy.match];
+                }
+              }
+            })
+          }
+
+       //   console.log('Diz be policy??', policy);
 
           promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
 
-          console.log(promise)        
-     
 
           var obj = policy[Object.keys(policy)];
 
 
-          if (obj.sockets || obj.sockets === undefined) {
+          if (obj && obj.sockets || obj && obj.sockets === undefined) {
 
 
   if(!obj.groups) {
     obj.groups = [];
   }
+  if(!options.groups) {
+    options.groups = [];
+  }
+
 
   var groups = [...options.groups, ...obj.groups]
 
