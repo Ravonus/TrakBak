@@ -1,13 +1,13 @@
 const config = require('../../config/config');
 
 
-Array.prototype.remove = function() {
+Array.prototype.remove = function () {
   var what, a = arguments, L = a.length, ax;
   while (L && this.length) {
-      what = a[--L];
-      while ((ax = this.indexOf(what)) !== -1) {
-          this.splice(ax, 1);
-      }
+    what = a[--L];
+    while ((ax = this.indexOf(what)) !== -1) {
+      this.splice(ax, 1);
+    }
   }
   return this;
 };
@@ -16,25 +16,33 @@ Array.prototype.remove = function() {
 // Options = name,groups,server,model,extras
 module.exports = (socket, route, object, user, functions, options) => {
 
-  if (!options) {
-    options = {};
-  }
 
-
-
-
-
-
-
+  
   if (!socket._events || socket._events && !socket._events[route]) {
 
     socket.on(route, (data) => {
 
+
+     // console.log(options);
+      var oldOptions;
+
+      // options = {};
+
       if (data && data.data) {
 
         if (typeof data.data === 'object') {
-          options = Object.assign(data.data, options);
+
+          options = Object.assign(options, data.data);
+        } else {
+          console.log('DATA OTHER');
+          //   options.value = data.data;
+          options = Object.assign(options, { value: data.data, type: "findOne" });
+
         }
+
+      } else {
+        delete options.value;
+        options.type = 'find';
       }
 
       var promises = [];
@@ -70,12 +78,12 @@ module.exports = (socket, route, object, user, functions, options) => {
         return el != null;
       });
 
-      
-      if(object.permissions && object.permissions > 0 ) {
+
+      if (object.permissions && object.permissions > 0) {
 
         promises.push(config.functions.permissions(user.permissions).promise(user, object, 'sockets'));
       }
-      
+
 
       if (Object.keys(array).length > 0) {
 
@@ -83,69 +91,34 @@ module.exports = (socket, route, object, user, functions, options) => {
 
           var myPolicy = policy[Object.keys(policy)];
 
-          if(!myPolicy.match || myPolicy.match.length === 0){
+          if (!myPolicy.match || myPolicy.match.length === 0) {
             myPolicy.match = [];
           }
 
-          if(!myPolicy.groups || myPolicy.groups.length === 0){
+          if (!myPolicy.groups || myPolicy.groups.length === 0) {
             myPolicy.groups = [];
           }
 
-          console.log(myPolicy.match.includes(JSON.stringify(myPolicy.groups)));
-          if(myPolicy.match.length > 0) {
-            myPolicy.match.forEach( (match,index) => {
-              if(myPolicy.groups.length > 0 && myPolicy.groups.includes(match)) {
 
+          if (myPolicy.match.length > 0) {
+            myPolicy.match.forEach((match, index) => {
+              if (myPolicy.groups.length > 0 && myPolicy.groups.includes(match)) {
+                runPromise();
                 myPolicy.groups.remove(match);
-                console.log(myPolicy.groups, 'and match?', myPolicy.match)
-                if(index === myPolicy.match.length - 1) {
-                    myPolicy.groups = [...myPolicy.groups, ...myPolicy.match];
+
+                if (index === myPolicy.match.length - 1) {
+                  myPolicy.groups = [...myPolicy.groups, ...myPolicy.match];
                 }
               }
             })
+          } else {
+            runPromise();
           }
 
-       //   console.log('Diz be policy??', policy);
+          function runPromise() {
 
-          promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
-
-
-          var obj = policy[Object.keys(policy)];
-
-
-          if (obj && obj.sockets || obj && obj.sockets === undefined) {
-
-
-  if(!obj.groups) {
-    obj.groups = [];
-  }
-  if(!options.groups) {
-    options.groups = [];
-  }
-
-
-  var groups = [...options.groups, ...obj.groups]
-
-  if(!obj.permissions) {
-    obj.permissions = 0;
-  }
-  if(!options.permissions) {
-    options.permissions = 0;
-  }
-
-  var permissions = options.permissions + obj.permissions;
-
-  
-
-  // if(options.groups) {
-  //   options.groups.forEach( (group) => {
-  //     groups.push(group);
-  //   })
-  // }
-
-  //console.log(obj.groups)
-            
             promises.push(new Promise((resolve, reject) => {
+
               functions[Object.keys(policy)]({ userObj: { [user]: '0' } }, (err, data) => {
 
                 if (err) {
@@ -156,6 +129,48 @@ module.exports = (socket, route, object, user, functions, options) => {
               })
 
             }));
+
+          }
+          //   console.log('Diz be policy??', policy);
+
+          promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
+
+
+          var obj = policy[Object.keys(policy)];
+
+
+          if (obj && obj.sockets || obj && obj.sockets === undefined) {
+
+
+            if (!obj.groups) {
+              obj.groups = [];
+            }
+            if (!options.groups) {
+              options.groups = [];
+            }
+
+
+            var groups = [...options.groups, ...obj.groups]
+
+            if (!obj.permissions) {
+              obj.permissions = 0;
+            }
+            if (!options.permissions) {
+              options.permissions = 0;
+            }
+
+            var permissions = options.permissions + obj.permissions;
+
+
+
+            // if(options.groups) {
+            //   options.groups.forEach( (group) => {
+            //     groups.push(group);
+            //   })
+            // }
+
+            //console.log(obj.groups)
+
 
           }
 
@@ -174,39 +189,76 @@ module.exports = (socket, route, object, user, functions, options) => {
 
         if (promises.length > 0) {
           Promise.all(promises).then(data => {
+            var keys = {};
+            var query = {};
             var controller = route.split(/(?=[A-Z])/);
             var modelFunction = config.controllers[capFirst(controller[0])]
             var controllerName = controller[1].toLowerCase();
             //console.log(window[capFirst(controller[0])])
-        
-            if (!options || !options.type) {
 
-              var functionIndex = Object.keys(modelFunction[controllerName])[0];
+            var functionIndex = Object.keys(modelFunction[controllerName])[0];
 
-              modelFunction[controllerName][functionIndex]((err, data) => {
+            if (options && options.type) {
+            //  console.log(options);
+              functionIndex = options.type
+              switch (functionIndex) {
+                case 'find':
 
+                  break;
+                case 'findOne':
+
+                  break;
+                case 'findById':
+
+                  query = options.value ? options.value : options.id ? options.id : options._id
+                  if (keys) {
+
+                  }
+
+
+                  break;
+                case 'byId':
+                  query = options.value ? options.value : options.id ? options.id : options._id
+                  if (keys) {
+
+                  }
+                  break;
+                case 'byFind':
+
+                  break;
+                default:
+
+              }
+
+              if (!modelFunction[controllerName][functionIndex]) {
+                functionIndex = Object.keys(modelFunction[controllerName])[0];
+            //    console.log('diz index', functionIndex);
+              }
+            }
+
+            if (controllerName === 'read') {
+             /// console.log('one little ducky, two little ducky');
+              modelFunction[controllerName][functionIndex](query, keys, (err, data) => {
+                console.log('ranZZZZZZZ')
                 socket.emit(route, data);
               })
-            } else if (options.value) {
+            } else if (controllerName === 'remove') {
 
-              var functionIndex = modelFunction[controllerName][options.type];
-
-
-              functionIndex(options.value, (err, data) => {
-
+              modelFunction[controllerName][functionIndex](query, (err, data) => {
+            
                 socket.emit(route, data);
-
               });
-
-            } else {
 
             }
 
 
+
           }).catch(err => {
 
+     
+
             socket.emit(route, err);
-            console.log('ERROR')
+            console.log('ERROR', err)
           });
         }
 

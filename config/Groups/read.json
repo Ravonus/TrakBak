@@ -1,10 +1,10 @@
 {
 	"sockets": false,
-	"api": true,
+	"api": false,
 	"isAuthenticated": {
 		"timing": "before",
 		"sockets": false,
-		"api": true
+		"api": false
 	},
 	"policies": [
 		{
@@ -12,7 +12,7 @@
 				"groups": [],
 				"permissions": 0,
 				"timing": "before",
-				"api": true,
+				"api": false,
 				"sockets": false
 			}
 		},

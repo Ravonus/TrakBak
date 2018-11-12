@@ -19,14 +19,14 @@ require('./clientWrite')(() => {
     if (file !== 'socket.io.js' && file !== 'clientWrite.js' && file !== 'clients') {
 
       sockets.push(require(`./${file}`));
-      console.log(sockets);
+
     }
     
   });
 
   
   require('../../config/routeConfig')((obj, files) => {
-   
+
     Object.keys(obj).forEach((configName, index) => {
 
       Object.keys(obj[configName]).forEach((route) => {
@@ -61,14 +61,21 @@ require('./clientWrite')(() => {
             obj[configName][route].name = configName;
             obj[configName][route].route = route;
             policyObject.push(obj[configName][route]);
+
             clientSocket(`function ${routeName}(data) {
           console.log(data)
+         t0 = performance.now();
         socket.emit('${routeName}', 
           {data:data}
         );
       
         };
-       socket.on('${routeName}', function (data) {console.log(data)})
+       socket.on('${routeName}', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
        `);
 
 
@@ -139,15 +146,13 @@ module.exports = {
 
       } else {
         policyObject.forEach((policyObj) => {
+       
         
         createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj,  policies, {})
         });
         
       }
 
-
-
-      console.log('clinet connected');
       socket.emit('connected', { connected: 'true' });
 
   

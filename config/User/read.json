@@ -7,28 +7,28 @@
 		"timing": "before",
 		"groups": [],
 		"permissions": 0,
-		"api": true,
-		"sockets": false
+		"api": false,
+		"sockets": true
 	},
 	"policies": [
 		{
 			"checkUser": {
-				"groups": ["dock"],
-				"match": ["administrato"],
-				"permissions": 2,
+				"groups": [],
+				"match": ["administrato", "publics"],
+				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": false
+				"sockets": true
 			}
 		},
 		{
 			"isTest": {
 				"groups": ["public"],
-				"match": ["public"],
+				"match": ["publicz", "public"],
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": true
+				"sockets": false
 			}
 		}
 	]

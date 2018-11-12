@@ -1,6 +1,7 @@
-var socket = io('10.0.0.85:3003');
-var trakbakSocket = '10.0.0.85:3003';
+var socket = io('https://www.trakbak.tk:5001');
+var trakbakSocket = 'https://www.trakbak.tk:5001';
 var trakbak = {};
+var t0;
 
 socket.on('connected', function (data) {
   console.log('dawgs n shit on connects.');
@@ -73,26 +74,44 @@ socket.on('login', function (data) {
   }
 });function userCreate(data) {
           console.log(data)
+         t0 = performance.now();
         socket.emit('userCreate', 
           {data:data}
         );
       
         };
-       socket.on('userCreate', function (data) {console.log(data)})
-       function userRead(data) {
-          console.log(data)
-        socket.emit('userRead', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userRead', function (data) {console.log(data)})
+       socket.on('userCreate', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
        function userRemove(data) {
           console.log(data)
+         t0 = performance.now();
         socket.emit('userRemove', 
           {data:data}
         );
       
         };
-       socket.on('userRemove', function (data) {console.log(data)})
+       socket.on('userRemove', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
+       function userRead(data) {
+          console.log(data)
+         t0 = performance.now();
+        socket.emit('userRead', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRead', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
        

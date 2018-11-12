@@ -76,7 +76,6 @@ let read = {
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
-        done(obj);
       }
     );
 
