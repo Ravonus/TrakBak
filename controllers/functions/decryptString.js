@@ -15,3 +15,14 @@ module.exports = (text, salt) => {
   }
 
 }
+
+/*
+ * Project: trakbak
+ * File Created: Tuesday, 13th November 2018 8:50:14 pm
+ * Author: Chad Koslovsky (chad@technomancyIT.com)
+ * -----
+ * Last Modified: Tuesday, 13th November 2018 9:58:51 pm
+ * Modified By: Chad Koslovsky (chad@technomancyIT.com>)
+ * -----
+ * Copyright 2018 - 2018 - TechnomancyIT
+ */

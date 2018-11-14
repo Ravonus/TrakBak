@@ -1,6 +1,6 @@
 {
-	"sockets": false,
-	"active": false,
+	"sockets": true,
+	"api": false,
 	"isAuthenticated": {
 		"timing": "before",
 		"active": false
