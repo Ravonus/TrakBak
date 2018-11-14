@@ -1,25 +1,28 @@
 {
+	"sockets": false,
+	"api": false,
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
-		"active": false
+		"sockets": false,
+		"api": false
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"api": false,
+				"sockets": false
 			}
 		},
 		{
 			"isTest": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"api": false,
+				"sockets": false
 			}
 		}
 	]

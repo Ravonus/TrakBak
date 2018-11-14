@@ -1,78 +1,6 @@
 {{> head}}
 <style>
-    .intro-2 {
-        background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img%20(11).jpg")no-repeat center center;
-        background-size: cover;
-    }
 
-    .top-nav-collapse {
-        background-color: #3f51b5 !important;
-    }
-
-    .navbar:not(.top-nav-collapse) {
-        background: transparent !important;
-    }
-
-    @media (max-width: 768px) {
-        .navbar:not(.top-nav-collapse) {
-            background: #3f51b5 !important;
-        }
-    }
-
-    .card {
-        background-color: rgba(229, 228, 255, 0.2);
-    }
-
-    .md-form .prefix {
-        font-size: 1.5rem;
-        margin-top: 1rem;
-    }
-
-    .md-form label {
-        color: #ffffff;
-    }
-
-    h6 {
-        line-height: 1.7;
-    }
-
-    @media (max-width: 740px) {
-        .full-height,
-        .full-height body,
-        .full-height header,
-        .full-height header .view {
-            height: 750px;
-        }
-    }
-
-    @media (min-width: 741px) and (max-height: 638px) {
-        .full-height,
-        .full-height body,
-        .full-height header,
-        .full-height header .view {
-            height: 750px;
-        }
-    }
-
-    .card {
-        margin-top: 30px;
-        /*margin-bottom: -45px;*/
-    }
-
-    .md-form input[type=text]:focus:not([readonly]),
-    .md-form input[type=password]:focus:not([readonly]) {
-        border-bottom: 1px solid #8EDEF8;
-        box-shadow: 0 1px 0 0 #8EDEF8;
-    }
-
-    .md-form input[type=text]:focus:not([readonly])+label,
-    .md-form input[type=password]:focus:not([readonly])+label {
-        color: #8EDEF8;
-    }
-
-    .md-form .form-control {
-        color: #fff;
-    }
 </style>
 
 <body class="fixed-sn white-skin">
@@ -83,7 +11,7 @@
         <nav  class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <strong>ClikBak</strong>
+                    <strong>Trakbak</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -92,18 +20,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="https://clikbak.com">Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav mr-sm-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="https://clikbak.com">Purchase</a>
+                        <a class="nav-link" href="https://clikbak.com">Contact</a>
                     </li>
                     </ul>
                 </div>
@@ -113,19 +35,19 @@
 
         <!--Intro Section-->
         <section class="view intro-2 hm-stylish-strong">
-            <div class="full-bg-img flex-center">
+            <div class="full-bg-img flex-center flex-center-login">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
 
                             <!--Form with header-->
-                            <div class="card wow fadeIn text-light" data-wow-delay="0.3s">
+                            <div class="card orange-transparent wow fadeIn text-light" data-wow-delay="0.3s">
                                 <div class="card-body">
 
                                     <!--Header-->
-                                    <div class="form-header purple-gradient">
+                                    <div class="form-header orange-gradient">
                                         <h3>
-                                            <i class="fa fa-user mt-2 mb-2"></i> Log in:</h3>
+                                            <i class="fa fa-user mt-2 mb-2"></i> Sign in:</h3>
                                     </div>
 
                                     <!--Body-->
@@ -133,7 +55,7 @@
                                     <div class="md-form">
                                         <i class="fa fa-envelope prefix white-text"></i>
                                         <input v-model="login" type="text" id="username" name="username" class="form-control">
-                                        <label for="username">Your email</label>
+                                        <label  for="username">Your email</label>
                                     </div>
 
                                     <div class="md-form">
@@ -143,7 +65,7 @@
                                     </div>
                                     </form> 
                                     <div class="text-center">
-                                        <button onclick="login()" class="btn purple-gradient btn-lg">Sign In</button>
+                                        <button onclick="login()" class="btn orange-gradient btn-lg">Sign In</button>
                                         <hr>
                                         <div class="inline-ul text-center d-flex justify-content-center">
                                             <a class="icons-sm tw-ic">

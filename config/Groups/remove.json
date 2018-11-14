@@ -1,7 +1,7 @@
 {
+	"sockets": false,
+	"active": false,
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
 		"active": false
 	},
@@ -9,17 +9,19 @@
 		{
 			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		},
 		{
 			"isTest": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		}
 	]

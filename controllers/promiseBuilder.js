@@ -7,33 +7,67 @@ let config = require('../config/config');
 let policy = {
   grabPromises: (policyConfig, req) => {
 
+   
     let promises = [];
 
+  
+    
     if (policyConfig) {
 
-      policyConfig.forEach((policyName) => {
 
-        let active = (typeof policyName[Object.keys(policyName)].active === "undefined" ? true : policyName[Object.keys(policyName)].active);
+      policyConfig.forEach((policyName, index) => {
+        
+  
+        promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
-        if (active)
+        let active = (typeof policyName[Object.keys(policyName)].api === "undefined" ? true : policyName[Object.keys(policyName)].api);
+
+
+
+        if (active && !policyName[Object.keys(policyName)].match) {
+
           promises.push(
             new Promise((response, rej) => {
 
               policies[Object.keys(policyName)](req, (err, data) => {
-
-                if (err) rej(err);
+                
+                if (err) rej({err, index});
                 else response(data);
               });
 
             })
           )
+        } else {
+
+          if(req.userObj && req.userObj.groups) {
+            var groups = policyName[Object.keys(policyName)].groups;
+            req.userObj.groups.forEach( (group) => {
+              if(groups.includes(group.name)) {
+                console.log('bat man');
+                promises.push(
+                  new Promise((response, rej) => {
+      
+                    policies[Object.keys(policyName)](req, (err, data) => {
+                      
+                      if (err) rej({err, index});
+                      else response(data);
+                    });
+      
+                  })
+                )
+              }
+            })
+          }
+        }
 
       })
+
+     
 
       return promises;
 
     }
-
+ 
   },
   mongoosePromise: (modelName, routeType, modelFunction, req) => {
 
@@ -43,12 +77,12 @@ let policy = {
 
     }
 
+    
+
     var promise =
 
       () => {
         return new Promise((response, rej) => {
-
-
 
 
           if (req.url.split('/').length >= 3 && routeType !== 'create') {
@@ -93,7 +127,7 @@ let policy = {
           else if (routeType === 'update') {
             config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
 
-              if (err) rej(err)
+              if (err) rej({err:err})
               response(data)
             });
 
@@ -102,13 +136,15 @@ let policy = {
 
             config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
 
-              if (err) rej(err)
+              if (err) rej({err:err})
               response(data)
             });
           }
 
         })
       }
+
+  
 
     return promise;
 
@@ -117,16 +153,30 @@ let policy = {
 
     return new Promise((response, rej) => {
 
-      if (str.active) {
+      if (str.api) {
 
         isAuthenticated(req, (err, data) => {
-          if (err) rej(err)
+
+          if (err) return rej(err)
+          console.log('diz data', data);
           response(data)
 
         })
       } else {
-        response('noAuth');
+        req.userObj = {
+          _id: 'public',
+          name: 'public',
+          groups: [{name:'public'}]
+        }
+
+        response(req.userObj);
       }
+    })
+  }, 
+  socketPromise: (policies) => {
+    let sockets = [];
+    return new Promise((response, reject) =>{ 
+
     })
   }
 }

@@ -1,14 +1,17 @@
 const path = require('path'),
   argv = require('yargs').argv;
-
-
 /*
-* Create and export configuration variables
+* Create and export configuration variables (This gets its information within the environment files. If new environment is required. Just create a config for it.)
 *
 */
 
+
 //Container for all the environments
 let environments = {};
+
+//run sass configuration on start
+
+require('./sass.js');
 
 require("fs").readdirSync(__dirname + '/environments/').forEach(function (file) {
 

@@ -1,5 +1,5 @@
 //This auto feels backend server ip and port.
-var clikbakSocket = '192.168.0.169:3002';
+var clikbakSocket = 'https://www.trakbak.tk:5001';
 var trakbak = {};
 
 //public table variable.

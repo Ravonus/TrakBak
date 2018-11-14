@@ -9,7 +9,6 @@ const express = require('express'),
 
 //User Routes
 
-console.log(User.api);
 router.route('/user/login').post(bodyParser, routes.user.login);
 //User Create Route
 //router.route('/user').post(bodyParser, routes.user.createUser, next);
@@ -22,11 +21,12 @@ router.route('/user/me').get(bodyParser, routes.user.me, next);
 
 function cb() {
   if(global.trakbak.controllers) {
-    
-    controllerNames.forEach((controller) => {
 
+    controllerNames.forEach((controller) => {
+    
       if(controller.type  !== 'create') {
 
+   
       router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
       }
       router.route(`/${controller.name}`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
@@ -55,4 +55,4 @@ router.route('/').get(routes.home, next);
 //Catch All route(This makes sure if you go to non-existing route. It has a 404 page.)
 router.route('*').get(routes.catchAll);
 
-module.exports = router;
+module.exports = {router, refresh:cb};

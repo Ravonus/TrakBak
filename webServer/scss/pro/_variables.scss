@@ -1,0 +1,433 @@
+// Variables Pro
+$border-radius-rounded:               10em;
+
+// Gradients Premium
+$gradients-premium: (
+  "purple": (
+    "start": #ff6ec4,
+    "end": #7873f5
+  ),
+  "peach": (
+    "start": #FFD86F,
+    "end": #FC6262
+  ),
+  "aqua": (
+    "start": #2096ff,
+    "end": #05ffa3
+  ),
+  "blue": (
+    "start": #45cafc,
+    "end": #303f9f
+  ),
+);
+
+// Accordion
+$accordion-card-header-padding-y:      1rem;
+$accordion-card-header-padding-x:      1.5rem;
+$accordion-rotate-icon-transform:      rotate(180deg);
+$accordion-link-hover-transition:      ease-in-out .3s;
+$accordion-card-body-line-height:      1.7;
+$accordion-card-body-color:            #626262;
+$accordion-card-body-font-size:        .9rem;
+
+// Animations
+$animations-pro-transform:             $accordion-rotate-icon-transform;
+$animations-pro-transition:            all 150ms ease-in 0s;
+
+// Autocomplete
+$autocomplete-margin-bottom:           1px;
+$autocomplete-clear-top:               0.85rem;
+$autocomplete-clear-color:             #a6a6a6;
+$autocomplete-wrap-max-height:         210px;
+$autocomplete-wrap-li-padding-y:       12px;
+$autocomplete-wrap-li-padding-x:       15px;
+$autocomplete-wrap-li-font-size:       .875rem;
+$autocomplete-wrap-li-hover-bg:        rgb(238, 238, 238);
+
+// Buttons
+$btn-floating-width:                   47px !default;
+$btn-floating-height:                  $btn-floating-width;
+$btn-floating-icon-size:               1.25rem !default;
+$btn-floating-line-height:             $btn-floating-width;
+
+$btn-floating-width-sm:                $btn-floating-width / 1.3 !default;
+$btn-floating-height-sm:               $btn-floating-width-sm;
+$btn-floating-icon-size-sm:            $btn-floating-icon-size / 1.3 !default;
+$btn-floating-line-height-sm:          $btn-floating-width-sm;
+
+$btn-floating-width-lg:                $btn-floating-width * 1.3 !default;
+$btn-floating-height-lg:               $btn-floating-width-lg;
+$btn-floating-icon-size-lg:            $btn-floating-icon-size * 1.3 !default;
+$btn-floating-line-height-lg:          $btn-floating-width-lg;
+
+$btn-floating-transtion:               $transition-basic;
+$btn-floating-margin:                  10px;
+$btn-floating-border-radius:           $border-radius-circle;
+
+$fixed-action-btn-right:               35px;
+$fixed-action-btn-bottom:              $fixed-action-btn-right;
+$fixed-action-btn-padding-top:         15px;
+$fixed-action-btn-ul-bottom:           64px;
+$fixed-action-btn-li-margin-bottom:    15px;
+
+$btn-rounded-border-radius:            $border-radius-rounded;
+
+// Social buttons
+$btn-counter-margin-top:               0px;
+$btn-sm-counter-margin-top:            8px;
+$btn-md-counter-margin-top:            5px;
+$btn-lg-counter-margin-top:            -4px;
+$btn-counter-margin-left:              -23px;
+$btn-counter-border-radius:            $border-radius-rounded;
+$btn-counter-padding-y:                1px;
+$btn-counter-padding-x:                7px;
+$btn-counter-bgc:                      rgb(254, 18, 18);
+$btn-counter-font-size:                11px;
+
+$icons-sm-margin:                      .5rem;
+$icons-sm-padding:                     $icons-sm-margin;
+$icons-sm-font-size:                   1.2rem;
+
+// Blog
+$blog-comment-date-text-color:         #666;
+$personal-sm-transition-duration:      .2s;
+$personal-sm-hover-transform:          scale(1.2);
+
+// Cards
+$card-up-size:                         120px;
+$card-avatar-margin-top:               -65px;
+$card-wrapper-min-height:              500px;
+$card-wrapper-perspective:             800px;
+$card-rotating-transform-style:        preserve-3d;
+$card-front-effect-click-transform:    rotateY(180deg);
+$card-back-effect-click-transform:     rotateY(0);
+$card-front-back-transition:           1s;
+$card-back-transform:                  rotateY(-180deg);
+
+// Charts
+$min-chart-width:                      110px;
+$min-chart-height:                     $min-chart-width;
+$min-chart-margin:                     50px;
+$min-chart-line-height:                $min-chart-width;
+$min-chart-percent-margin:             .1em;
+$min-chart-percent-font-size:          .8rem;
+
+// File input
+$file-path-wrapper-padding-left:       10px;
+$file-path-wrapper-height:             2.5rem;
+$file-input-path:                      2.1rem;
+$file-input-filter:                    alpha(opacity=0);
+
+// Input group
+$input-group-text-checkbox-pl:        18px;
+$input-group-text-height:             13px;
+$input-group-text-radio-pl:           24px;
+
+// Range input
+$input-range-my:                      15px;
+$input-range-mx:                      0px;
+$input-range-thumb-top:               10px;
+$input-range-thumb-margin-left:       -6px;
+$input-range-transform-origin:        50% 50%;
+$input-range-transform:               rotate(-45deg);
+$input-range-thumb-value-width:       30px;
+$input-range-thumb-value-transform:   rotate(45deg);
+$input-range-active-value-ml:         -1px;
+$input-range-active-value-mt:         8px;
+$input-range-active-value-font-size:  10px;
+$slider-runnable-track-height:        3px;
+$slider-runnable-track-bg:            #c2c0c2;
+$slider-thumb-height:                 14px;
+$slider-thumb-width:                  $slider-thumb-height;
+$slider-thumb-mt:                     -5px;
+$slider-thumb-transition:             .3s;
+$slider-runnable-track-focus-bg:      #ccc;
+$slider-border-width:                 6px;
+
+// Chips
+$chip-height:                         32px;
+$chip-font-size:                      13px;
+$chip-font-weight:                    500;
+$chip-font-color:                     rgba($black, .6);
+$chip-line-height:                    32px;
+$chip-padding-right:                  12px;
+$chip-br:                             16px;
+$chip-background-color:               map-get($blue-grey, "lighten-5");
+$chip-margin-bottom:                  1rem;
+$chip-margin-right:                   1rem;
+$chip-img-margin-right:               8px;
+$chip-img-margin-left:                -12px;
+$chip-img-height:                     32px;
+$chip-img-width:                      32px;
+$chip-close-font-size:                16px;
+$chip-close-line-height:              32px;
+$chip-close-padding-left:             8px;
+
+$chips-margin-bottom:                 30px;
+$chips-min-height:                    45px;
+$chips-padding-bottom:                1rem;
+$chips-input-font-color:              rgba($black, .6);
+$chips-input-font-size:               13px;
+$chips-input-font-weight:             500;
+$chips-input-height:                  32px;
+$chips-input-margin-right:            20px;
+$chips-input-line-height:             32px;
+$chips-input-width:                   120px;
+
+// Tabs
+$tabs-padding:                        0.7rem;
+$tabs-margin-x:                       1rem;
+$tabs-margin-y:                      -20px;
+$pills-padding:                       0.6rem;
+
+// Tabs classic
+$classic-tabs-padding-y:              20px;
+$classic-tabs-padding-x:              24px;
+$classic-tabs-font-size:              13px;
+$classic-tabs-color:                  rgba($white, .7);
+$classic-tabs-margin-left:            56px;
+
+// Skins
+$skins: (
+  "white": (
+    "skin-primary-color": #4285F4,
+    "skin-navbar": #fff,
+    "skin-footer-color": #6f7178,
+    "skin-accent": #4285F4,
+    "skin-flat": #F9F9F9,
+    "skin-sidenav-item": #4285F4,
+    "skin-sidenav-item-hover": rgba(0,0,0,0.05),
+    "skin-gradient-start": #ababab,
+    "skin-gradient-end": #fff,
+    "skin-mask-slight": rgba(255, 255, 255, 0.5),
+    "skin-mask-light": rgba(255, 255, 255, 0.65),
+    "skin-mask-strong": rgba(255, 255, 255, 0.8),
+    "skin-sn-child": #4285F4,
+    "skin-btn-primary": #4285F4,
+    "skin-btn-secondary": #fc685f,
+    "skin-btn-default": #454545,
+    "skin-text": #424242
+  ),
+  "black": (
+    "skin-primary-color": #2AD1A3,
+    "skin-navbar": #222,
+    "skin-footer-color": #222,
+    "skin-accent": #2AD1A3,
+    "skin-flat": #222,
+    "skin-sidenav-item": #2AD1A3,
+    "skin-sidenav-item-hover": #2AD1A3,
+    "skin-gradient-start": #000,
+    "skin-gradient-end": #616161,
+    "skin-mask-slight": rgba(0, 0, 0, 0.5),
+    "skin-mask-light": rgba(0, 0, 0, 0.65),
+    "skin-mask-strong": rgba(0, 0, 0, 0.8),
+    "skin-sn-child": #2AD1A3,
+    "skin-btn-primary": #2AD1A3,
+    "skin-btn-secondary": #0f478a,
+    "skin-btn-default": #222222,
+    "skin-text": #fff
+  ),
+  "cyan": (
+    "skin-primary-color": #4fada7,
+    "skin-navbar": #114861,
+    "skin-footer-color": #114861,
+    "skin-accent": #f0b247,
+    "skin-flat": #24879d,
+    "skin-sidenav-item": rgba(29, 65, 82, 0.8),
+    "skin-sidenav-item-hover": rgba(29, 65, 82, 0.8),
+    "skin-gradient-start": #114861,
+    "skin-gradient-end": #45b0c0,
+    "skin-mask-slight": rgba(21, 78, 96, 0.5),
+    "skin-mask-light": rgba(21, 78, 96, 0.65),
+    "skin-mask-strong": rgba(21, 78, 96, 0.8),
+    "skin-sn-child": #ffa742,
+    "skin-btn-primary": #ffa742,
+    "skin-btn-secondary": #45b0c0,
+    "skin-btn-default": #114861,
+    "skin-text": #fff
+  ),
+  "mdb": (
+    "skin-primary-color": #33b5e5,
+    "skin-navbar": #243a51,
+    "skin-footer-color": #243a51,
+    "skin-accent": #33b5e5,
+    "skin-flat": #224562,
+    "skin-sidenav-item": rgba(72, 198, 255, 0.8),
+    "skin-sidenav-item-hover": rgba(72, 198, 255, 0.8),
+    "skin-gradient-start": #0e2135,
+    "skin-gradient-end": #2c76b8,
+    "skin-mask-slight": rgba(13, 36, 60, 0.5),
+    "skin-mask-light": rgba(13, 36, 60, 0.65),
+    "skin-mask-strong": rgba(13, 36, 60, 0.8),
+    "skin-sn-child": #67d5ff,
+    "skin-btn-primary": #33b5e5,
+    "skin-btn-secondary": #0e3d67,
+    "skin-btn-default": #1a6398,
+    "skin-text": #fff
+  ),
+  "deep-purple": (
+    "skin-primary-color": #d0637c,
+    "skin-navbar": #7f7e91,
+    "skin-footer-color": #7f7e91,
+    "skin-accent": #ac85f0,
+    "skin-flat": #372e5f,
+    "skin-sidenav-item": rgba(176, 139, 240, 0.5),
+    "skin-sidenav-item-hover": rgba(176, 139, 240, 0.5),
+    "skin-gradient-start": #2e1f49,
+    "skin-gradient-end": #a47fe3,
+    "skin-mask-slight": rgba(36, 9, 56, 0.5),
+    "skin-mask-light": rgba(36, 9, 56, 0.65),
+    "skin-mask-strong": rgba(36, 9, 56, 0.88),
+    "skin-sn-child": #c9abfc,
+    "skin-btn-primary": #ac85f0,
+    "skin-btn-secondary": #6e4ca3,
+    "skin-btn-default": #372e5f,
+    "skin-text": #fff
+  ),
+  "navy-blue": (
+    "skin-primary-color": #309e9e,
+    "skin-navbar": #353b50,
+    "skin-footer-color": #353b50,
+    "skin-accent": #40c6c6,
+    "skin-flat": #4c5678,
+    "skin-sidenav-item": rgba(37, 207, 207, 0.8),
+    "skin-sidenav-item-hover": rgba(37, 207, 207, 0.8),
+    "skin-gradient-start": #222735,
+    "skin-gradient-end": #4f68a6,
+    "skin-mask-slight": rgba(14, 15, 32, 0.5),
+    "skin-mask-light": rgba(14, 15, 32, 0.65),
+    "skin-mask-strong": rgba(14, 15, 32, 0.8),
+    "skin-sn-child": #40c6c6,
+    "skin-btn-primary": #40c6c6,
+    "skin-btn-secondary": #7e51b4,
+    "skin-btn-default": #293756,
+    "skin-text": #fff
+  ),
+  "pink": (
+    "skin-primary-color": #bd5d70,
+    "skin-navbar": #535466,
+    "skin-footer-color": #535466,
+    "skin-accent": #9fa0ae,
+    "skin-flat": #aa5077,
+    "skin-sidenav-item": rgba(0, 0, 0, 0.4),
+    "skin-sidenav-item-hover": rgba(0, 0, 0, 0.4),
+    "skin-gradient-start": #812b5a,
+    "skin-gradient-end": #f28cc0,
+    "skin-mask-slight": rgba(152, 47, 88, 0.5),
+    "skin-mask-light": rgba(152, 47, 88, 0.65),
+    "skin-mask-strong": rgba(152, 47, 88, 0.8),
+    "skin-sn-child": #ffb0e6,
+    "skin-btn-primary": #601f39,
+    "skin-btn-secondary": #e7649d,
+    "skin-btn-default": #535466,
+    "skin-text": #fff
+  ),
+  "indigo": (
+    "skin-primary-color": #7f82c5,
+    "skin-navbar": #9095aa,
+    "skin-footer-color": #9095aa,
+    "skin-accent": #fd668c,
+    "skin-flat": #404f9f,
+    "skin-sidenav-item": rgba(250, 80, 121, 0.8),
+    "skin-sidenav-item-hover": rgba(250, 80, 121, 0.8),
+    "skin-gradient-start": #272d6e,
+    "skin-gradient-end": #90a8ff,
+    "skin-mask-slight": rgba(35, 65, 134, 0.5),
+    "skin-mask-light": rgba(35, 65, 134, 0.65),
+    "skin-mask-strong": rgba(35, 65, 134, 0.8),
+    "skin-sn-child": #ff89ac,
+    "skin-btn-primary": #fd668c,
+    "skin-btn-secondary": #3c61ae,
+    "skin-btn-default": #9095aa,
+    "skin-text": #fff
+  ),
+  "light-blue": (
+    "skin-primary-color": #3d799c,
+    "skin-navbar": #3f5c80,
+    "skin-footer-color": #3f5c80,
+    "skin-accent": #b4c2c9,
+    "skin-flat": #6a9ed3,
+    "skin-sidenav-item": rgba(29, 54, 86, 0.6),
+    "skin-sidenav-item-hover": rgba(29, 54, 86, 0.6),
+    "skin-gradient-start": #69adf4,
+    "skin-gradient-end": #69adf4,
+    "skin-mask-slight": rgba(87, 134, 180, 0.5),
+    "skin-mask-light": rgba(87, 134, 180, 0.65),
+    "skin-mask-strong": rgba(87, 134, 180, 0.8),
+    "skin-sn-child": #aadeff,
+    "skin-btn-primary": #ff4a67,
+    "skin-btn-secondary": #64c3f0,
+    "skin-btn-default": #2d486a,
+    "skin-text": #fff
+  ),
+  "grey": (
+    "skin-primary-color": #2b2b2b,
+    "skin-navbar": #44474b,
+    "skin-footer-color": #44474b,
+    "skin-accent": #75c1f0,
+    "skin-flat": #a5a4a4,
+    "skin-sidenav-item": rgba(0, 0, 0, 0.4),
+    "skin-sidenav-item-hover": rgba(0, 0, 0, 0.4),
+    "skin-gradient-start": #383838,
+    "skin-gradient-end": #a5a4a4,
+    "skin-mask-slight": rgba(121, 121, 121, 0.5),
+    "skin-mask-light": rgba(121, 121, 121, 0.65),
+    "skin-mask-strong": rgba(121, 121, 121, 0.8),
+    "skin-sn-child": #afdffc,
+    "skin-btn-primary": #46aded,
+    "skin-btn-secondary": #7d8488,
+    "skin-btn-default": #353637,
+    "skin-text": #fff
+  )
+);
+
+// Radio Buttons
+$radio-fill-color:                    $primary-color !default;
+$radio-empty-color:                   #5a5a5a !default;
+
+// Dropdown
+$dropdown-bg-color:                   $white !default;
+$dropdown-hover-bg-color:             #eee !default;
+$dropdown-color:                      $primary-color !default;
+$dropdown-item-height:                40px !default;
+
+// SideNav Variables
+$sidenav-breakpoint: 1440px !default;
+$hide-sidenav: "only screen and (max-width : #{$sidenav-breakpoint})" !default;
+$navbar-avatar-height: 35px;
+$navbar-double-small-padding: 4px;
+$navbar-double-font-size: 15px;
+$navbar-breadcrumb-dn-padding: 1rem;
+$navbar-button-collapse-left: 10px;
+$navbar-button-collapse-font-size: 1.5rem;
+$navbar-button-collapse-fs-sm: 1.4rem;
+$navbar-button-collapse-mx: 10px;
+
+// LIGHT BOX
+$pswp__show-hide-transition-duration: 333ms !default;
+$pswp__controls-transition-duration: 333ms !default;
+$pswp__background-color: #000 !default;
+$pswp__placeholder-color: #222 !default;
+$pswp__box-sizing-border-box: true !default; // disable .pswp * { box-sizing:border-box } (in case you already have it in your site css)
+$pswp__root-z-index: 1500 !default;
+$pswp__assets-path: "" !default; // path to skin assets folder (preloader, PNG and SVG sprite)
+$pswp__error-text-color: #CCC !default; // "Image not loaded" text color
+$pswp__include-minimal-style: true !default;
+
+// Date Picker
+$datepicker-weekday-bg: darken($primary-color, 7%) !default;
+$datepicker-date-bg: $primary-color !default;
+$datepicker-year: rgba(255, 255, 255, .4) !default;
+$datepicker-focus: rgba(0,0,0, .05) !default;
+$datepicker-selected: $primary-color !default;
+$datepicker-selected-outfocus: desaturate(lighten($primary-color, 35%), 15%) !default;
+
+//default time picker
+$timepicker-pickerbox-breakpoint: 40.125em;
+$timepicker-pickerlistitem-breakpoint: 46.75em;
+//default time & date picker
+$pickerframe-wrap-box-breakpoint: 28.875em;
+$pickerframe-mb-breakpoint: 40.125em;
+$pickerframe-pos-breakpoint: 35.875em;
+//default date picker
+$pickerweekday-padb-breakpoint: 33.875em;

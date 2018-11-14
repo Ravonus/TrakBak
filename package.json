@@ -8,7 +8,9 @@
     "staging": "node app.js --env=staging",
     "development": "node app.js --env=development",
     "production": "node app.js --env=production",
-    "test": "node app.js --mochaTest"
+    "test": "node app.js --mochaTest",
+    "build-css": "./webServer/shared/css",
+    "watch-css": "./webServer/scss"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,9 @@
     "cookie-session": "^2.0.0-beta.3",
     "expect": "^23.6.0",
     "express": "^4.16.3",
+    "express-route-refresh": "0.0.2",
     "express-session": "^1.15.6",
+    "fast-glob": "^2.2.2",
     "greenlock": "^2.4.2",
     "hbs": "^4.0.1",
     "ip": "^1.1.5",
@@ -42,8 +46,11 @@
     "letsencrypt": "^2.1.9",
     "lodash": "^4.17.11",
     "mongoose": "^5.2.17",
+    "mongoose-auto-increment": "^5.0.1",
     "mongoose-unique-validator": "^2.0.2",
     "node-minify": "^3.5.0",
+    "node-sass": "^4.9.3",
+    "node-watch": "^0.5.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "prettyjson": "^1.2.1",
@@ -52,6 +59,7 @@
     "ssl-root-cas": "^1.2.5",
     "uglify-js": "^3.4.9",
     "url-parse": "^1.4.3",
+    "webpack": "^4.20.2",
     "yargs": "^12.0.2"
   },
   "devDependencies": {

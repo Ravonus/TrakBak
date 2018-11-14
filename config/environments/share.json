@@ -2,6 +2,8 @@
   "version": "0.0.2 Alpha",
   "cookieSecret": "theyBeS3crets!",
   "host": "localhost",
+  "serverName_bak" : "https://10.0.0.85:3003",
   "certLocation": "/webServer/https/cert.pem",
-  "keyLocation": "/webServer/https/key.pem"
+  "keyLocation": "/webServer/https/key.pem",
+  "ivId": "26ae5cc854e36b6bdfca366848dea6bb"
 }

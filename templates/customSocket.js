@@ -1,20 +1,11 @@
 var socket = io('{{server}}');
 var trakbakSocket = '{{serverBack}}';
 var trakbak = {};
-
-function login() {
-
-  socket.emit('login', {
-    url: window.location.href,
-    form: [loginApp.login,loginApp.password]
-  });
-
-}
+var t0;
 
 socket.on('connected', function (data) {
-  console.log('dawgs n shit on connect.');
-})
-
+  console.log('dawgs n shit on connects.');
+});
 
 socket.on('me', function (data) {
   if (!JSON.parse(data.msg).error) {
@@ -31,32 +22,30 @@ socket.on('me', function (data) {
   }
 });
 
+//Don't edit after this line. Edit inside of clients folder.//
+
+function login() {
+
+  socket.emit('login', {
+    url: window.location.href,
+    form: [loginApp.login,loginApp.password]
+  });
+
+};
+
 socket.on('login', function (data) {
-  console.log('wtf');
+
+  console.log(data,'FICCCCL')
 
   var user = data.user;
  
-
   if (user && user.jwt) {
 
-    
     setCookie('jwt', user.jwt, 30)
     var jwt = user.jwt;
     // Save data to sessionStorage
     localStorage.setItem('trakbak', JSON.stringify( {user: data.user}));
 
-    // if (user.registrationKey !== null) {
-
-    //   var options = {
-    //     closeButton: true,
-    //     preventDuplicates: true,
-    //     positionClass: 'toast-top-full-width'
-
-    //   }
-
-    //   alerts('error', 'Email Verification', 'You still need to verify your email before you can access application.', options)
-
-    // }
     window.location.href = '/';
   } else {
 
@@ -82,10 +71,47 @@ socket.on('login', function (data) {
       "hideMethod": "fadeOut",
     };
 
-   // var error = JSON.parse(data.msg);
-
-   // Command: toastr["error"](error.message, error.error, options)
-
   }
-});
+});function userCreate(data) {
+          console.log(data)
+         t0 = performance.now();
+        socket.emit('userCreate', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userCreate', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
+        })
+       function userRead(data) {
+          console.log(data)
+         t0 = performance.now();
+        socket.emit('userRead', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRead', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
+       function userRemove(data) {
+          console.log(data)
+         t0 = performance.now();
+        socket.emit('userRemove', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRemove', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
+       

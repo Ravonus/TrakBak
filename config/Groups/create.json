@@ -1,25 +1,28 @@
 {
+	"sockets": false,
+	"active": false,
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
-		"active": false
+		"active": false,
+		"sockets": false
 	},
 	"policies": [
 		{
-			"isTest": {
+			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		},
 		{
-			"checkUser": {
+			"isTest": {
 				"groups": [],
-				"permissions": [],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"active": false,
+				"sockets": false
 			}
 		}
 	]

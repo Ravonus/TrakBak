@@ -14,7 +14,7 @@ var update = {
       (err, obj) => {
       // Handle any possible database errors
       if (err) return done(err);
-      done(null, obj);
+      return done(null, obj);
       }
   )
   
@@ -32,7 +32,7 @@ var update = {
       (err, obj) => {
       // Handle any possible database errors
       if (err) return done(err);
-      done(null, obj);
+      return done(null, obj);
       }
   )
   }

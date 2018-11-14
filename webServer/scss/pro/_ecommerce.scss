@@ -1,0 +1,171 @@
+// Ecommerce Pro Cards
+// Collection card
+.collection-card {
+  .stripe {
+    position: absolute;
+    bottom: 3rem;
+    width: 100%;
+    text-align: center;
+    padding: 1.2rem;
+    &.dark {
+      background-color: rgba(0, 0, 0, 0.7);
+      a p {
+        color: map-get($grey, "lighten-3");
+      }
+    }
+    &.light {
+      background-color: rgba(255, 255, 255, 0.7);
+      a p {
+        color: map-get($grey, "darken-3");
+      }
+    }
+    a {
+      p {
+        padding: 0;
+        margin: 0;
+        letter-spacing: 4px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.rating {
+  color: #ffa000;
+  list-style-type:none;
+  padding:0;
+  li {
+    display: inline-block;
+  }
+}
+// When icon doesn't need padding
+.no-padding {
+  .fa {
+    padding: 0;
+  }
+}
+
+// Quick look modal
+.ql-modal,
+.product-panel {
+  .modal-dialog {
+    max-width: none;
+    width: auto;
+    margin: 2rem;
+  }
+  .modal-header {
+    text-align: center;
+  }
+  .price {
+    .badge {
+      background-color: rgba(244, 67, 54, 0.7);
+      font-size: 1.4rem;
+      display: inline-block;
+      margin-left: 1rem;
+    }
+    p {
+      display: inline-block;
+      font-size: 1.3rem;
+      .price-before {
+        color: $black;
+        text-decoration: line-through;
+        margin-left: 0.5rem;
+      }
+      .price-after {
+        font-size: 1.7rem;
+        color: map-get($green, "base");
+      }
+    }
+  }
+  .media img {
+    max-width: 60px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .ql-modal {
+    .modal-dialog {
+      margin: 0;
+    }
+    padding-left: 0;
+  }
+}
+
+// Collection card
+.collection-card {
+  .stripe {
+    position: absolute;
+    bottom: 3rem;
+    width: 100%;
+    text-align: center;
+    padding: 1.2rem;
+    &.dark {
+      background-color: rgba(0, 0, 0, 0.7);
+      a p {
+        color: #eeeeee;
+      }
+    }
+    &.light {
+      background-color: rgba(255, 255, 255, 0.7);
+      a p {
+        color: #424242;
+      }
+    }
+    a {
+      p {
+        padding: 0;
+        margin: 0;
+        letter-spacing: 4px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+// Cart modal
+.cart-modal {
+  .table,
+  th {
+    text-align: center;
+  }
+  .table {
+    .total {
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .fa-remove {
+      color: $primary-color;
+    }
+  }
+}
+
+.card {
+  &.card-ecommerce {
+    .card-footer {
+      background-color: transparent;
+      .discount {
+        color: #9e9e9e;
+      }
+      a {
+        color: #757575;
+        transition: 0.4s;
+        &:hover {
+          color: #d50000;
+          transition: 0.4s;
+        }
+        &.active {
+          color: #d50000;
+        }
+      }
+    }
+  }
+}
+
+// Product table
+.product-table {
+  .btn {
+    &.btn-sm {
+      padding: 0.3rem 0.6rem;
+    }
+  }
+}

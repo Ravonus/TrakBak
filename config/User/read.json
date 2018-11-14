@@ -1,25 +1,34 @@
 {
+	"sockets": true,
+	"api": true,
+	"permissions": 0,
+	"groups": [],
 	"isAuthenticated": {
-		"groups": [],
-		"permissions": [],
 		"timing": "before",
-		"active": true
+		"groups": [],
+		"permissions": 0,
+		"api": false,
+		"sockets": true
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": [],
-				"permissions": [],
+				"match": ["administrato", "publics"],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"api": false,
+				"sockets": true
 			}
 		},
 		{
 			"isTest": {
-				"groups": [],
-				"permissions": [],
+				"groups": ["public"],
+				"match": ["publicz", "public"],
+				"permissions": 0,
 				"timing": "before",
-				"active": false
+				"api": false,
+				"sockets": false
 			}
 		}
 	]

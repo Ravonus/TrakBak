@@ -38,13 +38,12 @@ let read = {
 
     remove$(query);
 
-    
+
 
     User.find(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
     .exec((err, obj) => {
-      if (err) done(err);
-      done(null, obj);
+      if (err) return done(err);
 
     })
 
@@ -56,13 +55,12 @@ let read = {
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
     remove$(query);
-
+    console.log('query DAWG', query);
     User.findOne(query, keys, done)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
-        if (err) done(err);
-        done(obj);
+        if (err) return done(err);
       }
     );
 
@@ -78,7 +76,6 @@ let read = {
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);
-        done(obj);
       }
     );
 

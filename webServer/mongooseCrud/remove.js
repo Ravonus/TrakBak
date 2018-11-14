@@ -10,7 +10,7 @@ let remove = {
       (err, obj) => {
         // Handle any possible database errors
         if (err || obj === null) return done({"fucc":"oh shit dawg"});
-        done(null, Object.assign({ delete: true }, obj._doc));
+        return done(null, Object.assign({ delete: true }, obj._doc));
       }
     )
 
@@ -22,7 +22,7 @@ let remove = {
       (err, obj) => {
         // Handle any possible database errors
         if (err || obj === null) return done({"fucc":"oh shit dawg"});
-        done(null, Object.assign({ delete: true }, obj._doc));
+        return done(null, Object.assign({ delete: true }, obj._doc));
       }
     )
   }
