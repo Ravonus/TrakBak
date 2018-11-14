@@ -1,5 +1,15 @@
-const config = require('../../config/config');
+/*
+ * Project: trakbak
+ * File Created: Tuesday, 13th November 2018 8:50:14 pm
+ * Author: Chad Koslovsky (chad@technomancyIT.com)
+ * -----
+ * Last Modified: Tuesday, 13th November 2018 9:53:25 pm
+ * Modified By: Chad Koslovsky (chad@technomancyIT.com>)
+ * -----
+ * Copyright 2018 - 2018 - TechnomancyIT
+ */
 
+const config = require('../../config/config');
 Array.prototype.remove = function () {
   var what, a = arguments, L = a.length, ax;
   while (L && this.length) {
@@ -11,7 +21,6 @@ Array.prototype.remove = function () {
   return this;
 };
 
-// Options = name,groups,server,model,extras
 module.exports = (socket, route, object, user, functions, options) => {
 
   if (!socket._events || socket._events && !socket._events[route]) {
@@ -24,10 +33,14 @@ module.exports = (socket, route, object, user, functions, options) => {
 
         if (typeof data.data === 'object') {
 
-          options = Object.assign(options, data.data);
+          if (route.indexOf("Create") === 4) {
+            options = Object.assign(options, { body: data.data });
+          } else {
+            options = Object.assign(options, data.data);
+          }
+
         } else {
-          console.log('DATA OTHER');
-          //   options.value = data.data;
+
           options = Object.assign(options, { value: data.data, type: "findOne" });
 
         }
@@ -119,7 +132,6 @@ module.exports = (socket, route, object, user, functions, options) => {
             }));
 
           }
-          //   console.log('Diz be policy??', policy);
           promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
 
           var obj = policy[Object.keys(policy)];
@@ -144,21 +156,12 @@ module.exports = (socket, route, object, user, functions, options) => {
 
             var permissions = options.permissions + obj.permissions;
 
-            // if(options.groups) {
-            //   options.groups.forEach( (group) => {
-            //     groups.push(group);
-            //   })
-            // }
-
-            //console.log(obj.groups)
-
           }
 
           if (index === array.length - 1) {
 
             promisesRun()
           }
-          // not going to work because empty arrays
 
         });
       } else {
@@ -169,73 +172,89 @@ module.exports = (socket, route, object, user, functions, options) => {
 
         if (promises.length > 0) {
           Promise.all(promises).then(data => {
-            var keys = {};
-            var query = {};
+            // var secondary;
+            // var query = {};
             var controller = route.split(/(?=[A-Z])/);
             var modelFunction = config.controllers[capFirst(controller[0])]
             var controllerName = controller[1].toLowerCase();
-            //console.log(window[capFirst(controller[0])])
-
             var functionIndex = Object.keys(modelFunction[controllerName])[0];
 
             if (options && options.type) {
-            //  console.log(options);
+              //  console.log(options);
               functionIndex = options.type
-              switch (functionIndex) {
-                case 'find':
+              var query = options.value ? options.value : options.id ? options.id : {};
+              var secondary = options.keys ? options.keys : options.body ? options.body : {};
+              
 
-                  break;
-                case 'findOne':
+              // console.log('diz secondary', secondary);
 
-                  break;
-                case 'findById':
+              // switch (functionIndex) {
+              //   case 'find':
 
-                  query = options.value ? options.value : options.id ? options.id : options._id
-                  if (keys) {
+              //     break;
+              //   case 'findOne':
 
-                  }
+              //     break;
+              //   case 'findById':
 
+              //     query = options.value ? options.value : options.id ? options.id : options._id
+              //     secondary = options.keys ? options.keys : options.body ? options.body : null;
 
-                  break;
-                case 'byId':
-                  query = options.value ? options.value : options.id ? options.id : options._id
-                  if (keys) {
+              //     break;
+              //   case 'byId':
+              //     query = options.value ? options.value : options.id ? options.id : options._id;
+              //     secondary = options.keys ? options.keys : options.body ? options.body : null;
+              //     break;
+              //   case 'byFind':
 
-                  }
-                  break;
-                case 'byFind':
+              //     break;
+              //   default:
 
-                  break;
-                default:
-
-              }
+              // }
 
               if (!modelFunction[controllerName][functionIndex]) {
                 functionIndex = Object.keys(modelFunction[controllerName])[0];
-            //    console.log('diz index', functionIndex);
+
+              }
+            }
+            console.log(controllerName, functionIndex, options);
+            if (controllerName === 'read') {
+
+              socketEmit(query, secondary, route, controllerName, functionIndex);
+
+            } else if (controllerName === 'remove' || controllerName === 'update') {
+              secondary = controllerName === 'remove' ? undefined: secondary;
+              console.log('query', query, secondary);
+              socketEmit(query, secondary, route, controllerName, functionIndex);
+
+            } else if (controllerName === 'create') {
+              socketEmit(options.body, null, route, controllerName, null);
+            }
+
+            function socketEmit(query, secondary, route, name, index) {
+              
+
+              if (index) {
+                if(secondary) {
+                modelFunction[name][index](query, secondary, (err, data) => {
+
+                  socket.emit(route, data);
+                });
+              } else {
+                modelFunction[name][index](query, (err, data) => {
+
+                  socket.emit(route, data);
+                });
+              }
+              } else {
+                modelFunction[name](query, secondary, (err, data) => {
+
+                  socket.emit(route, data);
+                });
               }
             }
 
-            if (controllerName === 'read') {
-             /// console.log('one little ducky, two little ducky');
-              modelFunction[controllerName][functionIndex](query, keys, (err, data) => {
-                console.log('ranZZZZZZZ')
-                socket.emit(route, data);
-              })
-            } else if (controllerName === 'remove') {
-
-              modelFunction[controllerName][functionIndex](query, (err, data) => {
-            
-                socket.emit(route, data);
-              });
-
-            }
-
-
-
           }).catch(err => {
-
-     
 
             socket.emit(route, err);
             console.log('ERROR', err)
