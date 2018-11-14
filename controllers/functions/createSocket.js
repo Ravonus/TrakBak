@@ -1,6 +1,5 @@
 const config = require('../../config/config');
 
-
 Array.prototype.remove = function () {
   var what, a = arguments, L = a.length, ax;
   while (L && this.length) {
@@ -12,21 +11,14 @@ Array.prototype.remove = function () {
   return this;
 };
 
-
 // Options = name,groups,server,model,extras
 module.exports = (socket, route, object, user, functions, options) => {
 
-
-  
   if (!socket._events || socket._events && !socket._events[route]) {
 
     socket.on(route, (data) => {
 
-
-     // console.log(options);
       var oldOptions;
-
-      // options = {};
 
       if (data && data.data) {
 
@@ -47,12 +39,9 @@ module.exports = (socket, route, object, user, functions, options) => {
 
       var promises = [];
 
-
-
       if (!options.server) {
         options.server = config.serverName;
       }
-
 
       if (object.isAuthenticated) {
 
@@ -99,7 +88,6 @@ module.exports = (socket, route, object, user, functions, options) => {
             myPolicy.groups = [];
           }
 
-
           if (myPolicy.match.length > 0) {
             myPolicy.match.forEach((match, index) => {
               if (myPolicy.groups.length > 0 && myPolicy.groups.includes(match)) {
@@ -132,15 +120,11 @@ module.exports = (socket, route, object, user, functions, options) => {
 
           }
           //   console.log('Diz be policy??', policy);
-
           promises.push(config.functions.permissions(user.permissions).promise(user, policy, 'sockets'));
-
 
           var obj = policy[Object.keys(policy)];
 
-
           if (obj && obj.sockets || obj && obj.sockets === undefined) {
-
 
             if (!obj.groups) {
               obj.groups = [];
@@ -148,7 +132,6 @@ module.exports = (socket, route, object, user, functions, options) => {
             if (!options.groups) {
               options.groups = [];
             }
-
 
             var groups = [...options.groups, ...obj.groups]
 
@@ -161,8 +144,6 @@ module.exports = (socket, route, object, user, functions, options) => {
 
             var permissions = options.permissions + obj.permissions;
 
-
-
             // if(options.groups) {
             //   options.groups.forEach( (group) => {
             //     groups.push(group);
@@ -170,7 +151,6 @@ module.exports = (socket, route, object, user, functions, options) => {
             // }
 
             //console.log(obj.groups)
-
 
           }
 

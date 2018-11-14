@@ -1,4 +1,14 @@
-//sockets
+/*
+ * Project: trakbak
+ * File Created: Tuesday, 13th November 2018 8:50:14 pm
+ * Author: Chad Koslovsky (chad@technomancyIT.com)
+ * -----
+ * Last Modified: Wednesday, 14th November 2018 12:43:15 am
+ * Modified By: Chad Koslovsky (chad@technomancyIT.com>)
+ * -----
+ * Copyright 2018 - 2018 - TechnomancyIT
+ */
+
 const config = require('../../config/config'),
   policies = require('../routes/policies/policies');
 
@@ -9,11 +19,9 @@ global.sockets = {};
 
 // setup socket scripts. Loops through sockets and sets an array up. Socket.io does a for loop to load each connection.
 
-
 let policyObject = [];
 
 require('./clientWrite')(() => {
-
 
   require("fs").readdirSync(__dirname).forEach(function (file) {
     if (file !== 'socket.io.js' && file !== 'clientWrite.js' && file !== 'clients') {
@@ -24,7 +32,6 @@ require('./clientWrite')(() => {
     
   });
 
-  
   require('../../config/routeConfig')((obj, files) => {
 
     Object.keys(obj).forEach((configName, index) => {
@@ -34,8 +41,6 @@ require('./clientWrite')(() => {
         let policyObj = obj[configName][route];
         if (typeof policyObj === 'object') {
           obj[configName].route = route;
-
-  
 
           if (policyObj.sockets) {
 
@@ -78,8 +83,6 @@ require('./clientWrite')(() => {
         })
        `);
 
-
-
           } else {
             //need to check sepearte polices to make sure socket is not defined(Top is global check)
           }
@@ -88,8 +91,6 @@ require('./clientWrite')(() => {
 
     })
   })
-
-
 
 })
 
@@ -102,7 +103,6 @@ module.exports = {
   socket: (io) => {
 
     io.on('connection', (socket) => {
-
 
       var t0 = new Date().getTime();
 
@@ -117,13 +117,9 @@ module.exports = {
           socket.handshake.headers.cookies[pair[0]] = pair.splice(1).join('=');
         });
 
- 
-
         isAuthenticated(socket.handshake.headers, (err, data) => {
 
           activeClients[socket.id].user = data;
-
-         
 
           policyObject.forEach((policyObj) => {
 
@@ -141,22 +137,17 @@ module.exports = {
    
         });
   
-
-        })
+        });
 
       } else {
         policyObject.forEach((policyObj) => {
        
-        
         createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj,  policies, {})
         });
         
       }
 
       socket.emit('connected', { connected: 'true' });
-
-  
-
 
       var i;
       for (i = 0; i < sockets.length; i++) {
