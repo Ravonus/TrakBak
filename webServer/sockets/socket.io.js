@@ -1,5 +1,6 @@
 //sockets
 const config = require('../../config/config'),
+  mongoose = require('mongoose'),
   policies = require('../routes/policies/policies');
 
 let sockets = [];
@@ -21,21 +22,21 @@ require('./clientWrite')(() => {
       sockets.push(require(`./${file}`));
 
     }
-    
+
   });
 
-  
+
   require('../../config/routeConfig')((obj, files) => {
 
     Object.keys(obj).forEach((configName, index) => {
 
       Object.keys(obj[configName]).forEach((route) => {
-        
+
         let policyObj = obj[configName][route];
         if (typeof policyObj === 'object') {
           obj[configName].route = route;
 
-  
+
 
           if (policyObj.sockets) {
 
@@ -49,7 +50,7 @@ require('./clientWrite')(() => {
               policyObj.policies.forEach((policy, index) => {
 
                 if (policy[Object.keys(policy)].sockets !== undefined && !policy[Object.keys(policy)].sockets) {
-         
+
                   delete policyObj.policies[index];
                 }
               })
@@ -57,7 +58,7 @@ require('./clientWrite')(() => {
 
             let routeName = `${configName.toLowerCase()}${capFirst(route)}`
 
-      
+
             obj[configName][route].name = configName;
             obj[configName][route].route = route;
             policyObject.push(obj[configName][route]);
@@ -104,6 +105,7 @@ module.exports = {
     io.on('connection', (socket) => {
 
 
+
       var t0 = new Date().getTime();
 
       activeClients[socket.id] = {};
@@ -117,50 +119,62 @@ module.exports = {
           socket.handshake.headers.cookies[pair[0]] = pair.splice(1).join('=');
         });
 
- 
+   
+
+
 
         isAuthenticated(socket.handshake.headers, (err, data) => {
+         
+          
 
           activeClients[socket.id].user = data;
 
-         
+          
+          if(!data) {
+            mongoose.Query.prototype.clientID = 'rando clientid';
+          } else {
+            console.log('WT', data._id)
+            mongoose.Query.prototype.clientID = data._id.toString();
+          }
 
+
+     
           policyObject.forEach((policyObj) => {
 
             var options = {};
 
-            if(policyObj.groups && policyObj.groups.length !== 0) {
+            if (policyObj.groups && policyObj.groups.length !== 0) {
               options.groups = policyObj.groups;
             }
 
-            if(policyObj.permissions && policyObj.permissions !== 0) {
+            if (policyObj.permissions && policyObj.permissions !== 0) {
               options.permissions = policyObj.permissions;
             }
-      
-            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj, activeClients[socket.id].user, policies, options)
-   
-        });
-  
+
+            createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route), policyObj, activeClients[socket.id].user, policies, options)
+
+          });
+
 
         })
 
       } else {
         policyObject.forEach((policyObj) => {
-       
-        
-        createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route),  policyObj,  policies, {})
+
+
+          createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route), policyObj, policies, {})
         });
-        
+
       }
 
       socket.emit('connected', { connected: 'true' });
 
-  
+
 
 
       var i;
       for (i = 0; i < sockets.length; i++) {
-     
+
         sockets[i](socket)
       }
 

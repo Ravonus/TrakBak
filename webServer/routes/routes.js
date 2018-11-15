@@ -2,6 +2,8 @@ const express = require('express'),
   routes = require('./defaultRoutes'),
   bodyParser = require('body-parser').json(),
   config = require('../../config/config'),
+  clientID = require('../middleware/clienID');
+  
   next = (string) => { },
   router = express.Router();
   
@@ -27,9 +29,9 @@ function cb() {
       if(controller.type  !== 'create') {
 
    
-      router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
+      router.route(`/${controller.name}/:_id`)[controller.request](bodyParser, clientID, config.controllers[controller.name].api[controller.type]);
       }
-      router.route(`/${controller.name}`)[controller.request](bodyParser, config.controllers[controller.name].api[controller.type]);
+      router.route(`/${controller.name}`)[controller.request](bodyParser, clientID, config.controllers[controller.name].api[controller.type]);
     })
 
 

@@ -240,12 +240,12 @@ module.exports = (socket, route, object, user, functions, options) => {
               if (index) {
                 if(secondary) {
                 modelFunction[name][index](query, secondary, (err, data) => {
-
+               
                   socket.emit(route, data);
                 });
               } else {
                 modelFunction[name][index](query, (err, data) => {
-
+              
                   socket.emit(route, data);
                 });
               }

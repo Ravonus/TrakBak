@@ -1,5 +1,6 @@
 const User = require("../../models/User");
 
+
 var populate ='';
 Object.keys(User.schema.obj).forEach(function(key) {
   var val = User.schema.obj[key];
@@ -30,7 +31,7 @@ function remove$(query) {
 
 let read = {
 
-  find: (query, keys, done) => {
+  find: async (query, keys, done) => {
 
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
@@ -39,24 +40,32 @@ let read = {
     remove$(query);
 
 
+    const user = await User.find(query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
+    console.log(user, 'user fags');
+    done(null, user);
 
-    User.find(query, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-    .exec((err, obj) => {
-      if (err) return done(err);
 
-    })
+    // User.find(query, keys, done)
+    // .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    // .exec((err, obj) => {
+    //   if (err) return done(err);
+
+    // })
 
   },
   findOne: (query, keys, done) => {
-
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
     remove$(query);
     console.log('query DAWG', query);
-    User.findOne(query, keys, done)
+    var cache = true
+    if(keys && keys.cached === false) {
+      cache = false;
+    }
+    console.log(cache);
+    User.findOne(query, keys, done).cache(cache)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
@@ -72,7 +81,7 @@ let read = {
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
     User.findById(id, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

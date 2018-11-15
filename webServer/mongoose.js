@@ -5,6 +5,10 @@ const mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
   mongoDB = config.mongoDB;
 
+  require('../webServer/services/redis');
+  mongoose.Promise = global.Promise;
+
+
 let modelUser = require('./models/User'),
   prefix = config.envName,
   connection,
