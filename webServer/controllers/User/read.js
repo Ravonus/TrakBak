@@ -1,5 +1,5 @@
-const User = require("../../models/User");
-const clearCache = require('../../middleware/clearCache');
+const User = require("../../models/User"),
+{ clearHash }  = require('../../services/redis');
 
 
 var populate ='';
@@ -31,22 +31,25 @@ function remove$(query) {
 }
 
 let read = {
-  pushRequest : async (str, type , query, done, keys) => {
-    test = str;
-    read[type](query, keys, (err, data) => {
+  //push request needs array. 
+  //user.option(User object), options.query(Query for mongoose), options.keys(Extra mongoose options for query like keys), option.type(Type of mongoose request)
+  pushRequest : async (options, done) => {
+
+    read[options.type](options, (err, data) => {
       done(err, data)
     })
   },
-  find: async (query, keys, done) => {
-    console.log(test)
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    query = typeof (query) === 'function' ? {} : query;
 
-    remove$(query);
+  //TODO: Will have to fix any place that doesn't have this as an array( query, keys)
+  find: async (options, done) => {
 
+    // done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
+    // keys = typeof (keys) === 'function' ? {} : keys;
+    // query = typeof (query) === 'function' ? {} : query;
 
-    const user = await User.find().populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
+    remove$(options.query);
+
+    const user = await User.find(options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
     if(user && user.length > 0) {
     
       done(null, user);
@@ -65,7 +68,7 @@ let read = {
 
   },
   
-  findOne: (query, keys, done) => {
+  findOne: async (query, keys, done) => {
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
@@ -86,7 +89,7 @@ let read = {
     );
 
   },
-  findById: (id, keys, done) => {
+  findById: async (id, keys, done) => {
 
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;

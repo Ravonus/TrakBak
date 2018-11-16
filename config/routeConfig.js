@@ -56,7 +56,7 @@ config.controllers.controllerNames.forEach((name) => {
         });
         } else {
 
-        //    dirLength--;
+            dirLength--;
 
           
         }

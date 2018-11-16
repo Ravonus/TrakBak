@@ -32,8 +32,6 @@ mongoose.Query.prototype.exec = async function() {
 
 
   const cacheValue = await client.hget(this.clientID, key);
-  
-  console.log(cacheValue);
 
     // If we do, return that.
     
@@ -100,6 +98,8 @@ mongoose.Query.prototype.exec = async function() {
 
 module.exports = {
   clearHash(hashKey) {
-    client.del(JSON.stringify(hashKey));
+    var string = JSON.stringify(hashKey).replace(/\"/g,"");
+    console.log('diz be hash key', typeof(string))
+    client.del(string);
   }
 };

@@ -1,9 +1,20 @@
-const User = require('../../models/User');
-var test;
-var update = {
-  byId: (id, body, done) => {
+const User = require('../../models/User'),
+{ clearHash }  = require('../../services/redis');
 
-    User.findByIdAndUpdate(id, body,
+async function clearCache(options) {
+  console.log('before clear');
+  if(options.clearCache && options.user) {
+    console.log('clear dat shit');
+    await clearHash(options.user._id);
+  }
+}
+
+var update = {
+  byId: async (options, done) => {
+
+    await clearCache(options);
+    
+    User.findByIdAndUpdate(options.query, options.secondary,
   
       
       // an option that asks mongoose to return the updated version 
@@ -19,9 +30,11 @@ var update = {
   )
   
   },
-  byFind: (query, body, done) => {
+  byFind: async (options, done) => {
 
-    User.findOneAndUpdate(query, body,
+    await clearCache(options);
+    
+    User.findOneAndUpdate(options.query, options.secondary,
   
       
       // an option that asks mongoose to return the updated version 
