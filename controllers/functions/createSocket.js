@@ -223,15 +223,14 @@ module.exports = (socket, route, object, user, functions, options) => {
             console.log(controllerName, functionIndex, options);
             if (controllerName === 'read') {
 
-              socketEmit(query, secondary, route, controllerName, functionIndex);
+              socketEmit(query, secondary, route, controllerName, functionIndex, true);
 
             } else if (controllerName === 'remove' || controllerName === 'update') {
               secondary = controllerName === 'remove' ? undefined: secondary;
-              console.log('query', query, secondary);
               socketEmit(query, secondary, route, controllerName, functionIndex, true);
 
             } else if (controllerName === 'create') {
-              socketEmit(options.body, null, route, controllerName, null);
+              socketEmit(options.body, null, route, controllerName, null, true);
             }
 
             function socketEmit(query, secondary, route, name, index, clearCache) {

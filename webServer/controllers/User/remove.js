@@ -2,8 +2,10 @@ const User = require("../../models/User");
 
 let remove = {
 
-  byId: (id, done) => {
+  byId: async (id, done) => {
 
+    await clearCache(id);
+    
     User.findByIdAndRemove(id,
 
       // the callback function
@@ -15,8 +17,8 @@ let remove = {
     )
 
   },
-  byFind: (query, done) => {
-
+  byFind: async (query, done) => {
+    await clearCache(query);
     User.findOneAndRemove(query,
       // the callback function
       (err, obj) => {

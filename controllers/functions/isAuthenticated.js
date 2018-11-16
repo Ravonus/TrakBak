@@ -20,9 +20,10 @@ module.exports = (req, done) => {
         } else {
           
           req.decoded = decoded;
-          config.controllers.User.read.findOne({ _id: decoded.id },{cached:false}, (err, user) => {
-            console.log('hrrm')
-            console.log(err);
+
+          
+          config.controllers.User.read.findOne({ query: {_id: decoded.id }, clearCache: true }, (err, user) => {
+            console.log(err)
             if (err) {
               return done('fucc');
             }

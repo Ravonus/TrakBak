@@ -1,16 +1,15 @@
 const User = require("../../models/User"),
-{ clearHash }  = require('../../services/redis');
+  { clearHash } = require('../../services/redis');
 
-
-var populate ='';
-Object.keys(User.schema.obj).forEach(function(key) {
+var populate = '';
+Object.keys(User.schema.obj).forEach(function (key) {
   var val = User.schema.obj[key];
-//  console.log(key)
-if (typeof val === 'object' && val[0] && val[0].ref) {
- // console.log(key, typeof val, val[0]);
-  populate += ` ${val[0].ref.toLowerCase()}`
+  //  console.log(key)
+  if (typeof val === 'object' && val[0] && val[0].ref) {
+    // console.log(key, typeof val, val[0]);
+    populate += ` ${val[0].ref.toLowerCase()}`
 
-}
+  }
 });
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
@@ -33,81 +32,57 @@ function remove$(query) {
 let read = {
   //push request needs array. 
   //user.option(User object), options.query(Query for mongoose), options.keys(Extra mongoose options for query like keys), option.type(Type of mongoose request)
-  pushRequest : async (options, done) => {
+  pushRequest: async (options, done) => {
 
     read[options.type](options, (err, data) => {
       done(err, data)
     })
   },
 
-  //TODO: Will have to fix any place that doesn't have this as an array( query, keys)
-  find: async (options, done) => {
 
-    // done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    // keys = typeof (keys) === 'function' ? {} : keys;
-    // query = typeof (query) === 'function' ? {} : query;
+  find: async (options, done) => {
 
     remove$(options.query);
 
-    const user = await User.find(options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
-    if(user && user.length > 0) {
-    
+    const user = await User.find(options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
+    if (user && user.length > 0) {
       done(null, user);
     } else {
       done('fucc')
     }
-    
-
-
-    // User.find(query, keys, done)
-    // .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-    // .exec((err, obj) => {
-    //   if (err) return done(err);
-
-    // })
 
   },
-  
-  findOne: async (query, keys, done) => {
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    query = typeof (query) === 'function' ? { _id: 0 } : query;
 
-    remove$(query);
-    console.log('query DAWG', query);
-    var cache = true
-    if(keys && keys.cached === false) {
-      cache = false;
+  findOne: async (options, done) => {
+
+    remove$(options.query);
+
+    if(!options.secondary) {
+      options.secondary = {};
     }
-    console.log(cache);
-    User.findOne(query, keys, done).cache(cache)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-        // callback function (call exec incase where mongoose variables.)
-    .exec((err, obj) => {
-        if (err) return done(err);
-      }
-    );
+
+    const user = await User.findOne(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
+    console.log(user);
+    if (user && Object.keys(user).length > 0) {
+      console.log('da fuc?');
+      done(null, user);
+    } else {
+      done('fucc')
+    }
 
   },
-  findById: async (id, keys, done) => {
+  findById: async (options, done) => {
 
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    id = typeof (id) === 'function' ? { _id: 0 } : id;
 
-    User.findById(id, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
-        // callback function (call exec incase where mongoose variables.)
-    .exec((err, obj) => {
-        if (err) done(err);
-      }
-    );
+    const user = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
+    if (user && user.length > 0) {
+      done(null, user);
+    } else {
+      done('fucc')
+    }
 
   }
 
 }
 
 module.exports = read;
-
-
-

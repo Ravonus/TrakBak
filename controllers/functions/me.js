@@ -18,7 +18,7 @@ module.exports = (req) => {
     jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
       if (err) return rej('badToken')
 
-      UserJwt.findOne({ _id: decoded.id }, function (err, user) {
+      UserJwt.findOne({ query: decoded.id }, function (err, user) {
         user.passwordHash = undefined;
         decoded.id = undefined;
 

@@ -1,8 +1,10 @@
 const User = require("../../models/User"),
 DB = require('../../mongoose');
 // Must create key hide system. So people can push keys like when searching and not have it display (Good for data stored in DB that should never be pushed to client.)
-function create(obj, keys, done) {
-  
+async function create(options, done) {
+
+  await clearCache(options);
+
   obj._id = new DB.mongoose.Types.ObjectId();
   const modelObj = new User(obj);
 
@@ -11,8 +13,8 @@ function create(obj, keys, done) {
     
     if (err) return done(err.errors);
 
-    if(keys){
-      Object.keys(keys).forEach(function(key) {
+    if(options.secondary){
+      Object.keys(secondary).forEach(function(key) {
 
        data[key] = undefined;
       
