@@ -228,29 +228,32 @@ module.exports = (socket, route, object, user, functions, options) => {
             } else if (controllerName === 'remove' || controllerName === 'update') {
               secondary = controllerName === 'remove' ? undefined: secondary;
               console.log('query', query, secondary);
-              socketEmit(query, secondary, route, controllerName, functionIndex);
+              socketEmit(query, secondary, route, controllerName, functionIndex, true);
 
             } else if (controllerName === 'create') {
               socketEmit(options.body, null, route, controllerName, null);
             }
 
-            function socketEmit(query, secondary, route, name, index) {
+            function socketEmit(query, secondary, route, name, index, clearCache) {
               
-
               if (index) {
                 if(secondary) {
-                modelFunction[name][index](query, secondary, (err, data) => {
-
-                  socket.emit(route, data);
+                  var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+                  modelFunction[name][index](options, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(sendData);
+                  socket.emit(route, sendData);
                 });
               } else {
-                modelFunction[name][index](query, (err, data) => {
-
+                var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+                modelFunction[name][index](options, (err, data) => {
+              
                   socket.emit(route, data);
                 });
               }
               } else {
-                modelFunction[name](query, secondary, (err, data) => {
+                var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+                modelFunction[name](options, (err, data) => {
 
                   socket.emit(route, data);
                 });

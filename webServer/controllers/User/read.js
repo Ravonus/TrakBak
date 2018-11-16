@@ -1,4 +1,6 @@
-const User = require("../../models/User");
+const User = require("../../models/User"),
+{ clearHash }  = require('../../services/redis');
+
 
 var populate ='';
 Object.keys(User.schema.obj).forEach(function(key) {
@@ -29,34 +31,56 @@ function remove$(query) {
 }
 
 let read = {
+  //push request needs array. 
+  //user.option(User object), options.query(Query for mongoose), options.keys(Extra mongoose options for query like keys), option.type(Type of mongoose request)
+  pushRequest : async (options, done) => {
 
-  find: (query, keys, done) => {
-
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    query = typeof (query) === 'function' ? {} : query;
-
-    remove$(query);
-
-
-
-    User.find(query, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-    .exec((err, obj) => {
-      if (err) return done(err);
-
+    read[options.type](options, (err, data) => {
+      done(err, data)
     })
+  },
+
+  //TODO: Will have to fix any place that doesn't have this as an array( query, keys)
+  find: async (options, done) => {
+
+    // done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
+    // keys = typeof (keys) === 'function' ? {} : keys;
+    // query = typeof (query) === 'function' ? {} : query;
+
+    remove$(options.query);
+
+    const user = await User.find(options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
+    if(user && user.length > 0) {
+    
+      done(null, user);
+    } else {
+      done('fucc')
+    }
+    
+
+
+    // User.find(query, keys, done)
+    // .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    // .exec((err, obj) => {
+    //   if (err) return done(err);
+
+    // })
 
   },
-  findOne: (query, keys, done) => {
-
+  
+  findOne: async (query, keys, done) => {
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? { _id: 0 } : query;
 
     remove$(query);
     console.log('query DAWG', query);
-    User.findOne(query, keys, done)
+    var cache = true
+    if(keys && keys.cached === false) {
+      cache = false;
+    }
+    console.log(cache);
+    User.findOne(query, keys, done).cache(cache)
     .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
@@ -65,14 +89,14 @@ let read = {
     );
 
   },
-  findById: (id, keys, done) => {
+  findById: async (id, keys, done) => {
 
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     id = typeof (id) === 'function' ? { _id: 0 } : id;
 
     User.findById(id, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
+    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
         // callback function (call exec incase where mongoose variables.)
     .exec((err, obj) => {
         if (err) done(err);

@@ -10,6 +10,12 @@ var message = {
     obj.res.status(obj.statusCode).send(messages[obj.type]);
 
   },
+  sockets: (msg) => {
+      if (typeof(msg) === 'string') {
+          return {err:messages[msg]};
+      }
+      return msg;
+  },
   success: (message) => {
 
   },

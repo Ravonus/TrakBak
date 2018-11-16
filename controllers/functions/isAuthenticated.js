@@ -5,7 +5,7 @@ module.exports = (req, done) => {
 
   if (req.cookies && req.cookies.jwt) {
 
-    console.log('ran???')
+    
 
     var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
 
@@ -14,13 +14,15 @@ module.exports = (req, done) => {
       jwtCookie = jwtUnScramble(jwtCookie);
 
       jwt.verify(jwtCookie.trim(), config.jwtSecret, (err, decoded) => {
+   
         if (err) {
           return done(err);
         } else {
+          
           req.decoded = decoded;
-
-          config.controllers.User.read.findOne({ _id: decoded.id }, (err, user) => {
-
+          config.controllers.User.read.findOne({ _id: decoded.id },{cached:false}, (err, user) => {
+            console.log('hrrm')
+            console.log(err);
             if (err) {
               return done('fucc');
             }
@@ -29,7 +31,7 @@ module.exports = (req, done) => {
             user.passwordHash = undefined;
 
             delete decoded.id;
-
+         
             return done(null, Object.assign(decoded, user._doc));
 
           })

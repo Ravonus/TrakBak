@@ -2,7 +2,7 @@ language: node_js
 
 services:
   - mongodb
-
+  - redis-server
 before_script:
   - sleep 15
   - mongo staging-trakbak --eval 'db.dropUser("travis");'
