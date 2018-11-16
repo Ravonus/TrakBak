@@ -236,13 +236,14 @@ module.exports = (socket, route, object, user, functions, options) => {
 
             function socketEmit(query, secondary, route, name, index) {
               
-
               if (index) {
                 if(secondary) {
-                modelFunction[name][index](query, secondary, (err, data) => {
-               
-                  socket.emit(route, data);
-                });
+                  
+                  modelFunction[name].pushRequest(user, index, query, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(sendData);
+                  socket.emit(route, sendData);
+                }, secondary);
               } else {
                 modelFunction[name][index](query, (err, data) => {
               

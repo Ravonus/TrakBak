@@ -27,6 +27,7 @@ config.controllers = {};
 
 config.functions = require("./controllers/appFunctions");
 config.message = require("./controllers/messenger");
+global.message = require("./controllers/messenger");
 require('./webServer/mongooseCrud/mongooseCrud');
 
 

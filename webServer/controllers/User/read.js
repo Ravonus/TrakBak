@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const clearCache = require('../../middleware/clearCache');
 
 
 var populate ='';
@@ -30,9 +31,14 @@ function remove$(query) {
 }
 
 let read = {
-
+  pushRequest : async (str, type , query, done, keys) => {
+    test = str;
+    read[type](query, keys, (err, data) => {
+      done(err, data)
+    })
+  },
   find: async (query, keys, done) => {
-
+    console.log(test)
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? {} : query;
@@ -40,9 +46,14 @@ let read = {
     remove$(query);
 
 
-    const user = await User.find(query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
-    console.log(user, 'user fags');
-    done(null, user);
+    const user = await User.find().populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(true)
+    if(user && user.length > 0) {
+    
+      done(null, user);
+    } else {
+      done('fucc')
+    }
+    
 
 
     // User.find(query, keys, done)
@@ -53,6 +64,7 @@ let read = {
     // })
 
   },
+  
   findOne: (query, keys, done) => {
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;

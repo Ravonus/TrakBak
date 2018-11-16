@@ -1,5 +1,5 @@
-var socket = io('https://www.trakbak.tk:5001');
-var trakbakSocket = 'https://www.trakbak.tk:5001';
+var socket = io('172.20.10.5:3002');
+var trakbakSocket = '172.20.10.5:3002';
 var trakbak = {};
 var t0;
 
@@ -72,21 +72,7 @@ socket.on('login', function (data) {
     };
 
   }
-});function userRead(data) {
-          console.log(data)
-         t0 = performance.now();
-        socket.emit('userRead', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userRead', function (data) {
-         console.log(data)
-         var t1 = performance.now();
-         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-
-        })
-       function userCreate(data) {
+});function userCreate(data) {
           console.log(data)
          t0 = performance.now();
         socket.emit('userCreate', 
@@ -100,15 +86,15 @@ socket.on('login', function (data) {
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
-       function userRemove(data) {
+       function userRead(data) {
           console.log(data)
          t0 = performance.now();
-        socket.emit('userRemove', 
+        socket.emit('userRead', 
           {data:data}
         );
       
         };
-       socket.on('userRemove', function (data) {
+       socket.on('userRead', function (data) {
          console.log(data)
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")

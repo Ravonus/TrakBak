@@ -23,12 +23,12 @@
 		},
 		{
 			"isTest": {
-				"groups": ["public"],
-				"match": ["publicz", "public"],
+				"groups": [],
+				"match": [],
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": false
+				"sockets": true
 			}
 		}
 	]
