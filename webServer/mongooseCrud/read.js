@@ -1,15 +1,25 @@
 const modelName = require("../../models/modelName");
 
-var populate ='';
-Object.keys(modelName.schema.obj).forEach(function(key) {
+var populate = '';
+Object.keys(modelName.schema.obj).forEach(function (key) {
   var val = modelName.schema.obj[key];
-//  console.log(key)
-if (typeof val === 'object' && val[0] && val[0].ref) {
- // console.log(key, typeof val, val[0]);
-  populate += ` ${val[0].ref.toLowerCase()}`
+  //  console.log(key)
+  if (typeof val === 'object' && val[0] && val[0].ref) {
+    // console.log(key, typeof val, val[0]);
+    populate += ` ${val[0].ref.toLowerCase()}`
 
-}
+  }
 });
+
+function sendCallBack(mongoose, done) {
+
+  if (mongoose && Object.keys(mongoose).length > 0) {
+    return done(null, mongoose._doc ? mongoose._doc:mongoose);
+  } else {
+    return done('fucc')
+  }
+};
+
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
@@ -30,58 +40,38 @@ function remove$(query) {
 
 let read = {
 
-  find: (query, keys, done) => {
+  find: async (options, done) => {
+    // done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
+    // keys =  (keys) === 'function' ? {} : keys;
+    // query = typeof (query) === 'function' ? {} : query;
 
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    query = typeof (query) === 'function' ? {} : query;
+    remove$(options.query);
 
-    remove$(query);
+    const mongoose = await modelName.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
 
-    modelName.find(query, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-    .exec((err, obj) => {
-      if (err) return done(err);
-
-    })
+    sendCallBack(mongoose, done);
 
   },
-  findOne: (query, keys, done) => {
+  findOne: async (options, done) => {
 
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    query = typeof (query) === 'function' ? { _id: 0 } : query;
+    remove$(options.query);
 
-    remove$(query);
+    if (!options.secondary) {
+      options.secondary = {};
+    }
 
-    modelName.findOne(query, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-        // callback function (call exec incase where mongoose variables.)
-    .exec((err, obj) => {
-        if (err) return done(err);
-      }
-    );
+    const mongoose = await modelName.findOne(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+
+    sendCallBack(mongoose, done);
 
   },
-  findById: (id, keys, done) => {
+  findById: async (options, done) => {
 
-    done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
-    keys = typeof (keys) === 'function' ? {} : keys;
-    id = typeof (id) === 'function' ? { _id: 0 } : id;
-
-    modelName.findById(id, keys, done)
-    .populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate)
-        // callback function (call exec incase where mongoose variables.)
-    .exec((err, obj) => {
-        if (err) return done(err);
-      }
-    );
+    const mongoose = await modelName.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    sendCallBack(mongoose, done);
 
   }
 
 }
 
 module.exports = read;
-
-
-

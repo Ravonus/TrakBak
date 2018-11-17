@@ -1,5 +1,4 @@
-const User = require("../../models/User"),
-  { clearHash } = require('../../services/redis');
+const User = require("../../models/User");
 
 var populate = '';
 Object.keys(User.schema.obj).forEach(function (key) {
@@ -11,6 +10,17 @@ Object.keys(User.schema.obj).forEach(function (key) {
 
   }
 });
+
+function sendCallBack(mongoose, done) {
+
+  if (mongoose && Object.keys(mongoose).length > 0) {
+
+    return done(null, mongoose._doc ? mongoose._doc:mongoose);
+  } else {
+    return done('fucc')
+  }
+};
+
 function remove$(query) {
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
@@ -30,56 +40,37 @@ function remove$(query) {
 }
 
 let read = {
-  //push request needs array. 
-  //user.option(User object), options.query(Query for mongoose), options.keys(Extra mongoose options for query like keys), option.type(Type of mongoose request)
-  pushRequest: async (options, done) => {
-
-    read[options.type](options, (err, data) => {
-      done(err, data)
-    })
-  },
-
 
   find: async (options, done) => {
+    // done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
+    // keys =  (keys) === 'function' ? {} : keys;
+    // query = typeof (query) === 'function' ? {} : query;
 
     remove$(options.query);
 
-    const user = await User.find(options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
-    if (user && user.length > 0) {
-      done(null, user);
-    } else {
-      done('fucc')
-    }
+    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+
+    sendCallBack(mongoose, done);
 
   },
-
   findOne: async (options, done) => {
 
     remove$(options.query);
 
-    if(!options.secondary) {
+    if (!options.secondary) {
       options.secondary = {};
     }
 
-    const user = await User.findOne(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
-    console.log(user);
-    if (user && Object.keys(user).length > 0) {
-      console.log('da fuc?');
-      done(null, user);
-    } else {
-      done('fucc')
-    }
+    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+
+
+    sendCallBack(mongoose, done);
 
   },
   findById: async (options, done) => {
 
-
-    const user = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache)
-    if (user && user.length > 0) {
-      done(null, user);
-    } else {
-      done('fucc')
-    }
+    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    sendCallBack(mongoose, done);
 
   }
 

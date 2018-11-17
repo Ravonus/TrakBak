@@ -1,9 +1,11 @@
 const modelName = require('../../models/modelName');
 
 var update = {
-  byId: (id, body, done) => {
+  byId: async (options, done) => {
 
-    modelName.findByIdAndUpdate(id, body,
+    await clearCache(options);
+
+    modelName.findByIdAndUpdate(options.query, options.secondary,
   
       
       // an option that asks mongoose to return the updated version 
@@ -19,9 +21,10 @@ var update = {
   )
   
   },
-  byFind: (query, body, done) => {
+  byFind: async (options, done) => {
+    await clearCach(options);
 
-    modelName.findOneAndUpdate(query, body,
+    modelName.findOneAndUpdate(options.query, options.secondary,
   
       
       // an option that asks mongoose to return the updated version 
