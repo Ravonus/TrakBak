@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
   mongoDB = config.mongoDB;
 
-  require('../webServer/services/redis');
+ // require('../webServer/services/redis');
   mongoose.Promise = global.Promise;
 
 

@@ -19,7 +19,6 @@ mongoose.Query.prototype.cache = function(cache) {
 
 mongoose.Query.prototype.exec = async function() {
   if(!this.useCache) {
-    console.log('da fucc uhhhry');
     return exec.apply(this, arguments)
   }
 
@@ -84,15 +83,12 @@ mongoose.Query.prototype.exec = async function() {
 
   // Otherwise, issue the query and store the result in redis.
 
-  console.log('it breaks here');
+
 
   const result = await exec.apply(this, arguments);
 
-
-  console.log(JSON.stringify(result), 'diz resultz');
   client.hset(this.clientID, key, JSON.stringify(result), 'EX', 10);
 
-  console.log('Dat fool', key);
   return result;
 }
 

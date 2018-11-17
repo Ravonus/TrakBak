@@ -223,29 +223,33 @@ module.exports = (socket, route, object, user, functions, options) => {
             console.log(controllerName, functionIndex, options);
             if (controllerName === 'read') {
 
-              socketEmit(query, secondary, route, controllerName, functionIndex);
+              socketEmit(query, secondary, route, controllerName, functionIndex, true);
 
             } else if (controllerName === 'remove' || controllerName === 'update') {
+              console.log('diz secondary...', secondary)
               secondary = controllerName === 'remove' ? undefined: secondary;
-              console.log('query', query, secondary);
               socketEmit(query, secondary, route, controllerName, functionIndex, true);
 
             } else if (controllerName === 'create') {
-              socketEmit(options.body, null, route, controllerName, null);
+              socketEmit(options.body, null, route, controllerName, null, true);
             }
 
             function socketEmit(query, secondary, route, name, index, clearCache) {
               
               if (index) {
                 if(secondary) {
+               
                   var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+         
                   modelFunction[name][index](options, async (err, data) => {
+                    console.log('diz data', data);
                   var sendData = err ? err : data;
                   sendData = await message.sockets(sendData);
                   socket.emit(route, sendData);
                 });
               } else {
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+              
                 modelFunction[name][index](options, (err, data) => {
               
                   socket.emit(route, data);
@@ -253,8 +257,9 @@ module.exports = (socket, route, object, user, functions, options) => {
               }
               } else {
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
+              
                 modelFunction[name](options, (err, data) => {
-
+                  console.log('DIZ OPTION', options);
                   socket.emit(route, data);
                 });
               }

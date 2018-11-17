@@ -1,19 +1,12 @@
-const User = require('../../models/User'),
-{ clearHash }  = require('../../services/redis');
-
-async function clearCache(options) {
-  console.log('before clear');
-  if(options.clearCache && options.user) {
-    console.log('clear dat shit');
-    await clearHash(options.user._id);
-  }
-}
+const User = require('../../models/User');
 
 var update = {
   byId: async (options, done) => {
 
     await clearCache(options);
-    
+
+
+    console.log('FUCCC I DONT CRASH')
     User.findByIdAndUpdate(options.query, options.secondary,
   
       
@@ -24,16 +17,15 @@ var update = {
       // the callback function
       (err, obj) => {
       // Handle any possible database errors
-      if (err) done(err);
-      done(null, obj);
+      if (err) return done(err);
+      return done(null, obj);
       }
   )
   
   },
   byFind: async (options, done) => {
+    await clearCach(options);
 
-    await clearCache(options);
-    
     User.findOneAndUpdate(options.query, options.secondary,
   
       
@@ -44,8 +36,8 @@ var update = {
       // the callback function
       (err, obj) => {
       // Handle any possible database errors
-      if (err) done(err);
-      done(null, obj);
+      if (err) return done(err);
+      return done(null, obj);
       }
   )
   }

@@ -2,27 +2,31 @@ const User = require("../../models/User");
 
 let remove = {
 
-  byId: (id, done) => {
+  byId: async (options, done) => {
 
-    User.findByIdAndRemove(id,
+    await clearCache(options)
+
+    User.findByIdAndRemove(options.query,
 
       // the callback function
       (err, obj) => {
         // Handle any possible database errors
         if (err || obj === null) return done({"fucc":"oh shit dawg"});
-        done(null, Object.assign({ delete: true }, obj._doc));
+        return done(null, Object.assign({ delete: true }, obj._doc));
       }
     )
 
   },
-  byFind: (query, done) => {
+  byFind: async (options, done) => {
 
-    User.findOneAndRemove(query,
+    await clearCache(options);
+
+    User.findOneAndRemove(options.query,
       // the callback function
       (err, obj) => {
         // Handle any possible database errors
         if (err || obj === null) return done({"fucc":"oh shit dawg"});
-        done(null, Object.assign({ delete: true }, obj._doc));
+        return done(null, Object.assign({ delete: true }, obj._doc));
       }
     )
   }

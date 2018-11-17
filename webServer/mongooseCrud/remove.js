@@ -2,9 +2,11 @@ const modelName = require("../../models/modelName");
 
 let remove = {
 
-  byId: (id, done) => {
+  byId: async (options, done) => {
 
-    modelName.findByIdAndRemove(id,
+    await cleatCache(options)
+
+    modelName.findByIdAndRemove(options.query,
 
       // the callback function
       (err, obj) => {
@@ -15,9 +17,11 @@ let remove = {
     )
 
   },
-  byFind: (query, done) => {
+  byFind: async (options, done) => {
 
-    modelName.findOneAndRemove(query,
+    await clearCache(options);
+
+    modelName.findOneAndRemove(options.query,
       // the callback function
       (err, obj) => {
         // Handle any possible database errors

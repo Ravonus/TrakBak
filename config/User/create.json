@@ -4,7 +4,7 @@
 	"isAuthenticated": {
 		"timing": "before",
 		"api": false,
-		"sockets": false
+		"sockets": true
 	},
 	"policies": [
 		{
