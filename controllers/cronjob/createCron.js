@@ -4,8 +4,6 @@ var functionTypes = {};
 const { saveCrons } = require('../../webServer/services/redis');
 const  CircularJSON = require('circular-json');
 
-var crons = {};
-
 require("fs").readdirSync(__dirname+'/functions/').forEach(async function (file) {
   if (file !== 'socket.io.js' && file !== 'clientWrite.js' && file !== 'clients') {
 
@@ -28,16 +26,16 @@ function onComplete(cron) {
 
   if(cron){
    // console.log(crons[cron])
-    console.log(cron);
+ 
     const json = crons[cron];
-    console.log(json)
-    saveCrons(json);
+ 
+   // saveCrons(json);
   }
 }
 
 
 
-module.exports = async (name, options) => {
+module.exports =  (name, options) => {
 // if(!options.fireOnce) {
 
 //   onComplete = null;
@@ -51,7 +49,7 @@ if(options.type === 'clearCache') {
 var wrapper = { };
 wrapper[test];
 const CronJob = require('cron').CronJob;
-crons[name] = await Object.assign(new CronJob(options.runTime, function() {
+crons[name] = Object.assign(new CronJob(options.runTime, function() {
 
 
   if(typeof(this.cronTime.source) === 'string' || moment(this.cronTime.source).valueOf() < Date.now()) {
@@ -79,7 +77,7 @@ crons[name] = await Object.assign(new CronJob(options.runTime, function() {
   // saveCrons(json);
   
   }
-},onComplete(name), true, options.timezone, null, options.runOnInit),{'cronName':name});
+},onComplete(name), true, options.timezone, null, options.runOnInit),{'cronName':name, createTime:Date.now()});
 
   
   crons[name].fireOnce = options.fireOnce;
