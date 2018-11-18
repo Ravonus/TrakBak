@@ -39,6 +39,7 @@
     "hbs": "^4.0.1",
     "ip": "^1.1.5",
     "is-reachable": "^2.4.0",
+    "json-circular-stringify": "0.0.1",
     "jsonwebtoken": "^8.3.0",
     "le-acme-core": "^2.1.3",
     "le-challenge-fs": "^2.0.8",

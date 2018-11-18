@@ -11,7 +11,11 @@ const express = require('express'),
   cookieParser = require('cookie-parser'),
   argv = require('yargs').argv,
   startTime = Date.now(),
-  config = require('./config/config');
+  config = require('./config/config'),
+
+  { restoreCrons } = require('./webServer/services/redis');
+
+  restoreCrons();
 
   // global.policies = require('./webServer/routes/policies/policies');
 

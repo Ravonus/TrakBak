@@ -5,6 +5,9 @@ const CircularJSON = require('circular-json');
 
 const redisUrl = 'redis://127.0.0.1:6379';
 const client = redis.createClient(redisUrl);
+
+console.log(client);
+
 client.hget = util.promisify(client.hget);
 client.hset = util.promisify(client.hset);
 const CronJob = require('cron').CronJob;
@@ -17,28 +20,7 @@ const moment = require('moment');
 // client.hgetall('crons', (err, data) => {
 //   console.log(data);
 // });
-// client.hgetall('crons', (err, crons) => {
 
-//   if(crons) {
-//   Object.keys(crons).forEach( (cron) => {
-
-
-//     //console.log(cron, JSON.parse(crons[cron]));
-//     var obj = JSON.parse(JSON.parse(crons[cron]));
-//     console.log(obj)
-//     new CronJob(obj.cronTime, obj.onTick, obj.onComplete, obj.start, obj.timezone, obj.context, obj.runOnInit, obj.unrefTimeout);
-//     console.log(obj)
-//   //new CronJob(obj);
-
-
-
-
-//   })
-
-// }
-
-
-// })
 
 
 
@@ -64,6 +46,7 @@ mongoose.Query.prototype.exec = async function () {
     collection: this.mongooseCollection.name
   }));
 
+
   // see if we have a vlaue for 'key' in redis.
 
 
@@ -72,7 +55,7 @@ mongoose.Query.prototype.exec = async function () {
   // If we do, return that.
 
 
-  if (cacheValue) {
+  if (cacheValue && JSON.parse(cacheValue).length > 0) {
 
     // console.log(crons[this.clientID + key]);
     var cron = crons[this.clientID + key];
@@ -84,19 +67,18 @@ mongoose.Query.prototype.exec = async function () {
     if (cron) {
       var time = moment(moment(cron.cronTime.source).format()).unix()*1000;
       if ( time > Date.now()) {
-        var compare = Date.now() + 60000;
+        var compare = Date.now() + 30000;
  
       //  console.log(time)
 
    //     crons[this.clientID + key].cronTime.source = moment(compare).parseZone();
    const CronTime = require('cron').CronTime;
-   var tester = new CronTime(new Date(compare));
-   console.log(tester);
+   var time = new CronTime(new Date(compare));
       //  crons[this.clientID + key].setTime(CronJob.time(new Date(compare)));
       
-        crons[this.clientID + key].setTime(tester);
+        crons[this.clientID + key].setTime(time);
         crons[this.clientID + key].start();
-        console.log( crons[this.clientID + key].cronTime.source );
+     //   console.log( crons[this.clientID + key].cronTime.source );
       } else {
         crons[this.clientID + key].stop();
         delete crons[this.clientID + key];
@@ -157,7 +139,7 @@ mongoose.Query.prototype.exec = async function () {
 
   client.hset(JSON.stringify(this.clientID).replace(/"/g, ''), key, JSON.stringify(result));
 
-  createCron(this.clientID + key, { timezone: 'America/Denver', runTime: new Date(Date.now() + 6000), runOnInit: false, fireOnce: true, type: { name: 'clearCache', id: this.clientID, key: key } });
+  createCron(this.clientID + key, { timezone: 'America/Denver', runTime: new Date(Date.now() + 60000), runOnInit: false, fireOnce: true, type: { name: 'clearCache', id: this.clientID, key: key } });
 
   return result;
 }
@@ -169,12 +151,53 @@ module.exports = {
 
   },
   clearKey(id, key) {
-    client.hdel(JSON.stringify(id).replace(/"/g, ''), key);
+    console.log('ID', id, 'KEY', key)
+    client.hdel(JSON.stringify(id).replace(/"/g, ''), key, (err, data) => {
+        console.log(err);
+    });
   },
   saveCrons(cron) {
     if (cron) {
-      console.log(cron)
+//      console.log(cron)
       client.hset('crons', Date.now().toString(), JSON.stringify(cron));
     }
+  },
+  restoreCrons:() => { 
+
+    client.hgetall('crons', (err, cronss) => {
+      // console.log('FUCK')
+      console.log(cronss);
+       if(cronss) {
+       Object.keys(cronss).forEach( (cron) => {
+     
+      //   console.log('diz be cron', JSON.parse(cronss[cron]))
+         cronObj = JSON.parse(JSON.parse(cronss[cron]));
+         
+         //console.log(cron, JSON.parse(crons[cron]));
+        // var obj = JSON.parse(JSON.parse(crons[cron]));
+        // console.log(obj)
+       //  new CronJob(obj.cronTime, obj.onTick, obj.onComplete, obj.start, obj.timezone, obj.context, obj.runOnInit, obj.unrefTimeout);
+      //   console.log(obj)
+       //new CronJob(JSON.parse(cronss[cron]));
+        
+        var id = cronObj.cronName.split('{')[0];
+        var key = cronObj.cronName.match(/\{(.*?)\}/)[0];
+        
+       // console.log('ID: ',id, 'KEYL', JSON.stringify(key), typeof(JSON.stringify(key)))
+        key = JSON.stringify(key);
+
+        
+       createCron(cronObj.cronName, { timezone: cronObj.cronTime.zone, runTime: moment(cronObj.cronTime.source), runOnInit: false, fireOnce: cronObj.runOnce, type: { name: 'clearCache', id: id, key:key } });
+     
+     
+     
+     
+       })
+     
+     }
+     
+     
+     })
+   
   }
 };
