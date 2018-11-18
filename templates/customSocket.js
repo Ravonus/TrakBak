@@ -49,7 +49,6 @@ socket.on('login', function (data) {
     window.location.href = '/';
   } else {
 
-    console.log(data)
 
     var options = {
       "closeButton": true,

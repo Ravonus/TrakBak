@@ -49,7 +49,6 @@ socket.on('login', function (data) {
     window.location.href = '/';
   } else {
 
-    console.log(data)
 
     var options = {
       "closeButton": true,
@@ -81,34 +80,6 @@ socket.on('login', function (data) {
       
         };
        socket.on('userCreate', function (data) {
-         console.log(data)
-         var t1 = performance.now();
-         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-
-        })
-       function userRead(data) {
-          console.log(data)
-         t0 = performance.now();
-        socket.emit('userRead', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userRead', function (data) {
-         console.log(data)
-         var t1 = performance.now();
-         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
-
-        })
-       function userRemove(data) {
-          console.log(data)
-         t0 = performance.now();
-        socket.emit('userRemove', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userRemove', function (data) {
          console.log(data)
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")

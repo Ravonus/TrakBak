@@ -5,7 +5,7 @@ const mongoose = require('mongoose'),
   autoIncrement = require('mongoose-auto-increment'),
   mongoDB = config.mongoDB;
 
- // require('../webServer/services/redis');
+  require('../webServer/services/redis');
   mongoose.Promise = global.Promise;
 
 
@@ -42,17 +42,15 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err, data) =
   connection = data;
 
   function done(data) {
-    console.log(data)
+
   }
 
   permissions(254+ 256 + 512+ +1024+ 274877906945+2251799813685248).pf((err, data) => {
 
-    console.log(permissions(254).promise())
-    console.log(data);
 
   });
 
-  console.log('^^^ FUCCC ^^^^^')
+
 
 
   function cb() {

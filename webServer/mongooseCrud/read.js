@@ -47,7 +47,7 @@ let read = {
 
     remove$(options.query);
 
-    const mongoose = await modelName.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    const mongoose = await modelName.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID);
 
     sendCallBack(mongoose, done);
 
@@ -60,14 +60,14 @@ let read = {
       options.secondary = {};
     }
 
-    const mongoose = await modelName.findOne(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    const mongoose = await modelName.findOne(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID);
 
     sendCallBack(mongoose, done);
 
   },
   findById: async (options, done) => {
 
-    const mongoose = await modelName.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    const mongoose = await modelName.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID);
     sendCallBack(mongoose, done);
 
   }

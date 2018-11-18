@@ -42,9 +42,9 @@ GroupsSchema.pre('save', function(next) {
 
   if(this.groupId > 2) {
     this.groupId = (this.groupId -1) * 2;
-    console.log(this.groupId)
+
   }
-  console.log(this);
+
 
   
   mongoose.model('IdentityCounter').findOneAndUpdate({model:'Groups'}, {count:this.groupId},

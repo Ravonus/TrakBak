@@ -34,7 +34,6 @@ let read = {
   find: (query, keys, done) => {
 
     
-
     done = typeof (done) !== "undefined" ? done : typeof (query) === 'function' ? query : keys;
     keys = typeof (keys) === 'function' ? {} : keys;
     query = typeof (query) === 'function' ? {} : query;

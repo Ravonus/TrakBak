@@ -27,8 +27,7 @@ module.exports = (req, done) => {
           req.decoded = decoded;
         //  console.log(config.controllers)
         
-          config.controllers.User.read.findOne({ query: { _id: decoded.id }, clearCache: true }, (err, user) => {
-            console.log('DIZ USER', user)
+          config.controllers.User.read.findOne({ query: { _id: decoded.id }, clearCache: true, clientID: decoded.id }, (err, user) => {
          
             if (user && Object.keys(user).length > 0) {
 
@@ -65,7 +64,6 @@ module.exports = (req, done) => {
       name: 'public',
       groups: [{ name: 'public' }]
     }
-    console.log('cry')
 
     done('notAuthenticated');
     // return done(null, req.userObj)

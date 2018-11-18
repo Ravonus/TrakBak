@@ -31,7 +31,7 @@ module.exports = {
     if(req.body && !req.body.username && req.body['name.username']) {
       req.body.username = req.body['name.username'];
     }
-    console.log(';pgon', req.body.username, 'fuck pw', req.body.password)
+
     req.login({ username: req.body.username, password: req.body.password }, (user) => {
 
       console.log(user);

@@ -119,26 +119,18 @@ module.exports = {
           socket.handshake.headers.cookies[pair[0]] = pair.splice(1).join('=');
         });
 
-   
-
-
-
-        isAuthenticated(socket.handshake.headers, (err, data) => {
-         
-
+         isAuthenticated(socket.handshake.headers, (err, data) => {
 
           activeClients[socket.id].user = data;
 
-          
           if(!data) {
             mongoose.Query.prototype.clientID = 'rando clientid';
           } else {
-            console.log('WT', data._id)
             mongoose.Query.prototype.clientID = data._id.toString();
+
+            
           }
 
-
-     
           policyObject.forEach((policyObj) => {
 
             var options = {};

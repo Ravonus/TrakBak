@@ -14,7 +14,7 @@
 		{
 			"checkUser": {
 				"groups": [],
-				"match": ["administrato", "publics"],
+				"match": ["administrator", "publics"],
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
@@ -28,7 +28,7 @@
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": true
+				"sockets": false
 			}
 		}
 	]

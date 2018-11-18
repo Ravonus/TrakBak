@@ -46,13 +46,12 @@ if (environmentToExport.threads === 'auto') {
 if (environmentToExport.ignoreSSL) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
-console.log(typeof (environmentToExport.certLocation));
+
 if (typeof (environmentToExport.certLocation) === 'string') {
 
   process.env.NODE_EXTRA_CA_CERTS = path.join(__dirname, '../', environmentToExport.certLocation);
 
 
-  console.log(process.env.NODE_EXTRA_CA_CERTS);
 }
 
 //Combine share environment variables with current envioronment.
@@ -67,7 +66,7 @@ if (environmentToExport.serverName) {
   process.env.cbSocketBack = environmentToExport.serverName;
 }
 
-console.log(process.env.NODE_ENV)
+
 
 // Export the module
 module.exports = environmentToExport;

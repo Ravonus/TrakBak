@@ -1,7 +1,7 @@
 const { clearHash } = require('../services/redis');
 
-module.exports = async (req, res, next) => {
-  await next();
-
+module.exports =  (req, res, next) => {
+  console.log('diz hash', clearHash)
   clearHash(req.user.id);
+  await next();
 }

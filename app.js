@@ -7,6 +7,7 @@ const express = require('express'),
   https = require('https'),
   server = http.createServer(app),
   io = require('socket.io')(server),
+  moment = require('moment'),
   cookieParser = require('cookie-parser'),
   argv = require('yargs').argv,
   startTime = Date.now(),
@@ -24,11 +25,14 @@ config.controllers = {};
 
 
 
+global.crons = {};
 
 config.functions = require("./controllers/appFunctions");
+global.createCron = require("./controllers/cronjob/createCron");
 config.message = require("./controllers/messenger");
 global.message = require("./controllers/messenger");
 require('./webServer/mongooseCrud/mongooseCrud');
+
 
 
 var length = 1;
@@ -160,4 +164,10 @@ runServer = () => {
     setTimeout(() => { runServer(); }, 0);
 
   }
+
+
+//createCron('fuck', {timezone:'America/Denver',runTime:'0 31-59/3 12-23/1 20-31/1 0-11/11 2024'})
+
+
+
 }

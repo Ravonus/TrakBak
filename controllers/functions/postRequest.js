@@ -7,8 +7,6 @@ host = config.host;
 
 module.exports =   (jwt, path, object, _callback) => {
 
-    console.log('ranz', host, port, path)
-
     let json = JSON.stringify(object);
 
     if (jwt == 'nojwt') {

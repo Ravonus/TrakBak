@@ -47,8 +47,8 @@ let read = {
     // query = typeof (query) === 'function' ? {} : query;
 
     remove$(options.query);
-
-    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    
+    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
 
     sendCallBack(mongoose, done);
 
@@ -61,7 +61,7 @@ let read = {
       options.secondary = {};
     }
 
-    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
 
 
     sendCallBack(mongoose, done);
@@ -69,7 +69,7 @@ let read = {
   },
   findById: async (options, done) => {
 
-    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache);
+    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
     sendCallBack(mongoose, done);
 
   }

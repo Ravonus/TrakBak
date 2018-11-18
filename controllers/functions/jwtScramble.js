@@ -5,7 +5,6 @@ module.exports = (id, token) => {
   var tokenArr = token.match(/.{0,4}/g);
   idArr.forEach(function (split, index) {
 
-    console.log(index);
     tokenArr[index] = tokenArr[index] + split;
   })
 

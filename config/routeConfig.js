@@ -23,7 +23,7 @@ config.controllers.controllerNames.forEach((name) => {
 
             fs.readdir(`${__dirname}/${model}`, (err, files) => {
                 lastFiles = files;
-                console.log('I RAB THIS MAN TIMES', indexFirst);
+
     
             
             files.forEach(function(file, index) {
@@ -62,12 +62,10 @@ config.controllers.controllerNames.forEach((name) => {
         }
 
         function checkEnd(indexFirst, index, files, dirLength, configs) {
-            console.log(indexFirst, dirLength - 1)
+
             if (index === files.length - 1 && indexFirst === dirLength - 1) { 
-                console.log('I FUCKING RAN HOMEZ')
-              //  module.exports = 'cry fuck';
-              console.log('runnnn??',   fs.readdirSync(__dirname).length)
-              console.log('configs', configs);
+
+
                 exportRun(configs, files);
             }
         
@@ -78,7 +76,7 @@ config.controllers.controllerNames.forEach((name) => {
 
 
       function exportRun(obj, files) {
-        console.log('DIZ BE ROUTE NAME');
+
            done(obj, files);
       }
     

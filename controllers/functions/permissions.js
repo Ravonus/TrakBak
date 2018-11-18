@@ -118,10 +118,9 @@ module.exports = (num) => {
                   })
 
                 } else {
-                  console.log('i cry', addArr[i])
 
                   if (i === addArr.length - 1) {
-                    console.log('i', i, "addArr", addArr.length)
+ 
                     if (foundPerm || foundGroup) {
                       response('Found Match')
                     } else {
