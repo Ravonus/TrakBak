@@ -183,14 +183,11 @@ module.exports = (socket, route, object, user, functions, options) => {
             var functionIndex = Object.keys(modelFunction[controllerName])[0];
 
             if (options && options.type) {
-              //  console.log(options);
+
               functionIndex = options.type
               var query = options.value ? options.value : options.id ? options.id : {};
               var secondary = options.keys ? options.keys : options.body ? options.body : {};
               
-
-              // console.log('diz secondary', secondary);
-
               // switch (functionIndex) {
               //   case 'find':
 
@@ -220,7 +217,7 @@ module.exports = (socket, route, object, user, functions, options) => {
 
               }
             }
-            console.log(controllerName, functionIndex, options);
+
             if (controllerName === 'read') {
 
               socketEmit(query, secondary, route, controllerName, functionIndex, true);

@@ -1,18 +1,24 @@
 module.exports = (num) => {
-  // console.log('wtf',isSet);
+
+  console.log(num, 'num');
+
   return promise = {
 
     promise: (userObj, policies, type) => {
+
+
 
       if (!type) {
         type = 'api';
       }
 
-      //  console.log('cry??' + isSet);
       return new Promise((response, reject) => {
+      
+        var policy = policies[Object.keys(policies)]
 
-        if (policies && policies[type] && policies.permissions && policies.permissions > 0 || policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)][type]) {
+        if (policy && policy[type] && policy.permissions && policy.permissions > 0 || policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)][type]) {
 
+       
           var weight = 0;
           var permission;
 
@@ -28,6 +34,8 @@ module.exports = (num) => {
               permission = policies[Object.keys(policies)].permissions;
             }
           }
+
+
 
           function getBinary(num) {
 
@@ -47,8 +55,6 @@ module.exports = (num) => {
               }
 
               if (i === binaries.length) {
-                //    console.log(binaryArray);
-                //   response(binaryArray);
 
                 return binaryArray;
 
@@ -57,6 +63,8 @@ module.exports = (num) => {
           }
           var userPerms = getBinary(num);
 
+         
+
           var policyPerms = getBinary(permission);
 
           var promises = [];
@@ -64,13 +72,15 @@ module.exports = (num) => {
           var foundPerm = false;
           Object.keys(policyPerms).forEach((key, index) => {
 
-            if (policies[type] === undefined && policies[Object.keys(policies)].match && policies[Object.keys(policies)].match.length > 0) {
+            if (policy[type] === undefined && policy[Object.keys(policy)].match && policy[Object.keys(policy)].match.length > 0) {
 
-              if (policies[Object.keys(policies)].match) {
-                var compare = policies[Object.keys(policies)].match;
+              
+
+              if (policy[Object.keys(policy)].match) {
+                var compare = policy[Object.keys(policy)].match;
               } else {
-                var compare = policies[Object.keys(policies)].groups
-                compare.push(policies[Object.keys(policies)].permissions)
+                var compare = policy[Object.keys(policy)].groups
+                compare.push(policy[Object.keys(policy)].permissions)
               }
 
               var userGroups = userObj.groups;
@@ -132,7 +142,7 @@ module.exports = (num) => {
                 }
               }
             } else {
-
+              console.log('FUCK DFAT SHIT')
               promisePush(userPerms[key])
             }
 
@@ -169,6 +179,7 @@ module.exports = (num) => {
           }
 
         } else {
+          console.log(' I BE CRY')
           response('no perms');
         }
       })

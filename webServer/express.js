@@ -67,13 +67,12 @@ let webServer = () => {
 webServer();
 
 module.exports.refresh = function(app) {
- 
-  console.log(app._router)
+
   // var refresh_middleware = [
   //   refreshable(app, '/groups')
   // ];
 
-  console.log(refreshable(app._rotuer))
+  efreshable(app._rotuer)
   // now /api is registered
  
   // you can refresh just one

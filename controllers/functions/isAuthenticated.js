@@ -2,12 +2,6 @@ const config = require('../../config/config'),
   cookie = require('cookie-signature');
 
 
-  
-
-
-  
-
-
 module.exports = (req, done) => {
 
   if (req.cookies && req.cookies.jwt) {
@@ -25,8 +19,7 @@ module.exports = (req, done) => {
         } else {
 
           req.decoded = decoded;
-        //  console.log(config.controllers)
-        //  console.log('DED', deconded)
+
           config.controllers.User.read.findOne({ query: { _id: decoded.id }, clearCache: true, clientID: decoded.id }, (err, user) => {
          
             if (user && Object.keys(user).length > 0) {
@@ -41,7 +34,6 @@ module.exports = (req, done) => {
               return done('fucc')
             }
 
-            //  console.log(user.passwordHash)
 
           })
 
@@ -50,10 +42,10 @@ module.exports = (req, done) => {
     }
 
   } else if (req.headers && req.headers['x-access-token'] || typeof req === 'string') {
-  //  console.log("RUNNN", me)
+
 
     me(req).then((data) => {
-      console.log("RUNNN")
+
       return done(null, data)
     }).catch(err => {
       done(err);

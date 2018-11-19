@@ -14,15 +14,13 @@ module.exports = (req) => {
     }
 
     var jwtToken = jwtUnScramble(token);
-    
 
-    console.log(jwtToken, 'TOKNE');
     if (!jwtToken) return rej('noToken')
 
     jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
-      console.log(config.jwtSecret)
+
       if (err) return rej('badToken')
-      console.log( decoded.id);
+
       UserJwt.findOne( { _id: decoded.id }, function (err, user) {
 
 

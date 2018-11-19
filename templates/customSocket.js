@@ -85,6 +85,20 @@ socket.on('login', function (data) {
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
+       function userRead(data) {
+          console.log(data)
+         t0 = performance.now();
+        socket.emit('userRead', 
+          {data:data}
+        );
+      
+        };
+       socket.on('userRead', function (data) {
+         console.log(data)
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
        function userRemove(data) {
           console.log(data)
          t0 = performance.now();

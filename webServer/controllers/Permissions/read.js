@@ -3,9 +3,9 @@ const Permissions = require("../../models/Permissions");
 var populate ='';
 Object.keys(Permissions.schema.obj).forEach(function(key) {
   var val = Permissions.schema.obj[key];
-//  console.log(key)
+
 if (typeof val === 'object' && val[0] && val[0].ref) {
- // console.log(key, typeof val, val[0]);
+
   populate += ` ${val[0].ref.toLowerCase()}`
 
 }

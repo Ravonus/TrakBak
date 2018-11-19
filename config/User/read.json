@@ -1,12 +1,12 @@
 {
-	"sockets": false,
-	"api": false,
+	"sockets": true,
+	"api": true,
 	"permissions": 0,
 	"groups": [],
 	"isAuthenticated": {
 		"timing": "before",
 		"groups": [],
-		"permissions": 0,
+		"permissions": 1,
 		"api": true,
 		"sockets": true
 	},
@@ -14,24 +14,21 @@
 		{
 			"checkUser": {
 				"groups": [],
-				
 				"match": [],
-				"permissions": 0,
+				"permissions": 2,
 				"timing": "before",
-				"api": false,
-				"sockets": true,
-				"active": false
+				"api": true,
+				"sockets": true
 			}
 		},
 		{
 			"isTest": {
-				"groups": [],
-				"match": [],
+				"groups": ["fuck"],
+				"match": ["fuck"],
 				"permissions": 0,
 				"timing": "before",
-				"api": false,
-				"sockets": false,
-				"active": false
+				"api": true,
+				"sockets": false
 			}
 		}
 	]

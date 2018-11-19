@@ -2,29 +2,24 @@
 let policies = require('../webServer/routes/policies/policies');
 let config = require('../config/config');
 
-
-
 let policy = {
   grabPromises: (policyConfig, req) => {
 
-   
     let promises = [];
 
-  
+    console.log('what is it?', req.userObj.permissions)
     
     if (policyConfig) {
 
-
       policyConfig.forEach((policyName, index) => {
-        
-  
+
         promises.push(permissions(req.userObj.permissions).promise(req.userObj, policyName));
 
         let active = (typeof policyName[Object.keys(policyName)].api === "undefined" ? true : policyName[Object.keys(policyName)].api);
 
-
-
-        if (active && !policyName[Object.keys(policyName)].match) {
+        if (active && !policyName[Object.keys(policyName)].match || !policyName[Object.keys(policyName)].group 
+        
+        || active && policyName[Object.keys(policyName)].match.length === 0 || policyName[Object.keys(policyName)].group && policyName[Object.keys(policyName)].group.length === 0) {
 
           promises.push(
             new Promise((response, rej) => {
@@ -37,13 +32,15 @@ let policy = {
 
             })
           )
-        } else {
-
+        } else 
+          
           if(req.userObj && req.userObj.groups) {
+            
             var groups = policyName[Object.keys(policyName)].groups;
             req.userObj.groups.forEach( (group) => {
+          
               if(groups.includes(group.name)) {
-                console.log('bat man');
+
                 promises.push(
                   new Promise((response, rej) => {
       
@@ -57,47 +54,34 @@ let policy = {
                 )
               }
             })
-          }
+          
         }
 
       })
 
-     
-
       return promises;
-
     }
- 
   },
   mongoosePromise: (modelName, routeType, modelFunction, req) => {
 
     if (Object.keys(req.body).length === 0) {
 
       req.body = req.query;
-
     }
-
-    
 
     var promise =
 
       () => {
         return new Promise((response, rej) => {
 
-
-          console.log(req.url.split('/'));
           if (req.url.split('/').length >= 3 && routeType !== 'create') {
 
-
             let url = req.url.split('/');
-            console.log(routeType);
+
             if (routeType !== 'update') {
 
-
-             console.log("DA GFUCCCC", url)
               config.controllers[modelName][routeType][modelFunction[0]]({query: url[2] } , (err, data) => {
                 if (err) {
-                  //     console.log(err);
                   rej(err)
                 };
                 response(data);
@@ -120,7 +104,6 @@ let policy = {
 
           } else if (routeType === 'create') {
 
-
             config.controllers[modelName][routeType]({query: req.body, secondary: {} }, (err, data) => {
 
               if (err) rej(err)
@@ -137,7 +120,7 @@ let policy = {
 
 
           } else {
-            console.log(modelFunction[1])
+
             config.controllers[modelName][routeType][modelFunction[1]]({query:req.body}, (err, data) => {
 
               if (err) rej({err:err})
@@ -147,8 +130,6 @@ let policy = {
 
         })
       }
-
-  
 
     return promise;
 
@@ -160,9 +141,9 @@ let policy = {
       if (str.api) {
     
         isAuthenticated(req, (err, data) => {
-
+          // console.log(str.api, 'It does run', data)
           if (err) return rej(err)
-          console.log('diz data', data);
+
           return response(data)
 
         })

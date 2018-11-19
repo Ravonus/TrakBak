@@ -3,9 +3,9 @@ const User = require("../../models/User");
 var populate = '';
 Object.keys(User.schema.obj).forEach(function (key) {
   var val = User.schema.obj[key];
-  //  console.log(key)
+
   if (typeof val === 'object' && val[0] && val[0].ref) {
-    // console.log(key, typeof val, val[0]);
+
     populate += ` ${val[0].ref.toLowerCase()}`
 
   }
@@ -49,7 +49,7 @@ let read = {
     // query = typeof (query) === 'function' ? {} : query;
 
     remove$(options.query);
-    console.log(options.query,'next', options.secondary)
+
     const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
 
     sendCallBack(mongoose, done);
@@ -70,7 +70,7 @@ let read = {
 
   },
   findById: async (options, done) => {
-    console.log('DA FUCK', options)
+
     const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
     sendCallBack(mongoose, done);
 
