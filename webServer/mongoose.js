@@ -2,7 +2,6 @@ const mongoose = require('mongoose'),
   config = require('./../config/config'),
   startTime = require('../app').startTime,
   argv = require('yargs').argv,
-  autoIncrement = require('mongoose-auto-increment'),
   mongoDB = config.mongoDB;
 
   //require('../webServer/services/redis');
@@ -45,10 +44,10 @@ mongoose.connect(mongooseConnect, { auth, useNewUrlParser: true }, (err, data) =
 
   }
 
-  permissions(254+ 256 + 512+ +1024+ 274877906945+2251799813685248).pf((err, data) => {
+  // permissions(254+ 256 + 512+ +1024+ 274877906945+2251799813685248).pf((err, data) => {
 
 
-  });
+  // });
 
 
 

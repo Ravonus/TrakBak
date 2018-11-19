@@ -5,5 +5,7 @@
   "serverName_bak" : "https://10.0.0.85:3003",
   "certLocation": "/webServer/https/cert.pem",
   "keyLocation": "/webServer/https/key.pem",
-  "ivId": "26ae5cc854e36b6bdfca366848dea6bb"
+  "ivId": "26ae5cc854e36b6bdfca366848dea6bb",
+  "redis" : "127.0.0.1",
+  "redisPort": 6379
 }

@@ -1,24 +1,19 @@
 module.exports = (num) => {
 
-  console.log(num, 'num');
-
   return promise = {
 
     promise: (userObj, policies, type) => {
-
-
 
       if (!type) {
         type = 'api';
       }
 
       return new Promise((response, reject) => {
-      
+
         var policy = policies[Object.keys(policies)]
 
         if (policy && policy[type] && policy.permissions && policy.permissions > 0 || policies && policies[Object.keys(policies)].permissions && policies[Object.keys(policies)].permissions > 0 && userObj && userObj.permissions && policies[Object.keys(policies)][type]) {
 
-       
           var weight = 0;
           var permission;
 
@@ -34,8 +29,6 @@ module.exports = (num) => {
               permission = policies[Object.keys(policies)].permissions;
             }
           }
-
-
 
           function getBinary(num) {
 
@@ -142,7 +135,7 @@ module.exports = (num) => {
                 }
               }
             } else {
-              console.log('FUCK DFAT SHIT')
+             
               promisePush(userPerms[key])
             }
 
@@ -179,7 +172,6 @@ module.exports = (num) => {
           }
 
         } else {
-          console.log(' I BE CRY')
           response('no perms');
         }
       })

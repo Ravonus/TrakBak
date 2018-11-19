@@ -1,3 +1,6 @@
+//TODO: THIS FILE IS UGLY.. IT WAS MASHED TOGETHER EARLY TESTING AND NOT FIXED.. IT NEEDS TO BE FIXED CHAD.. Do NOT let this file go untouched.
+
+
 const fs = require('fs'),
   path = require('path'),
   prettyjson = require('prettyjson'),
@@ -280,7 +283,6 @@ fs.readdir(modelsDir, function (err, files) {
 
                 if (err) return err;
 
-                console.log("RRRROOOOOOAR")
 
                 config.controllers[capFirst(modelFile).slice(0, -3)].api[myFile.slice(0, -3)] = requireFromString(apiRoute.replace(/modelName/g, modelFile.slice(0, -3)).replace(/routeType/g, myFile.slice(0, -3)))
                 var request = 'get'
@@ -299,32 +301,23 @@ fs.readdir(modelsDir, function (err, files) {
 
                 config.controllers.controllerNames.push({ name: (modelFile).slice(0, -3), type: myFile.slice(0, -3), request })
 
-
                 if (index === directories.length - 1 && indexTwo === files.length - 1) {
-
 
                   setTimeout(function () { 
                     
-                    console.log('DONNNE DAWG');
-
                     if(update && config.controllers) {
-                    console.log(config.controllers.Groups.api);
+
                     global.controllers = config.controllers;
                     }
                     
                     global.trakbak.controllers = true; 
                   }, 0);
 
-
                 }
-
               }
-
             }
           });
-
         });
-
       }
     });
   });

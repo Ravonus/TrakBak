@@ -47,7 +47,7 @@ var routeType = (req, res) => {
       if(policyConfig.api === undefined || policyConfig.api) {
 
       promises = promiseFunctions.grabPromises(policyConfig.policies, req);
-      console.log(promises);
+
       }
 
     function promiseAll() {

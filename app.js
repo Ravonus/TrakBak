@@ -15,6 +15,8 @@ const express = require('express'),
 
   { restoreCrons } = require('./webServer/services/redis');
 
+  //require('./webServer/services/redis');
+
   restoreCrons();
 
   // global.policies = require('./webServer/routes/policies/policies');

@@ -6,8 +6,6 @@ let policy = {
   grabPromises: (policyConfig, req) => {
 
     let promises = [];
-
-    console.log('what is it?', req.userObj.permissions)
     
     if (policyConfig) {
 
@@ -141,7 +139,7 @@ let policy = {
       if (str.api) {
     
         isAuthenticated(req, (err, data) => {
-          // console.log(str.api, 'It does run', data)
+
           if (err) return rej(err)
 
           return response(data)

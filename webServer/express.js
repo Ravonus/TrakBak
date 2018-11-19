@@ -93,7 +93,7 @@ module.exports.refresh = function(app) {
 }
 
 // module.exports.refresh = (cb) => {
-//   console.log('test')
+
 // }
 
 module.exports.cb = (cb) => {
