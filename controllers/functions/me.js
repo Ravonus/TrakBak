@@ -8,7 +8,9 @@ module.exports = (req) => {
     if (typeof req === 'string') {
       var token = req;
     } else {
+ 
       var token = cookie.unsign(req.headers['x-access-token'], config.cookieSecret);
+      
     }
 
     var jwtToken = jwtUnScramble(token);
@@ -16,9 +18,12 @@ module.exports = (req) => {
     if (!jwtToken) return rej('noToken')
 
     jwt.verify(jwtToken, config.jwtSecret, function (err, decoded) {
+
       if (err) return rej('badToken')
 
-      UserJwt.findOne({ query: decoded.id }, function (err, user) {
+      UserJwt.findOne( { _id: decoded.id }, function (err, user) {
+
+
         user.passwordHash = undefined;
         decoded.id = undefined;
 

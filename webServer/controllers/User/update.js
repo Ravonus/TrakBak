@@ -5,8 +5,6 @@ var update = {
 
     await clearCache(options);
 
-
-    console.log('FUCCC I DONT CRASH')
     User.findByIdAndUpdate(options.query, options.secondary,
   
       

@@ -35,8 +35,6 @@ socket.on('me', function (data) {
 
 socket.on('login', function (data) {
 
-  console.log(data,'FICCCCL')
-
   var user = data.user;
  
   if (user && user.jwt) {

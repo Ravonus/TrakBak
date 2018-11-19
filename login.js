@@ -24,7 +24,8 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-function login() {
+
+function login() {
 
   socket.emit('login', {
     url: window.location.href,
@@ -46,8 +47,6 @@ socket.on('login', function (data) {
 
     window.location.href = '/';
   } else {
-
-    console.log(data)
 
     var options = {
       "closeButton": true,

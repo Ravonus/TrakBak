@@ -39,12 +39,15 @@ var routeType = (req, res) => {
     .then(data => {
 
 
-      req.userObj = data;
+     
+      req.userObj = data.user;
       
       let mongoosePromise = promiseFunctions.mongoosePromise('modelName', 'routeType', functionNames.routeType, req);
-   
+     
       if(policyConfig.api === undefined || policyConfig.api) {
+
       promises = promiseFunctions.grabPromises(policyConfig.policies, req);
+
       }
 
     function promiseAll() {

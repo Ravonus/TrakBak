@@ -24,9 +24,9 @@ PermissionsSchema.pre('save', function(next) {
 
   if(this.bit > 2) {
     this.bit= (this.bit -1) * 2;
-    console.log(this.bit)
+
   }
-  console.log(this);
+
 
   
   mongoose.model('IdentityCounter').findOneAndUpdate({model:'Permissions'}, {count:this.bit},

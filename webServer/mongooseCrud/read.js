@@ -3,9 +3,9 @@ const modelName = require("../../models/modelName");
 var populate = '';
 Object.keys(modelName.schema.obj).forEach(function (key) {
   var val = modelName.schema.obj[key];
-  //  console.log(key)
+
   if (typeof val === 'object' && val[0] && val[0].ref) {
-    // console.log(key, typeof val, val[0]);
+
     populate += ` ${val[0].ref.toLowerCase()}`
 
   }

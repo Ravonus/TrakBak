@@ -15,6 +15,8 @@ const express = require('express'),
 
   { restoreCrons } = require('./webServer/services/redis');
 
+  //require('./webServer/services/redis');
+
   restoreCrons();
 
   // global.policies = require('./webServer/routes/policies/policies');
@@ -168,17 +170,5 @@ runServer = () => {
     setTimeout(() => { runServer(); }, 0);
 
   }
-
-
-//createCron('fuck', {timezone:'America/Denver',runTime:'0 31-59/3 12-23/1 20-31/1 0-11/11 2024'})
-
-// setTimeout(function(){ 
-//   console.log(moment(Date.now()))
-//   console.log(crons.fuck.nextDates())
-//  }, 3000);
-
-//  setTimeout(function(){ 
-//   //crons.fuck.start();
-//  }, 10000);
 
 }

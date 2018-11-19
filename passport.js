@@ -59,8 +59,6 @@ passport.serializeUser((user, done) => {
     var password = user.password;
     User.findOne({ 'name.username': username }, function (err, user) {
 
-      console.log(user);
-
       if (!user) { return done({ error: "loginError" }); }
 
       user.validPassword(password, (err, data) => {

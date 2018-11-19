@@ -1,10 +1,10 @@
-const path = require('path'),
-  argv = require('yargs').argv;
 /*
 * Create and export configuration variables (This gets its information within the environment files. If new environment is required. Just create a config for it.)
 *
 */
 
+const path = require('path'),
+  argv = require('yargs').argv;
 
 //Container for all the environments
 let environments = {};
@@ -30,6 +30,21 @@ let environmentToExport = typeof (environments[currentEnvironment]) == 'object' 
 
 environmentToExport = Object.assign(environmentToExport, environments.share);
 
+
+
+if(environmentToExport.redis) {
+  if(environmentToExport.redis.indexOf('redis') !== 0) {
+    environmentToExport.redis = `redis://${environmentToExport.redis}`
+  }
+  if(environmentToExport.redisPort) {
+  environmentToExport.redis = `${environmentToExport.redis}:${environmentToExport.redisPort}`;
+  }
+
+
+}
+
+
+
 // This checks if environment has thread default changed. Default of node = 4. Auto will use math and count your threads(Hyper threading too), you can run softwareOff and it will remove hyper threading or software cores.
 
 if (environmentToExport.threads === 'auto') {
@@ -50,7 +65,6 @@ if (environmentToExport.ignoreSSL) {
 if (typeof (environmentToExport.certLocation) === 'string') {
 
   process.env.NODE_EXTRA_CA_CERTS = path.join(__dirname, '../', environmentToExport.certLocation);
-
 
 }
 

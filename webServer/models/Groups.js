@@ -28,28 +28,15 @@ GroupsSchema.plugin(autoIncrement.plugin, {
   incrementBy: 1
 });
 
-
-
-
 GroupsSchema.pre('save', function(next) {
-
- 
-
-  // console.log(autoIncrement.plugin);
-  // console.log(this.groupId);
-
-  // console.log('mATH', (this.groupId -1) * 2)
 
   if(this.groupId > 2) {
     this.groupId = (this.groupId -1) * 2;
 
   }
 
-
-  
   mongoose.model('IdentityCounter').findOneAndUpdate({model:'Groups'}, {count:this.groupId},
   
-    
     // an option that asks mongoose to return the updated version 
     // of the document instead of the pre-updated one.
     {new: true},

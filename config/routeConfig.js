@@ -8,7 +8,6 @@ module.exports = (done) => {
 
 config.controllers.controllerNames.forEach((name) => {
 
- //   console.log(name.name)
 })
 
     var dirLength = fs.readdirSync(__dirname).length;
@@ -81,11 +80,6 @@ config.controllers.controllerNames.forEach((name) => {
       }
     
     }
-
-
- //   console.log(configs);
- //console.log(obj);
-
 
     
 //module.exports = configs;

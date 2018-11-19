@@ -3,9 +3,9 @@ const User = require("../../models/User");
 var populate = '';
 Object.keys(User.schema.obj).forEach(function (key) {
   var val = User.schema.obj[key];
-  //  console.log(key)
+
   if (typeof val === 'object' && val[0] && val[0].ref) {
-    // console.log(key, typeof val, val[0]);
+
     populate += ` ${val[0].ref.toLowerCase()}`
 
   }
@@ -22,6 +22,8 @@ function sendCallBack(mongoose, done) {
 };
 
 function remove$(query) {
+
+
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
 
@@ -47,8 +49,8 @@ let read = {
     // query = typeof (query) === 'function' ? {} : query;
 
     remove$(options.query);
-    
-    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+
+    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
 
     sendCallBack(mongoose, done);
 
@@ -61,7 +63,7 @@ let read = {
       options.secondary = {};
     }
 
-    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
 
 
     sendCallBack(mongoose, done);
@@ -69,7 +71,7 @@ let read = {
   },
   findById: async (options, done) => {
 
-    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
     sendCallBack(mongoose, done);
 
   }

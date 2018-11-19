@@ -6,28 +6,28 @@
 	"isAuthenticated": {
 		"timing": "before",
 		"groups": [],
-		"permissions": 0,
-		"api": false,
+		"permissions": 1,
+		"api": true,
 		"sockets": true
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": [],
-				"match": ["administrator", "publics"],
-				"permissions": 0,
+				"match": [],
+				"permissions": 2,
 				"timing": "before",
-				"api": false,
+				"api": true,
 				"sockets": true
 			}
 		},
 		{
 			"isTest": {
-				"groups": [],
-				"match": [],
+				"groups": ["fuck"],
+				"match": ["fuck"],
 				"permissions": 0,
 				"timing": "before",
-				"api": false,
+				"api": true,
 				"sockets": false
 			}
 		}
