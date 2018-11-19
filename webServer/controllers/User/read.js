@@ -22,6 +22,8 @@ function sendCallBack(mongoose, done) {
 };
 
 function remove$(query) {
+
+
   //loop to add $ in front of mongo/mongoose where commands. This makes it so you don't have to pass it to the object before call.
   Object.keys(query).forEach(function (key) {
 
@@ -47,8 +49,8 @@ let read = {
     // query = typeof (query) === 'function' ? {} : query;
 
     remove$(options.query);
-    
-    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+    console.log(options.query,'next', options.secondary)
+    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
 
     sendCallBack(mongoose, done);
 
@@ -61,15 +63,15 @@ let read = {
       options.secondary = {};
     }
 
-    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+    const mongoose = await User.findOne(options.query).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
 
 
     sendCallBack(mongoose, done);
 
   },
   findById: async (options, done) => {
-
-    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.user._id);
+    console.log('DA FUCK', options)
+    const mongoose = await User.findById(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
     sendCallBack(mongoose, done);
 
   }

@@ -9,7 +9,6 @@ async function create(options, done) {
 
   modelObj.save( (err, data) => {
 
-    
     if (err) return done(err.errors);
 
     if(options.secondary){

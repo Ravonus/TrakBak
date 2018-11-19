@@ -36,7 +36,7 @@ function cb() {
 
 
   } else {
-    console.log('asd')
+
     setTimeout(function () { cb(); }, 0);
   }
 }

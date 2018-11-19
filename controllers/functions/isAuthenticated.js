@@ -15,22 +15,22 @@ module.exports = (req, done) => {
     var jwtCookie = cookie.unsign(req.cookies.jwt, config.cookieSecret);
 
     if (jwtCookie) {
-
+    
       jwtCookie = jwtUnScramble(jwtCookie);
 
       jwt.verify(jwtCookie.trim(), config.jwtSecret, async (err, decoded) => {
-
+  
         if (err) {
           return done(err);
         } else {
 
           req.decoded = decoded;
         //  console.log(config.controllers)
-        
+        //  console.log('DED', deconded)
           config.controllers.User.read.findOne({ query: { _id: decoded.id }, clearCache: true, clientID: decoded.id }, (err, user) => {
          
             if (user && Object.keys(user).length > 0) {
-
+        
               user.passwordHash = undefined;
 
               delete decoded.id;
@@ -50,8 +50,10 @@ module.exports = (req, done) => {
     }
 
   } else if (req.headers && req.headers['x-access-token'] || typeof req === 'string') {
-    functions.me(req).then((data) => {
+  //  console.log("RUNNN", me)
 
+    me(req).then((data) => {
+      console.log("RUNNN")
       return done(null, data)
     }).catch(err => {
       done(err);

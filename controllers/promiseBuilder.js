@@ -85,16 +85,17 @@ let policy = {
         return new Promise((response, rej) => {
 
 
+          console.log(req.url.split('/'));
           if (req.url.split('/').length >= 3 && routeType !== 'create') {
 
 
             let url = req.url.split('/');
-
+            console.log(routeType);
             if (routeType !== 'update') {
 
 
-
-              config.controllers[modelName][routeType][modelFunction[0]](url[2], (err, data) => {
+             console.log("DA GFUCCCC", url)
+              config.controllers[modelName][routeType][modelFunction[0]]({query: url[2] } , (err, data) => {
                 if (err) {
                   //     console.log(err);
                   rej(err)
@@ -103,8 +104,10 @@ let policy = {
               });
 
             } else {
+              
+              var query = { query: url[2], secondary: req.body}
 
-              config.controllers[modelName][routeType][modelFunction[0]](url[2], req.body, (err, data) => {
+              config.controllers[modelName][routeType][modelFunction[0]](query, (err, data) => {
 
                 if (err) {
                   rej(err)
@@ -118,14 +121,15 @@ let policy = {
           } else if (routeType === 'create') {
 
 
-            config.controllers[modelName][routeType](req.body, {}, (err, data) => {
+            config.controllers[modelName][routeType]({query: req.body, secondary: {} }, (err, data) => {
 
               if (err) rej(err)
               response(data)
             });
           }
           else if (routeType === 'update') {
-            config.controllers[modelName][routeType][modelFunction[1]](req.query, req.body, (err, data) => {
+            var query = {query: req.query, secondary: req.body}
+            config.controllers[modelName][routeType][modelFunction[1]](query, (err, data) => {
 
               if (err) rej({err:err})
               response(data)
@@ -133,8 +137,8 @@ let policy = {
 
 
           } else {
-
-            config.controllers[modelName][routeType][modelFunction[1]](req.body, (err, data) => {
+            console.log(modelFunction[1])
+            config.controllers[modelName][routeType][modelFunction[1]]({query:req.body}, (err, data) => {
 
               if (err) rej({err:err})
               response(data)
@@ -154,12 +158,12 @@ let policy = {
     return new Promise((response, rej) => {
 
       if (str.api) {
-
+    
         isAuthenticated(req, (err, data) => {
 
           if (err) return rej(err)
           console.log('diz data', data);
-          response(data)
+          return response(data)
 
         })
       } else {

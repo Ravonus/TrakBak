@@ -1,24 +1,26 @@
 {
-	"sockets": true,
-	"api": true,
+	"sockets": false,
+	"api": false,
 	"permissions": 0,
 	"groups": [],
 	"isAuthenticated": {
 		"timing": "before",
 		"groups": [],
 		"permissions": 0,
-		"api": false,
+		"api": true,
 		"sockets": true
 	},
 	"policies": [
 		{
 			"checkUser": {
 				"groups": [],
-				"match": ["administrator", "publics"],
+				
+				"match": [],
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": true
+				"sockets": true,
+				"active": false
 			}
 		},
 		{
@@ -28,7 +30,8 @@
 				"permissions": 0,
 				"timing": "before",
 				"api": false,
-				"sockets": false
+				"sockets": false,
+				"active": false
 			}
 		}
 	]
