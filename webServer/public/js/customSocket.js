@@ -89,7 +89,7 @@ function socketInterpreter(socketMessage) {
   console.log(socketMessage)
 }function userCreate(data) {
          t0 = performance.now();
-        socket.emit('userCreate', 
+        socket.emit('userRead', 
           {data:data}
         );
       
@@ -102,7 +102,7 @@ function socketInterpreter(socketMessage) {
         })
        function userRead(data) {
          t0 = performance.now();
-        socket.emit('userRead', 
+        socket.emit('userCreate', 
           {data:data}
         );
       
