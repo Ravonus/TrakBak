@@ -31,7 +31,7 @@ let environmentToExport = typeof (environments[currentEnvironment]) == 'object' 
 environmentToExport = Object.assign(environmentToExport, environments.share);
 
 
-
+// This will combine the redis ports if the user did not in config. It also will add redis if they forgot it. It should not break anything if they do decide to do either of these too.
 if(environmentToExport.redis) {
   if(environmentToExport.redis.indexOf('redis') !== 0) {
     environmentToExport.redis = `redis://${environmentToExport.redis}`
@@ -40,13 +40,16 @@ if(environmentToExport.redis) {
   environmentToExport.redis = `${environmentToExport.redis}:${environmentToExport.redisPort}`;
   }
 
-
 }
 
+// This will load all the general configs.
 
+require("fs").readdirSync(__dirname + '/general/').forEach(function (file) {
+
+  environmentToExport[file.slice(0, -5)] = require(__dirname + "/general/" + file);
+});
 
 // This checks if environment has thread default changed. Default of node = 4. Auto will use math and count your threads(Hyper threading too), you can run softwareOff and it will remove hyper threading or software cores.
-
 if (environmentToExport.threads === 'auto') {
   process.env.UV_THREADPOOL_SIZE = Math.ceil(Math.max(4, require('os').cpus().length * 1));
 } else if (typeof (environmentToExport.threads) === 'number') {
@@ -57,19 +60,15 @@ if (environmentToExport.threads === 'auto') {
 }
 
 //Check ignore SSL and set correct process envioronment.
-
 if (environmentToExport.ignoreSSL) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
 
 if (typeof (environmentToExport.certLocation) === 'string') {
-
   process.env.NODE_EXTRA_CA_CERTS = path.join(__dirname, '../', environmentToExport.certLocation);
-
 }
 
 //Combine share environment variables with current envioronment.
-
 if (!environmentToExport.jwtExpire) {
 
   environmentToExport.jwtExpire = 86400

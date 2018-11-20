@@ -17,6 +17,7 @@ const express = require('express'),
 
   //require('./webServer/services/redis');
 
+  global.email = require('./services/email/email');
   restoreCrons();
 
   // global.policies = require('./webServer/routes/policies/policies');
@@ -27,9 +28,6 @@ const express = require('express'),
   }
 
 config.controllers = {};
-
-
-
 
 global.crons = {};
 
