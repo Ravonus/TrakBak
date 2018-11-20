@@ -64,7 +64,6 @@ require('./clientWrite')(() => {
             policyObject.push(obj[configName][route]);
 
             clientSocket(`function ${routeName}(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('${routeName}', 
           {data:data}
@@ -72,7 +71,12 @@ require('./clientWrite')(() => {
       
         };
        socket.on('${routeName}', function (data) {
+         if(typeof(data) === 'string') {
+           data = JSON.parse(data);
+         }
          console.log(data)
+         console.log(data[0])
+         console.log(data[0].groups);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
@@ -147,7 +151,7 @@ module.exports = {
             if (policyObj.permissions && policyObj.permissions !== 0) {
               options.permissions = policyObj.permissions;
             }
-            
+
             createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route), policyObj, activeClients[socket.id].user, policies, options)
 
           });

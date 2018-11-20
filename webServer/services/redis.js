@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-  config = require('../../config/config'),
+config = require('../../config/config'),
   redis = require('redis'),
   util = require('util'),
   client = redis.createClient(config.redis),
@@ -16,7 +16,11 @@ client.hset = util.promisify(client.hset);
 // });
 
 
+async function mongoosePopulate(populate, cache, model) {
 
+
+  return model;
+}
 
 
 mongoose.Query.prototype.cache = function (cache, id) {
@@ -36,101 +40,61 @@ mongoose.Query.prototype.exec = async function () {
     return exec.apply(this, arguments)
   }
 
-
   const key = JSON.stringify(Object.assign({}, this.getQuery(), {
     collection: this.mongooseCollection.name
   }));
 
-
   // see if we have a vlaue for 'key' in redis.
-
 
   const cacheValue = await client.hget(JSON.stringify(this.clientID).replace(/"/g, ''), key);
 
-  // If we do, return that.
+  if (this.schema && this.schema.obj) {
+    var populate = '';
+    var model = this;
+    console.log('KEYS', Object.keys(this.schema.obj))
+    Object.keys(this.schema.obj).forEach(function (key) {
+      console.log('KEY');
+      var val = model.schema.obj[key];
 
+      if (typeof val === 'object' && val[0] && val[0].ref) {
+
+        populate += ` ${val[0].ref.toLowerCase()}`
+
+      }
+    });
+
+  }
+
+  // If we do, return that.
 
   if (cacheValue && JSON.parse(cacheValue).length > 0) {
 
     // console.log(crons[this.clientID + key]);
     var cron = crons[this.clientID + key];
 
-
-
-
-
     if (cron) {
       var time = moment(moment(cron.cronTime.source).format()).unix() * 1000;
       if (time > Date.now()) {
         var compare = Date.now() + 30000;
 
-        //  console.log(time)
-
-        //     crons[this.clientID + key].cronTime.source = moment(compare).parseZone();
         const CronTime = require('cron').CronTime;
         var time = new CronTime(new Date(compare));
-        //  crons[this.clientID + key].setTime(CronJob.time(new Date(compare)));
 
         crons[this.clientID + key].setTime(time);
         crons[this.clientID + key].start();
-        //   console.log( crons[this.clientID + key].cronTime.source );
+
       } else {
         crons[this.clientID + key].stop();
         delete crons[this.clientID + key];
       }
       const doc = JSON.parse(cacheValue);
-
-
-      return Array.isArray(doc)
-        ? doc.map(d => new this.model(d))
-        : new this.model(doc);
-
+      return doc;
     }
   }
 
-
-
-  // if (cacheValue) {
-
-
-  //   const doc =  JSON.parse(cacheValue);
-
-  //  // this.model
-  // //  this.model = doc;
-
-  //   await doc.map((d, index) => {
-
-
-  //   new this.model(d)
-
-  //   if(doc.map.length === index) {
-
-  //    return this
-
-
-  //   }
-
-
-
-  // });
-
-
-
-  // //return exec.apply(this, arguments)
-  // return Array.isArray(doc) 
-  // ? doc.map(d => {
-  //   console.log(this.model(d))
-  //   new this.model(d)}
-  // )
-  // : new this.model(doc);
-
-  // }
-
-  // Otherwise, issue the query and store the result in redis.
-
-
-
   const result = await exec.apply(this, arguments);
+
+  console.log(JSON.stringify(result));
 
   client.hset(JSON.stringify(this.clientID).replace(/"/g, ''), key, JSON.stringify(result));
 

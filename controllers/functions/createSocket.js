@@ -239,9 +239,9 @@ module.exports = (socket, route, object, user, functions, options) => {
                   var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
          
                   modelFunction[name][index](options, async (err, data) => {
-         
+                    console.log('DIZ DATE', data[0].groups)
                   var sendData = err ? err : data;
-                  sendData = await message.sockets(sendData);
+                  console.log('DIZ DATE', sendData[0].groups)
                   socket.emit(route, sendData);
                 });
               } else {

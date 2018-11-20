@@ -70,7 +70,6 @@ socket.on('login', function (data) {
 
   }
 });function userCreate(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userCreate', 
           {data:data}
@@ -78,13 +77,17 @@ socket.on('login', function (data) {
       
         };
        socket.on('userCreate', function (data) {
+         if(typeof(data) === 'string') {
+           data = JSON.parse(data);
+         }
          console.log(data)
+         console.log(data[0])
+         console.log(data[0].groups);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userRead(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userRead', 
           {data:data}
@@ -92,13 +95,17 @@ socket.on('login', function (data) {
       
         };
        socket.on('userRead', function (data) {
+         if(typeof(data) === 'string') {
+           data = JSON.parse(data);
+         }
          console.log(data)
+         console.log(data[0])
+         console.log(data[0].groups);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userRemove(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userRemove', 
           {data:data}
@@ -106,13 +113,17 @@ socket.on('login', function (data) {
       
         };
        socket.on('userRemove', function (data) {
+         if(typeof(data) === 'string') {
+           data = JSON.parse(data);
+         }
          console.log(data)
+         console.log(data[0])
+         console.log(data[0].groups);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userUpdate(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userUpdate', 
           {data:data}
@@ -120,7 +131,12 @@ socket.on('login', function (data) {
       
         };
        socket.on('userUpdate', function (data) {
+         if(typeof(data) === 'string') {
+           data = JSON.parse(data);
+         }
          console.log(data)
+         console.log(data[0])
+         console.log(data[0].groups);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
