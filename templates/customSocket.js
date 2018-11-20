@@ -24,7 +24,8 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-function login() {
+
+function login() {
 
   socket.emit('login', {
     url: window.location.href,
@@ -70,7 +71,8 @@ socket.on('login', function (data) {
 
   }
 });
-function socketInterpreter(socketMessage) {
+
+function socketInterpreter(socketMessage) {
 
   if(socketMessage.message) {
       messenger(socketMessage);
@@ -87,7 +89,7 @@ socket.on('login', function (data) {
   console.log(socketMessage)
 }function userCreate(data) {
          t0 = performance.now();
-        socket.emit('userCreate', 
+        socket.emit('userRead', 
           {data:data}
         );
       
@@ -100,7 +102,7 @@ socket.on('login', function (data) {
         })
        function userRead(data) {
          t0 = performance.now();
-        socket.emit('userRead', 
+        socket.emit('userCreate', 
           {data:data}
         );
       

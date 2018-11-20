@@ -77,4 +77,7 @@ typings/
 .serverless
 
 #Config files with passwords
-config/general/*
+config/general/email.json
+
+#Ignore changing client templates
+templates/

@@ -149,7 +149,7 @@ module.exports = {
             if (policyObj.permissions && policyObj.permissions !== 0) {
               options.permissions = policyObj.permissions;
             }
-            
+
             createSocket(socket, policyObj.name.toLowerCase() + capFirst(policyObj.route), policyObj, activeClients[socket.id].user, policies, options)
 
           });
