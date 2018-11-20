@@ -53,6 +53,7 @@
     "node-minify": "^3.5.0",
     "node-sass": "^4.9.3",
     "node-watch": "^0.5.8",
+    "nodemailer": "^4.7.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "prettyjson": "^1.2.1",
