@@ -64,7 +64,7 @@ config.controllers.controllerNames.forEach((name) => {
 
             if (index === files.length - 1 && indexFirst === dirLength - 1) { 
 
-
+                
                 exportRun(configs, files);
             }
         

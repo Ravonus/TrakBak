@@ -24,7 +24,8 @@ socket.on('me', function (data) {
 
 //Don't edit after this line. Edit inside of clients folder.//
 
-function login() {
+
+function login() {
 
   socket.emit('login', {
     url: window.location.href,
@@ -69,38 +70,45 @@ socket.on('login', function (data) {
     };
 
   }
-});function userCreate(data) {
-         t0 = performance.now();
-        socket.emit('userCreate', 
-          {data:data}
-        );
-      
-        };
-       socket.on('userCreate', function (data) {
-         if(typeof(data) === 'string') {
-           data = JSON.parse(data);
-         }
-         console.log(data)
-         console.log(data[0])
-         console.log(data[0].groups);
-         var t1 = performance.now();
-         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+});
 
-        })
-       function userRead(data) {
+function socketInterpreter(socketMessage) {
+
+  if(socketMessage.message) {
+      messenger(socketMessage);
+  }
+
+  if(socketMessage.obj) {
+
+  }
+
+  if(socketMessage.vue) {
+
+  }
+  
+  console.log(socketMessage)
+}function userCreate(data) {
          t0 = performance.now();
         socket.emit('userRead', 
           {data:data}
         );
       
         };
+       socket.on('userCreate', function (data) {
+         socketInterpreter(data);
+         var t1 = performance.now();
+         console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+
+        })
+       function userRead(data) {
+         t0 = performance.now();
+        socket.emit('userCreate', 
+          {data:data}
+        );
+      
+        };
        socket.on('userRead', function (data) {
-         if(typeof(data) === 'string') {
-           data = JSON.parse(data);
-         }
-         console.log(data)
-         console.log(data[0])
-         console.log(data[0].groups);
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
@@ -113,12 +121,7 @@ socket.on('login', function (data) {
       
         };
        socket.on('userRemove', function (data) {
-         if(typeof(data) === 'string') {
-           data = JSON.parse(data);
-         }
-         console.log(data)
-         console.log(data[0])
-         console.log(data[0].groups);
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
@@ -131,12 +134,7 @@ socket.on('login', function (data) {
       
         };
        socket.on('userUpdate', function (data) {
-         if(typeof(data) === 'string') {
-           data = JSON.parse(data);
-         }
-         console.log(data)
-         console.log(data[0])
-         console.log(data[0].groups);
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
