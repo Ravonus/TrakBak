@@ -16,14 +16,11 @@ client.hset = util.promisify(client.hset);
 // });
 
 
-async function mongoosePopulate(populate, cache, model) {
 
-
-  return model;
-}
 
 
 mongoose.Query.prototype.cache = function (cache, id) {
+  console.log('DIZ ID', id)
   this.clientID = id;
   if (cache) {
     this.useCache = true;
@@ -51,9 +48,9 @@ mongoose.Query.prototype.exec = async function () {
   if (this.schema && this.schema.obj) {
     var populate = '';
     var model = this;
-    console.log('KEYS', Object.keys(this.schema.obj))
+
     Object.keys(this.schema.obj).forEach(function (key) {
-      console.log('KEY');
+
       var val = model.schema.obj[key];
 
       if (typeof val === 'object' && val[0] && val[0].ref) {
@@ -75,7 +72,7 @@ mongoose.Query.prototype.exec = async function () {
     if (cron) {
       var time = moment(moment(cron.cronTime.source).format()).unix() * 1000;
       if (time > Date.now()) {
-        var compare = Date.now() + 30000;
+        var compare = Date.now() + 3000;
 
         const CronTime = require('cron').CronTime;
         var time = new CronTime(new Date(compare));
@@ -88,17 +85,36 @@ mongoose.Query.prototype.exec = async function () {
         delete crons[this.clientID + key];
       }
       const doc = JSON.parse(cacheValue);
-      return doc;
+
+      
+
+      if(doc.length > 0) {
+     var array = doc.map(d => {
+        d.cached = true;
+        model = new this.model(d)
+        model = model.toObject();
+        model.groups = d.groups;
+        return Object.assign(model,{cached:true})
+      })
+    }
+
+      console.log('ARRAY', array)
+      return array
+    
+      
+   //   mongoose._doc ? mongoose._doc: mongoose
+
+   //   return doc;
     }
   }
 
   const result = await exec.apply(this, arguments);
-
-  console.log(JSON.stringify(result));
+;
 
   client.hset(JSON.stringify(this.clientID).replace(/"/g, ''), key, JSON.stringify(result));
+  
 
-  createCron(this.clientID + key, { timezone: 'America/Denver', runTime: new Date(Date.now() + 60000), runOnInit: false, fireOnce: true, type: { name: 'clearCache', id: this.clientID, key: key } });
+  createCron(this.clientID + key, { timezone: 'America/Denver', runTime: new Date(Date.now() + 6000), runOnInit: false, fireOnce: true, type: { name: 'clearCache', id: this.clientID, key: key } });
 
   return result;
 }
@@ -116,8 +132,10 @@ module.exports = {
     });
   },
   saveCrons(cron) {
+
     if (cron) {
 
+      console.log(cron, 'diz be cron');
       client.hset('crons', Date.now().toString(), JSON.stringify(cron));
     }
   },

@@ -7,7 +7,7 @@ let sockets = [];
 let activeClients = {};
 
 global.sockets = {};
-
+var socketAdded = [];
 // setup socket scripts. Loops through sockets and sets an array up. Socket.io does a for loop to load each connection.
 
 
@@ -61,6 +61,9 @@ require('./clientWrite')(() => {
 
             obj[configName][route].name = configName;
             obj[configName][route].route = route;
+            console.log('test', socketAdded)
+            if(!socketAdded.includes(routeName)){
+              socketAdded.push(routeName);
             policyObject.push(obj[configName][route]);
 
             clientSocket(`function ${routeName}(data) {
@@ -71,18 +74,13 @@ require('./clientWrite')(() => {
       
         };
        socket.on('${routeName}', function (data) {
-         if(typeof(data) === 'string') {
-           data = JSON.parse(data);
-         }
-         console.log(data)
-         console.log(data[0])
-         console.log(data[0].groups);
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        `);
-
+      }
 
 
           } else {

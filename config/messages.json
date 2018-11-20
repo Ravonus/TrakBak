@@ -6,6 +6,8 @@
   "loginError": { "auth": false, "message": "There was a probleming Logging in. Please check Username and Password." },
   "passwordHash": { "created": false, "message": "Password is a required field" },
   "dirDoesNotExist": {"message":"Directory'.white+:'.yellow + 'NAME'.grey+ ' Does not exist within'.red+' path'.white+':'.yellow+'PATH\n\r'.grey"},
-  "fucc": "fuccc you got an error"
+  "fucc": "fuccc you got an error",
+  "socketGenericSuccess": {"flag":"success","type":"{model}","model":"{model}","message":"{model} has been {type}."},
+  "socketGenericError": {"flag":"error","type":"{model}","model":"{model}","message":"{model} has not been {type}."}
 }
 

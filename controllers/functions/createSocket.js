@@ -235,29 +235,35 @@ module.exports = (socket, route, object, user, functions, options) => {
               
               if (index) {
                 if(secondary) {
-               
+          
                   var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
-         
+                  console.log('DIS IS IT, options', options)
                   modelFunction[name][index](options, async (err, data) => {
-                    console.log('DIZ DATE', data[0].groups)
+         
+                  
                   var sendData = err ? err : data;
-                  console.log('DIZ DATE', sendData[0].groups)
+
+                  sendData = await message.sockets(name, index, sendData);
                   socket.emit(route, sendData);
                 });
               } else {
+      
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
               
-                modelFunction[name][index](options, (err, data) => {
-              
-                  socket.emit(route, data);
+                modelFunction[name][index](options, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(name, index, sendData);
+                  socket.emit(route, sendData);
                 });
               }
               } else {
+                
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
               
-                modelFunction[name](options, (err, data) => {
-
-                  socket.emit(route, data);
+                modelFunction[name](options, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(name, index, sendData);
+                  socket.emit(route, sendData);
                 });
               }
             }
