@@ -28,25 +28,66 @@ var message = {
         if(msg.value) {
           
         } else {
+          var payload = {}
+
+          payload.message = messages.socketGenericSuccess
+          payload.type = type;
+
+  
+          payload.msg = msg;
           
-          if(msg.length && msg.length > 0) {
+          if(msg.length && msg.length > 0 ) {
+            if(Object.keys(msg[0])[0] === '$__'){
               var keys = Object.keys(msg[0].toObject());
+            } else {
+              var keys = Object.keys(msg[0]);
+            }
 
               if(typeof(msg[0][keys[0]]) === 'object') {
+          
+                if(Object.keys(msg[0][keys[0]])[0] === "$init"){
                 var keyTwo = Object.keys(msg[0][keys[0]].toObject());
+                } else {
+                  var keyTwo = Object.keys(msg[0][keys[0]]);
+                }
 
-                model = msg[0][keys[0]][keyTwo[0]]
+       
+                payload.model = msg[0][keys[0]][keyTwo[0]]
+                payload.message = messages.socketGenericSuccess.message.replace(/{model}/g,payload.model).replace(/{type}/g,type);
 
               } else {
-                model = msg[0][keys[0]]
+              payload.model = msg[0][keys[0]]
+              payload.message = messages.socketGenericSuccess.message.replace(/{model}/g,payload.model).replace(/{type}/g,type);
+              console.log('FUCK', payload.model)
               }
+
+
+
               
+          } else {
+            var name = Object.keys(msg)
+            
+              console.log('DIZ IS NAME', name);
+              if(typeof(msg[name[0]]) === 'object') {
+                console.log('RAN FAG')
+                  payload.model = msg[name[0]][Object.keys(msg[name[0]])]
+                } else {
+                  console.log('fuck you', msg[name[0]])
+                  payload.model = msg[name[0]];
+                }
+                  
+                  payload.message = messages.socketGenericSuccess.message.replace(/{model}/g,payload.model).replace(/{type}/g,type);
+              
+        
           }
         }
-        var payload = messages.socketGenericSuccess
-        payload.message = messages.socketGenericSuccess.message.replace(/{model}/gi,model).replace(/{type}/,type);
-        payload.obj = msg;
-        return  Object.assign(payload, msg)
+        if(msg[0] && msg[0].cached || msg.cached) {
+
+           payload.flag = 'info'
+        } else {
+          payload.flag = messages.socketGenericSuccess.flag;
+        }
+        return  payload;
       }
 
   },

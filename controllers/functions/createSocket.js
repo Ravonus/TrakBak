@@ -237,10 +237,10 @@ module.exports = (socket, route, object, user, functions, options) => {
                 if(secondary) {
           
                   var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
-         
+                  console.log('DIS IS IT, options', options)
                   modelFunction[name][index](options, async (err, data) => {
          
-       
+                  
                   var sendData = err ? err : data;
 
                   sendData = await message.sockets(name, index, sendData);
