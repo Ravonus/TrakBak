@@ -235,29 +235,35 @@ module.exports = (socket, route, object, user, functions, options) => {
               
               if (index) {
                 if(secondary) {
-               
+          
                   var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
          
                   modelFunction[name][index](options, async (err, data) => {
          
+       
                   var sendData = err ? err : data;
-                  sendData = await message.sockets(sendData);
+
+                  sendData = await message.sockets(name, index, sendData);
                   socket.emit(route, sendData);
                 });
               } else {
+      
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
               
-                modelFunction[name][index](options, (err, data) => {
-              
-                  socket.emit(route, data);
+                modelFunction[name][index](options, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(name, index, sendData);
+                  socket.emit(route, sendData);
                 });
               }
               } else {
+                
                 var options = clearCache ? {user,type:index,query,secondary,clearCache} : {user,type:index,query,secondary};
               
-                modelFunction[name](options, (err, data) => {
-
-                  socket.emit(route, data);
+                modelFunction[name](options, async (err, data) => {
+                  var sendData = err ? err : data;
+                  sendData = await message.sockets(name, index, sendData);
+                  socket.emit(route, sendData);
                 });
               }
             }

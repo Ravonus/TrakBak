@@ -69,8 +69,23 @@ socket.on('login', function (data) {
     };
 
   }
-});function userCreate(data) {
-          console.log(data)
+});
+function socketInterpreter(socketMessage) {
+
+  if(socketMessage.message) {
+      messenger(socketMessage);
+  }
+
+  if(socketMessage.obj) {
+
+  }
+
+  if(socketMessage.vue) {
+
+  }
+  
+  console.log(socketMessage)
+}function userCreate(data) {
          t0 = performance.now();
         socket.emit('userCreate', 
           {data:data}
@@ -78,13 +93,12 @@ socket.on('login', function (data) {
       
         };
        socket.on('userCreate', function (data) {
-         console.log(data)
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userRead(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userRead', 
           {data:data}
@@ -92,13 +106,12 @@ socket.on('login', function (data) {
       
         };
        socket.on('userRead', function (data) {
-         console.log(data)
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userRemove(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userRemove', 
           {data:data}
@@ -106,13 +119,12 @@ socket.on('login', function (data) {
       
         };
        socket.on('userRemove', function (data) {
-         console.log(data)
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
        function userUpdate(data) {
-          console.log(data)
          t0 = performance.now();
         socket.emit('userUpdate', 
           {data:data}
@@ -120,7 +132,7 @@ socket.on('login', function (data) {
       
         };
        socket.on('userUpdate', function (data) {
-         console.log(data)
+         socketInterpreter(data);
          var t1 = performance.now();
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
