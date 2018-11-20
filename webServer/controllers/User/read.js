@@ -1,6 +1,9 @@
 const User = require("../../models/User");
 
 var populate = '';
+
+
+
 Object.keys(User.schema.obj).forEach(function (key) {
   var val = User.schema.obj[key];
 
@@ -50,8 +53,9 @@ let read = {
 
     remove$(options.query);
 
-    const mongoose = await User.find(options.query, options.secondary).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate).cache(options.clearCache, options.clientID || options.query || options.user._id);
+    const mongoose = await User.find(options.query, options.secondary).cache(options.clearCache, options.clientID || options.query || options.user._id).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate);
 
+    console.log(mongoose, ' I CRY');
     sendCallBack(mongoose, done);
 
   },
