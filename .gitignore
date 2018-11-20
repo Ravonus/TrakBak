@@ -78,3 +78,6 @@ typings/
 
 #Config files with passwords
 config/general/email.json
+
+#Ignore changing client templates
+templates/

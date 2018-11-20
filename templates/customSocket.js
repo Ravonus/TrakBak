@@ -69,14 +69,14 @@ socket.on('login', function (data) {
     };
 
   }
-});function userCreate(data) {
+});function userRead(data) {
          t0 = performance.now();
-        socket.emit('userCreate', 
+        socket.emit('userRead', 
           {data:data}
         );
       
         };
-       socket.on('userCreate', function (data) {
+       socket.on('userRead', function (data) {
          if(typeof(data) === 'string') {
            data = JSON.parse(data);
          }
@@ -87,14 +87,14 @@ socket.on('login', function (data) {
          console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
 
         })
-       function userRead(data) {
+       function userCreate(data) {
          t0 = performance.now();
-        socket.emit('userRead', 
+        socket.emit('userCreate', 
           {data:data}
         );
       
         };
-       socket.on('userRead', function (data) {
+       socket.on('userCreate', function (data) {
          if(typeof(data) === 'string') {
            data = JSON.parse(data);
          }
