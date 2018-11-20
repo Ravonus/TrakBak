@@ -55,7 +55,6 @@ let read = {
 
     const mongoose = await User.find(options.query, options.secondary).cache(options.clearCache, options.clientID || options.query || options.user._id).populate(typeof (noPopulate) !== "undefined" ? noPopulate : populate);
 
-    console.log(mongoose, ' I CRY');
     sendCallBack(mongoose, done);
 
   },

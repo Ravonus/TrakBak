@@ -36,14 +36,6 @@ mongoose.Query.prototype.cache = function (cache, id) {
 
 mongoose.Query.prototype.exec = async function () {
 
-
-
-
-
-
-
-
-
   if (!this.useCache) {
     return exec.apply(this, arguments)
   }
@@ -99,48 +91,6 @@ mongoose.Query.prototype.exec = async function () {
       return doc;
     }
   }
-
-
-
-  // if (cacheValue) {
-
-
-  //   const doc =  JSON.parse(cacheValue);
-
-  //  // this.model
-  // //  this.model = doc;
-
-  //   await doc.map((d, index) => {
-
-
-  //   new this.model(d)
-
-  //   if(doc.map.length === index) {
-
-  //    return this
-
-
-  //   }
-
-
-
-  // });
-
-
-
-  // //return exec.apply(this, arguments)
-  // return Array.isArray(doc) 
-  // ? doc.map(d => {
-  //   console.log(this.model(d))
-  //   new this.model(d)}
-  // )
-  // : new this.model(doc);
-
-  // }
-
-  // Otherwise, issue the query and store the result in redis.
-
-
 
   const result = await exec.apply(this, arguments);
 
