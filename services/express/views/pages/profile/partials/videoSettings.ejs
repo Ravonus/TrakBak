@@ -1,0 +1,34 @@
+<div v-if="user.groups.video_mod" class="tab-pane" id="link9">
+  <h5 class="title">Video Settings</h5>
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4">
+      <div class="form-group">
+        <label v-if="vimeoAPI.cid" for="vcid">Vimeo Client ID</label>
+        <label v-else for="vcid"></label>
+        <input @input="settingsSaveCheck($event, 'cid', 'vimeoAPI')" id="vcid" type="text" class="form-control"
+          placeholder="Vimeo Client ID" :value="(!push.vimeoAPI || !push.vimeoAPI.cid) ? vimeoAPI.cid : push.vimeoAPI.cid">
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-4">
+      <div class="form-group">
+          <label v-if="vimeoAPI.secret" for="vSecret">Vimeo secret</label>
+          <label v-else for="vSecret"></label>
+          <input @input="settingsSaveCheck($event, 'secret', 'vimeoAPI')" id="vSecret" type="text" class="form-control"
+            placeholder="Vimeo secret" :value="(!push.vimeoAPI || !push.vimeoAPI.secret) ? vimeoAPI.secret : push.vimeoAPI.secret">
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-4">
+      <div class="form-group">
+          <label v-if="vimeoAPI.token" for="vToken">Vimeo token</label>
+          <label v-else for="vToken"></label>
+          <input @input="settingsSaveCheck($event, 'token', 'vimeoAPI')" id="vToken" type="text" class="form-control"
+            placeholder="Vimeo token" :value="(!push.vimeoAPI || !push.vimeoAPI.token) ? vimeoAPI.token : push.vimeoAPI.token">
+      </div>
+    </div>
+
+  </div>
+  <div class="text-right">
+    <button @click="saveSettings" v-if="push.showButton" type="button" class="btn btn-primary mt-5">Save</button>
+    <button v-else type="button" class="btn btn-primary mt-5" style="visibility: hidden !important;">Save</button>
+  </div>
+</div>

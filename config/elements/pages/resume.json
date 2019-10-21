@@ -1,0 +1,43 @@
+{
+    "title": "My Resume",
+    "titleParagraph": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, repellat.",
+    "resumeTitle": "Where have I worked?",
+    "downloads" : ["<i class='far fa-file-alt'></i><a href='/downloads/resume.pdf' target='_blank'> Pdf Version</a><br>", 
+        "<i class='far fa-file-alt'></i><a href='/downloads/resume.docx'> Docx Version</a><br>",
+        "<i class='far fa-file-alt'></i><a href='/downloads/resume.rtf'> RichText Version</a><br>"],
+    "resumeParagraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, accusamus commodi. Ipsa tempora consequatur sint quis placeat. Quisquam, ipsam eius?",
+    "resumes": [
+        [
+            {
+                "name": "Dev Maseters",
+                "position": "Full Stack Developer",
+                "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus illum consequuntur beatae?",
+                "start": "10-10-2014",
+                "end": "1-5-2016"
+            },
+            {
+                "name": "123 Designes",
+                "position": "Web designers",
+                "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus illum consequuntur beatae?",
+                "start": "10-10-2014",
+                "end": "1-5-2016"
+            },
+            {
+                "name": "Super Doopers",
+                "position": "Web designers",
+                "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus illum consequuntur beatae?",
+                "start": "10-10-2014",
+                "end": "1-5-2016"
+            }
+        ],
+        [
+            {
+                "name": "Super Doopers",
+                "position": "Web designers",
+                "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus illum consequuntur beatae?",
+                "start": "10-10-2014",
+                "end": "1-5-2016"
+            }
+        ]
+    ]
+}

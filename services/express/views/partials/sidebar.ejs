@@ -1,0 +1,126 @@
+<div class="sidebar" data-color="blue">
+  <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  -->
+  <div class="logo">
+    <a href="#" class="simple-text logo-mini">
+      PLM
+    </a>
+    <a href="#" class="simple-text logo-normal">
+      Asphalt & Concrete
+    </a>
+    <div class="navbar-minimize">
+      <button id="minimizeSidebar" class="btn btn-simple btn-icon btn-neutral btn-round">
+        <i class="now-ui-icons text_align-center visible-on-sidebar-regular"></i>
+        <i class="now-ui-icons design_bullet-list-67 visible-on-sidebar-mini"></i>
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-wrapper" id="sidebar-wrapper">
+    <div class="waves-effect waves-dark user" v-if="user">
+      <div class="waves-effect waves-dark photo">
+        <img v-if="user.avatar" :src="`/${user.account}/${user.avatar.fileName}`" />
+        <img v-else :src="'https://avatars.dicebear.com/v2/gridy/'+user.account+'.svg?options[colorful]=1'" />
+      </div>
+      <div class="info">
+        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+          <span>
+            {{user.account}}
+            <b class="caret"></b>
+          </span>
+        </a>
+        <div class="clearfix"></div>
+        <div class="collapse" id="collapseExample">
+          <ul class="nav">
+            <li id="myProfileNav">
+              <a class="waves-effect waves-dark" name="myProfile" @click="navClick($event, 'myProfileNav')">
+                <span name="myProfile" class="sidebar-mini-icon">MP</span>
+                <span name="myProfile" class="sidebar-normal">My Profile</span>
+              </a>
+            </li>
+            <li id="editProfileNav">
+              <a class="waves-effect waves-dark" name="editProfile" @click="navClick($event, 'editProfileNav')">
+                <span name="editProfile" class="sidebar-mini-icon">EP</span>
+                <span name="editProfile" class="sidebar-normal">Edit Profile</span>
+              </a>
+            </li>
+            <li id="settingsNav">
+              <a class="waves-effect waves-dark" name="settings" @click="navClick($event, 'settingsNav')">
+                <span name="settings" class="sidebar-mini-icon">S</span>
+                <span name="settings" class="sidebar-normal">Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <ul class="nav">
+      <li v-if="!user" id="dashboardNav" class="active">
+        <a class="waves-effect waves-dark" name="dashboard" @click="navClick($event, 'dashboardNav')">
+          <i name="dashboard" class="now-ui-icons design_app"></i>
+          <p name="dashboard">Dashboard</p>
+        </a>
+      </li>
+      <li v-if="!user" id="communityNav">
+        <a class="waves-effect waves-dark" data-toggle="collapse" href="#communityNavCollapse">
+          <i class="now-ui-icons design_image"></i>
+          <p>
+            Community
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse" id="communityNavCollapse">
+          <ul class="nav">
+            <li class="forumsSub">
+              <a class="waves-effect waves-dark" name="forums" @click="navClick($event, 'communityNav')">
+                <span name="forums" class="sidebar-mini-icon">F</span>
+                <span name="forums" class="sidebar-normal"> Forums </span>
+              </a>
+            </li>
+            <li class="rulesSub">
+              <a class="waves-effect waves-dark" name="rules" @click="navClick($event, 'communityNav')">
+                <span name="rules" class="sidebar-mini-icon">R</span>
+                <span name="rules" class="sidebar-normal"> Rules </span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li>
+
+      <li v-for="navigation in nav.links" :id="navigation.script ? navigation.script.toLowerCase()+'Nav' : navigation.name.toLowerCase()+'Nav'">
+
+        <a v-if="navigation.subNavs && navigation.subNavs.length > 0" class="waves-effect waves-dark" data-toggle="collapse" :href="navigation.script ? `#${navigation.script.toLowerCase()}NavCollapse` : `#${navigation.name.toLowerCase()}NavCollapse`">
+          <i class="now-ui-icons design_image"></i>
+          <p>
+            {{navigation.script ? navigation.script : navigation.name}}
+            <b class="caret"></b>
+          </p>
+        </a>
+
+        <div v-if="navigation.subNavs && navigation.subNavs.length > 0" class="collapse" :id="`${navigation.name.toLowerCase()}NavCollapse`">
+          <ul class="nav">
+            <li v-for="subNavId in navigation.subNavs" v-if="nav.sub[subNavId]" :class="`${nav.sub[subNavId].name.toLowerCase()}Sub`">
+              <a class="waves-effect waves-dark" :name="nav.sub[subNavId].name.toLowerCase()" @click="navClick($event, navigation.name.toLowerCase()+'Nav')">
+                <span :name="nav.sub[subNavId].name.toLowerCase()" class="sidebar-mini-icon">{{nav.sub[subNavId].name.substring(0,
+                  nav.sub[subNavId].name.length - nav.sub[subNavId].name.length +1)}}</span>
+                <span :name="nav.sub[subNavId].name.toLowerCase()" class="sidebar-normal"> {{nav.sub[subNavId].name}} </span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+
+        <a v-else class="waves-effect waves-dark" :name="navigation.script ? navigation.script.toLowerCase() : navigation.name.toLowerCase()"
+          @click="navClick($event, navigation.script ? navigation.script.toLowerCase()+'Nav' : navigation.name.toLowerCase()+'Nav')">
+          <i :name="navigation.script ? navigation.script.toLowerCase() : navigation.name.toLowerCase()" class="now-ui-icons design_app"></i>
+          <p :name="navigation.script ? navigation.script.toLowerCase() : navigation.name.toLowerCase()">{{navigation.name}}</p>
+        </a>
+
+      </li>
+
+
+    </ul>
+  </div>
+</div>

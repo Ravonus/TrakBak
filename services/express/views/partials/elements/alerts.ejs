@@ -1,0 +1,8 @@
+<div v-for="alert in alerts" :class="'alert ' + alert.type +' '+ alert.close + ' fade' + ' show'" role="alert">
+    <strong>{{alert.title}}</strong> {{alert.text}} 
+    <a v-if="alert.link && alert.vue" :class="alert.vue" v-on:click="alertFunctions($event)" :href="alert.link.href">{{alert.link.text}}</a>
+    <a v-else-if="alert.link" :href="alert.link.href">{{alert.link.text}}</a>
+    <button v-if="alert.close" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>

@@ -1,0 +1,33 @@
+{
+    "title": "My Work",
+    "paragraph": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint aliquam debitis labore saepe! Aliquam officiis ipsum consequuntur voluptates.",
+    "workTitle": "My Skills",
+    "workParagraph": "Excepteur officia in dolor ut aliqua amet laborum ut nisi velit nostrud qui laborum.",
+    "works": [
+        {
+            "name": "BlaydeWorx",
+            "subName": "Construction Ticket System",
+            "paragraph": "Magna sunt voluptate dolore proident labore aliqua eiusmod labore aliquip elit. Incididunt sit anim proident minim non aute laboris. Ea eiusmod culpa consectetur veniam ex voluptate enim do ut irure aliquip ut eiusmod. In excepteur pariatur proident non tempor id et non excepteur anim do. Eu sunt in anim id deserunt dolore fugiat.",
+            "img": "/img/timeclock.png",
+            "id" : "blayde"
+        },
+        {
+            "name": "Html",
+            "subName": "more awesome text",
+            "paragraph": "Non et minim magna laboris minim anim do Lorem tempor aliquip proident reprehenderit cupidatat. Dolor ut aute sint enim cillum ullamco tempor nostrud culpa dolor pariatur. Minim ex aliquip in exercitation eu dolor duis labore in sunt eiusmod aliquip. Et qui qui proident ipsum id consectetur reprehenderit ut id incididunt eiusmod ut. Pariatur aliquip pariatur irure ipsum anim aliquip labore excepteur et incididunt sit ipsum sint aliquip. Ex consectetur sunt veniam pariatur ea nisi adipisicing. Exercitation aliquip sint veniam excepteur est officia voluptate do consectetur eiusmod.",
+            "img": "https://unsplash.it/1200/768.jpg?image=24"
+        },
+        {
+            "name": "Html",
+            "subName": "more awesome text",
+            "paragraph": "Sit et consequat ex occaecat ut mollit in culpa commodo exercitation ipsum nostrud et. Nulla minim mollit do cupidatat excepteur amet consectetur Lorem in nisi laboris. Excepteur minim sint ullamco amet ea aute pariatur velit enim eu do amet. Cupidatat cupidatat mollit Lorem aliquip ea ipsum velit adipisicing. Non nulla sit cillum aliqua laboris nostrud nisi aute excepteur anim. Enim occaecat mollit id veniam consequat id ipsum ut sit amet nulla mollit ex.",
+            "img": "https://unsplash.it/1200/768.jpg?image=252"
+        },
+        {
+            "name": "Html",
+            "subName": "more awesome text",
+            "paragraph": "Anim deserunt est occaecat reprehenderit labore culpa velit deserunt. Ut veniam in sint labore voluptate. Enim aute anim incididunt veniam dolore nisi magna. Lorem labore sunt incididunt deserunt. Aliqua et Lorem irure irure aute nulla minim Lorem aliqua consectetur pariatur magna adipisicing. Culpa consequat id sint aliquip.",
+            "img": "https://unsplash.it/1200/768.jpg?image=251"
+        }
+    ]
+}

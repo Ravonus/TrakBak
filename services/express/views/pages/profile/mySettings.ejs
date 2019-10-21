@@ -1,0 +1,38 @@
+<div class="card-body ">
+
+  <!-- color-classes: "nav-pills-primary", "nav-pills-info", "nav-pills-success", "nav-pills-warning","nav-pills-danger"-->
+  <ul class="nav nav-pills nav-pills-primary nav-pills-icons justify-content-center" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active waves-effect waves-dark" data-toggle="tab" href="#link7" role="tablist">
+        <i class="now-ui-icons objects_umbrella-13"></i>
+        Webpage
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link waves-effect waves-dark" data-toggle="tab" href="#link8" role="tablist">
+        <i class="now-ui-icons shopping_shop"></i>
+        Notifications
+      </a>
+    </li>
+    <li v-if="user.groups.video_mod" class="nav-item">
+      <a @click="settings('video')" class="nav-link waves-effect waves-dark" data-toggle="tab" href="#link9" role="tablist">
+        <i class="now-ui-icons ui-2_settings-90"></i>
+        Video Settings
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content tab-space tab-subcategories">
+    <div class="tab-pane active" id="link7">
+      Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
+      users after installed base benefits.
+      <br><br>
+      Dramatically visualize customer directed convergence without revolutionary ROI.
+    </div>
+    <div class="tab-pane" id="link8">
+      Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables
+      for real-time schemas.
+      <br><br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
+    </div>
+    <% include ./partials/videoSettings %>
+  </div>
+</div>

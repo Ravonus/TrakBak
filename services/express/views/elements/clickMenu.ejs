@@ -1,0 +1,7 @@
+<div class="dropdown-menu dropdown-primary" id="context-menu">
+<a v-for="menu in clickMenu" v-if="!menu.divider && !clickMenuOptions.noTop" class="dropdown-item" @click="clickMenuFunction(menu.id, menu.key, menu.type,  menu.modal ? menu.modal : menu.swal)" :data-id="menu.id" href="#">{{menu.name}}</a>
+
+<div class="dropdown-divider"></div>
+<a v-for="menu in clickMenu" v-if="menu.divider" class="dropdown-item" @click="clickMenuFunction(menu.id, menu.key, menu.type, menu.modal ? menu.modal : menu.swal)" >{{menu.name}}</a>
+
+</div>

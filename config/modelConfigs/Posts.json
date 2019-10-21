@@ -1,0 +1,55 @@
+{
+	"prefix": "api",
+	"routes": {
+		"m_create": {},
+		"m_read": {
+			"permissions": 67
+		},
+		"m_update": {
+			"permissions": 65
+		},
+		"m_delete": {
+			"permissions": 1,
+			"socket": false
+		}
+	},
+	"path": "/api/Posts",
+	"policies": {
+		"fileUpload": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/fileUpload.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"isOwner": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/isOwner.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"recaptcha": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/recaptcha.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"videoUpload": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/videoUpload.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		}
+	}
+}

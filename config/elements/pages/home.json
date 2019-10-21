@@ -1,0 +1,32 @@
+{
+    "title": "About me",
+    "titleParagraph": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, repellat.",
+    "skillsTitle": "My Skills",
+    "skillsParagraph": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, facere. Totam, doloremque.",
+    "skills": [
+        {
+            "name": "Html",
+            "percentage": "100%"
+        },
+        {
+            "name": "Css",
+            "percentage": "50%"
+        },
+        {
+            "name": "Javascript",
+            "percentage": "100%"
+        },
+        {
+            "name": "PHP",
+            "percentage": "100%"
+        },
+        {
+            "name": "Python",
+            "percentage": "100%"
+        },
+        {
+            "name": "C#",
+            "percentage": "100%"
+        }
+    ]
+}

@@ -1,0 +1,105 @@
+{
+	"schema": {
+		"name": {
+			"type": "String",
+			"required": true
+		},
+		"type": {
+			"type": "Number",
+			"required": true,
+			"default": 0
+		},
+		"description": {
+			"type": "String",
+			"required": true
+		},
+		"order": {
+			"type": "Number",
+			"required": true
+		},
+		"script": "String",
+		"subNavs": [
+			{
+				"type": "${mongoose.Schema.ObjectId}",
+				"ref": "Navigations"
+			}
+		],
+		"groups": [
+			{
+				"type": "${mongoose.Schema.ObjectId}",
+				"ref": "Groups"
+			}
+		],
+		"users": [
+			{
+				"type": "${mongoose.Schema.ObjectId}",
+				"ref": "Users"
+			}
+		],
+		"permissions": "Number",
+		"enabled": {
+			"type": "Boolean",
+			"default": true
+		},
+		"createdAt": {
+			"type": "Date",
+			"default": "${Date.now}"
+		},
+		"updatedAt": {
+			"type": "Date",
+			"default": "${Date.now}"
+		}
+	},
+	"prefix": "api",
+	"routes": {
+		"m_create": {
+			"permissions": 1
+		},
+		"m_read": {},
+		"m_update": {
+			"permissions": 1
+		},
+		"m_delete": {
+			"permissions": 1
+		}
+	},
+	"path": "/api/Navigations",
+	"policies": {
+		"fileUpload": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/fileUpload.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"isOwner": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/isOwner.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"recaptcha": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/recaptcha.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		},
+		"videoUpload": {
+			"routes": {},
+			"function": "/Users/chad/Documents/plmNew/controllers/policies/videoUpload.js",
+			"enabled": false,
+			"linked": {
+				"groups": [],
+				"permissions": 0
+			}
+		}
+	}
+}

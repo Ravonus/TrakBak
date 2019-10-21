@@ -1,0 +1,145 @@
+<!--Modal: Login / Register Form-->
+<div class="modal fade" id="showDoc" tabindex="-1" role="dialog" aria-labelledby="showUserLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update Object</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+        <div class="row">
+
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Account</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'account', nav.page)" v-model="docs[nav.page][rowNumber].account"
+                type="text" class="form-control" name="account" placeholder="Account">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Email</label>
+              <input v-if="docs && nav.page && docs[nav.page]" @input="docsInput($event, rowNumber, 'email', nav.page)"
+                v-model="docs[nav.page][rowNumber].email" type="text" class="form-control" name="email"
+                placeholder="Email">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Password</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'password', nav.page)" v-model="docs[nav.page][rowNumber].password"
+                type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+          </div>
+        </div>
+
+ 
+
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">First name</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.firstName', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.firstName" type="text" class="form-control"
+                name="persons.firstName" placeholder="First name">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Last name</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.lastName', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.lastName" type="text" class="form-control"
+                name="persons.lastName" placeholder="Last name">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Address</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.address', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.address" type="text" class="form-control"
+                name="persons.address" placeholder="Address">
+
+            </div>
+          </div>
+  
+
+   
+
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">City</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.city', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.city" type="text" class="form-control" name="persons.city"
+                placeholder="City">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">Zip code</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.zip', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.zip" type="text" class="form-control" name="persons.zip"
+                placeholder="Zip Code">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <label class="cLable">State</label>
+              <input v-if="docs && nav.page && docs[nav.page]"
+                @input="docsInput($event, rowNumber, 'persons.state', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.state" type="text" class="form-control" name="persons.state"
+                placeholder="State">
+            </div>
+          </div>
+   
+
+        <div v-if="docs && nav.page && docs[nav.page]">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="cLable">User Bio</label>
+              <textarea @input="docsInput($event, rowNumber, 'persons.bio', nav.page)"
+                v-model="docs[nav.page][rowNumber].persons.bio" rows="4" cols="80" placeholder="Update users bio"
+                name="persons.bio" class="form-control"
+                placeholder="User Bio">{{docs[nav.page][rowNumber].persons.bio}}</textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- <input id="select-to" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
+        <h4 class="modal-title">Modal Heading</h4>
+        <select class="selectpicker my-select" data-style="btn-primary" data-live-search="true" multiple
+          data-selected-text-format="count > 3">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Barbecue</option>
+          <option>Barbecue2</option>
+        </select>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <div class="text-right">
+          <button
+            v-if="docs.data[nav.page] && docs.data[nav.page][rowNumber] && docs.data[nav.page][rowNumber].saveTrue"
+            @click="saveDoc(nav.page, rowNumber, docs[nav.page][rowNumber]._id)" type="button"
+            class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--Modal: Login / Register Form-->

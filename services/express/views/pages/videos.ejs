@@ -1,0 +1,194 @@
+<div class="row">
+  <div v-if="singleObj && vueCustom && vueCustom.length > 0" class="card-wrapper col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-12">
+
+      <div :id="'card'+noSpecial(vueCustom[0].name)" class="card card-rotating text-center singleObj">
+          {{playTick(vueCustom[0]._id)}}
+          <!-- Front Side -->
+          <div class="face front">
+
+
+              <div v-if="vueCustom[0].services && vueCustom[0].services.local" class="embed-responsive embed-responsive-16by9">
+                <!-- <iframe autoplay="false" class="embed-responsive-item" :src="'/videos/play?id='+topic._id"></iframe> -->
+                <video :poster="'/thumbnails/'+ vueCustom[0].services.local.name + '.png'" class="player" preload="metadata"
+                  allowfullscreen playsinline controls controlslist="nodownload" :id="vueCustom[0]._id">
+                  <source :src="'/watch/'+vueCustom[0]._id+'?play=true&filename='+vueCustom[0].services.local.name" type="video/mp4">
+                    <h2>{{vueCustom[0]._id}}</h2>
+                </video>
+              </div>
+      
+              <div v-else-if="vueCustom[0].services && vueCustom[0].services.type && vueCustom[0].services.type.web && vueCustom[0].services.type.web === 'YouTube'"
+                class="embed-responsive embed-responsive-16by9">
+                <iframe class="player" autoplay="false" :src="'https://www.youtube.com/embed/'+vueCustom[0].url"
+                  allowfullscreen></iframe>
+      
+              </div>
+      
+      
+              <div v-else-if="vueCustom[0].services && vueCustom[0].services.type && vueCustom[0].services.type.web && vueCustom[0].services.type.web === 'Vimeo'"
+                class="embed-responsive embed-responsive-16by9">
+                <!-- <iframe autoplay="false" class="embed-responsive-item" :src="'/videos/play?id='+vueCustom[0]_id"></iframe> -->
+      
+                <iframe class="player" autoplay="false" :src="'https://player.vimeo.com/video/'+vueCustom[0].url"
+                  allowfullscreen></iframe>
+      
+              </div>
+      
+              <!-- Content -->
+              <div class="card-body">
+                <h4 class="font-weight-bold mb-3">{{vueCustom[0].name}}</h4>
+                <p class="font-weight-bold blue-text">Posts:</p>
+                <!-- Triggering button -->
+                <a class="rotate-btn" @click="toggleClass('card'+noSpecial(vueCustom[0].name))"><i class="fas fa-redo-alt"></i>
+                  Click here for more details</a>
+              </div>
+            </div>
+          <!-- Front Side -->
+    
+          <!-- Back Side -->
+          <div class="face back">
+            <div class="card-body">
+    
+              <!-- Content -->
+              <h4 class="font-weight-bold mb-0">Details</h4>
+              <hr>
+              <p>
+                {{vueCustom[0].description}}
+                <hr>
+                <button @click="videoCommentSize" class="btn btn-primary" type="button" data-toggle="collapse" :data-target="'#vcomments-'+vueCustom[0]._id" aria-expanded="false" :aria-controls="'vcomments-'+vueCustom[0]._id">Comments</button>
+                <div class="myVideosComments collapse multi-collapse" :id="'vcomments-'+vueCustom[0]._id">
+                    <div class="card card-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                  </div>
+                <!-- Social Icons -->
+                <ul class="list-inline py-2">
+                  <li class="list-inline-item"><a class="p-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></li>
+                  <li class="list-inline-item"><a class="p-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a></li>
+                  <li class="list-inline-item"><a class="p-2 fa-lg gplus-ic"><i class="fab fa-google-plus-g"></i></a>
+                  </li>
+                  <li class="list-inline-item"><a class="p-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a></li>
+                </ul>
+                <!-- Triggering button -->
+                <a class="rotate-btn" @click="toggleClass('card'+noSpecial(vueCustom[0].name)); closeVideoComments(vueCustom[0]._id)"><i class="fas fa-undo"></i>
+                  Click here to rotate back
+                </a>
+    
+            </div>
+            <button v-if="user.groups.administrator || user.groups['video-mods']"
+              @click="showSwal(vueCustom[0]._id, 'areYouSure', 'vidoes', {url:'watch', type:'videoDelete', event:$event})"
+              type="button" class="btn btn-danger">Delete</button>
+          </div>
+          <!-- Back Side -->
+    
+        </div>
+
+      {{createCommentScript(vueCustom[0]._id)}}
+
+
+  </div>
+
+  <div v-else v-for="(topic, index) in vueCustom" class="card-wrapper col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div :id="'card'+noSpecial(topic.name)" class="card card-rotating text-center">
+      {{playTick(topic._id)}}
+      {{createCommentScript(topic._id)}}
+      <!-- Front Side -->
+      <div class="face front">
+
+
+        <div v-if="topic.services && topic.services.local" class="embed-responsive embed-responsive-16by9">
+          <!-- <iframe autoplay="false" class="embed-responsive-item" :src="'/videos/play?id='+topic._id"></iframe> -->
+          <video :poster="'/thumbnails/'+topic.services.local.name+'.png'" class="player" preload="metadata"
+            allowfullscreen playsinline controls controlslist="nodownload" :id="topic._id">
+            <source :src="'/watch/'+topic._id+'?play=true&filename='+topic.services.local.name" type="video/mp4">
+              <h2>{{topic._id}}</h2>
+          </video>
+        </div>
+
+        <div v-else-if="topic.services && topic.services.type && topic.services.type.web && topic.services.type.web === 'YouTube'"
+          class="embed-responsive embed-responsive-16by9">
+          <iframe class="player" autoplay="false" :src="'https://www.youtube.com/embed/'+topic.url"
+            allowfullscreen></iframe>
+
+        </div>
+
+
+        <div v-else-if="topic.services && topic.services.type && topic.services.type.web && topic.services.type.web === 'Vimeo'"
+          class="embed-responsive embed-responsive-16by9">
+          <!-- <iframe autoplay="false" class="embed-responsive-item" :src="'/videos/play?id='+topic._id"></iframe> -->
+
+          <iframe class="player" autoplay="false" :src="'https://player.vimeo.com/video/'+topic.url"
+            allowfullscreen></iframe>
+
+        </div>
+
+        <!-- Content -->
+        <div class="card-body">
+          <h4 class="font-weight-bold mb-3"><a @click="videoClick" href="">{{topic.name}}</a></h4>
+          <p class="font-weight-bold blue-text">Posts:</p>
+          <!-- Triggering button -->
+          <a class="rotate-btn" @click="toggleClass('card'+noSpecial(topic.name))"><i class="fas fa-redo-alt"></i>
+            Click here for more details</a>
+        </div>
+      </div>
+      <!-- Front Side -->
+
+      <!-- Back Side -->
+      <div class="face back">
+        <div class="card-body">
+
+          <!-- Content -->
+          <h4 class="font-weight-bold mb-0">Details</h4>
+          <hr>
+          <p>
+            {{topic.description}}
+            <hr>
+
+            <button class="btn btn-primary" type="button" data-toggle="collapse" :data-target="'#vcomments-'+topic._id" aria-expanded="false" :aria-controls="'vcomments-'+topic._id">Comments</button>
+
+            <div class="collapse multi-collapse" :id="'vcomments-'+topic._id">
+                <div class="card card-body">
+
+                </div>
+              </div>
+
+            <!-- Social Icons -->
+            <ul class="list-inline py-2">
+              <li class="list-inline-item"><a class="p-2 fa-lg fb-ic"><i class="fab fa-facebook-f"></i></a></li>
+              <li class="list-inline-item"><a class="p-2 fa-lg tw-ic"><i class="fab fa-twitter"></i></a></li>
+              <li class="list-inline-item"><a class="p-2 fa-lg gplus-ic"><i class="fab fa-google-plus-g"></i></a>
+              </li>
+              <li class="list-inline-item"><a class="p-2 fa-lg li-ic"><i class="fab fa-linkedin-in"></i></a></li>
+            </ul>
+            <!-- Triggering button -->
+            <a class="rotate-btn" @click="toggleClass('card'+noSpecial(topic.name)); closeVideoComments(topic._id)"><i class="fas fa-undo"></i>
+              Click here to rotate back
+            </a>
+
+        </div>
+        <button v-if="user.groups.administrator || user.groups['video-mods']"
+          @click="showSwal(topic._id, 'areYouSure', 'vidoes', {url:'watch', type:'videoDelete', event:$event})"
+          type="button" class="btn btn-danger">Delete</button>
+      </div>
+      <!-- Back Side -->
+
+    </div>
+
+
+
+
+  </div>
+
+
+  
+</div>
+<!-- Rotating card -->
+<!-- <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> -->
+
+
+
+
+
+<!-- Accordion card -->
+
+
+<!-- Accordion wrapper -->

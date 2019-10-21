@@ -1,0 +1,17 @@
+*.log
+.log
+/logs/
+/logs/*
+logs/*
+logs/
+config/dsp.json
+config/mgSync.json
+config/mail.json
+config/express.json
+node_modules/*
+node_modules/
+/node_modules/*
+services/dspStatistics/*
+!services/dspStatistics/*.js
+Video/*
+/Video/*

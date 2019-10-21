@@ -1,0 +1,145 @@
+<!--Modal: Login / Register Form-->
+<div class="modal fade" id="showTicket" tabindex="-1" role="dialog" aria-labelledby="showTicketLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal modal-xl" role="document">
+      <!--Content-->
+      <div  v-if="modal" class="modal-content">
+  
+        <!--Modal cascading tabs-->
+        <div class="modal-c-tabs">
+  
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#ticketMain" role="tab"><i class="fas fa-user mr-1"></i>
+                Main</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#ticketMessages" role="tab"><i class="fas fa-user-plus mr-1"></i>
+                Messages</a>
+            </li>
+          </ul>
+  
+          <!-- Tab panels -->
+          <div class="tab-content">
+            <!--Panel 7-->
+            <div class="tab-pane fade in show active" id="ticketMain" role="tabpanel">
+  
+              <!--Body-->
+              <div class="modal-body mb-1">
+
+              </div>
+              <!--Footer-->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+              </div>
+  
+            </div>
+            <!--/.Panel 7-->
+  
+            <!--Panel 8-->
+            <div class="tab-pane fade" id="ticketMessages" role="tabpanel">
+  
+              <!--Body-->
+              <div class="modal-body">
+
+                  <div class="card rare-wind-gradient chat-room">
+                      <div class="card-body">
+                    
+                        <!-- Grid row -->
+                        <div class="row px-lg-2 px-2">
+                    
+                          <!-- Grid column -->
+                          <div class="col-md-6 col-xl-4 px-0">
+                    
+                            <h6 class="font-weight-bold mb-3 text-center text-lg-left">Active Members</h6>
+                            <div class="white z-depth-1 px-2 pt-3 pb-0 members-panel-1 scrollbar-c1 ffscrollbar-c1">
+                              <ul class="list-unstyled friend-list">
+                                <!-- <li class="active grey lighten-3 p-2">
+                                  <a href="#" class="d-flex justify-content-between">
+                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1">
+                                    <div class="text-small">
+                                      <strong>John Doe</strong>
+                                      <p class="last-message text-muted">Hello, Are you there?</p>
+                                    </div>
+                                    <div class="chat-footer">
+                                      <p class="text-smaller text-muted mb-0">Just now</p>
+                                      <span class="badge badge-danger float-right">1</span>
+                                    </div>
+                                  </a>
+                                </li> -->
+                                <li v-if="checkActiveMember(obj.sender._id)" v-for="obj in menuObj" class="p-2">
+                                  <a href="#" class="d-flex justify-content-between">
+                                      <img width="60" height="60" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" :alt="obj.sender.account" :src="LetterAvatar(obj.sender.account)">
+                                    <div class="text-small">
+                                      <strong>{{obj.sender.account}}</strong>
+                                      <p class="last-message text-muted">{{obj.text}}</p>
+                                    </div>
+                                    <div class="chat-footer">
+                                      <p class="text-smaller text-muted mb-0">{{moment(obj.updatedAt).fromNow()}}</p>
+                                      <span class="text-muted float-right"><i class="fas fa-mail-reply" aria-hidden="true"></i></span>
+                                    </div>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                    
+                          </div>
+                          <!-- Grid column -->
+                    
+                          <!-- Grid column -->
+                          <div class="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0">
+                    
+                            <div class="chat-message">
+                    
+                              <ul class="list-unstyled chat-1 scrollbar-c1 ffscrollbar-c1">
+                                <li v-for="obj in menuObj"  class="d-flex justify-content-between mb-4">
+                                    <img width="60" height="60" class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" :alt="obj.sender.account" :src="LetterAvatar(obj.sender.account)">
+                                  <div class="chat-body white p-3 ml-2 z-depth-1">
+                                    <div class="header">
+                                      <strong class="primary-font">{{obj.sender.account}}</strong>
+                                      <small class="pull-right text-muted"><i class="far fa-clock"></i> {{moment(obj.updatedAt).fromNow()}}</small>
+                                    </div>
+                                    <hr class="w-100">
+                                    <p class="mb-0">
+                                      {{obj.text}}
+                                    </p>
+                                  </div>
+                                </li>
+                              </ul>
+                              <div class="white">
+                                <form id="ticketSendMessage">
+                                <div class="form-group basic-textarea">
+                                  <textarea  v-on:keydown.shift.enter="sendMsg" name="text" class="form-control pl-2 my-0" id="ticketTextarea" rows="3" placeholder="Type your reply here..."></textarea>
+                                </div>
+                              </div>
+                              <submit @click="sendMsg" type="button" class="btn btn-outline-pink btn-rounded btn-sm waves-effect waves-dark float-right">Send</submit>
+                            </form>
+                            </div>
+                    
+                          </div>
+                          <!-- Grid column -->
+                    
+                        </div>
+                        <!-- Grid row -->
+                    
+                      </div>
+                    </div>
+  
+              </div>
+              <!--Footer-->
+              <div class="modal-footer">
+                <div class="options text-right">
+
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!--/.Panel 8-->
+          </div>
+  
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+  <!--Modal: Login / Register Form-->

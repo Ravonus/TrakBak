@@ -1,0 +1,13 @@
+<table id="mainDataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th v-for="head in mainTableHead">{{head.name}}</th>
+      <!-- <th class="disabled-sorting text-right">Actions</th> -->
+    </tr>
+  </thead>
+  <tbody id="mainDataTableBody">
+
+  </tbody>
+</table>
+
+<% include ./clickMenu %>

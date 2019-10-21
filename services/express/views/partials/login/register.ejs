@@ -1,0 +1,161 @@
+<div v-else-if="loginPage === 'register'" class="col-md-6 mr-auto ml-auto">
+
+  <form @keydown.exact.enter="registration(regPage + 1)" @keydown.enter.shift="registration(regPage - 1)" class="form"
+    id="registrationForm">
+    <div class="card card-login card-plain">
+      <div class="card-header ">
+        <div class="logo-container">
+          <img src="img/now-logo.png" alt="">
+        </div>
+      </div>
+      <div v-if="regPage === 0" class="card-body ">
+
+        <div class="row">
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <span class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons users_circle-08"></i>
+              </div>
+            </span>
+            <input id="accountSelect" v-model="registrationForm.account" name="account" type="text" class="form-control"
+              placeholder="Account...">
+          </div>
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <input v-model="registrationForm.email" name="email" type="email" placeholder="Email Address...."
+              class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group no-border form-control-lg mx-auto px-auto">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <input v-model="registrationForm.password" name="password" type="password" placeholder="Password..."
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div v-if="regPage === 1" class="card-body ">
+        <div class="row">
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <span class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons users_circle-08"></i>
+              </div>
+            </span>
+            <input id="nameSelect" v-model="registrationForm.persons.firstName" name="persons.firstName" type="text"
+              class="form-control" placeholder="First name...">
+          </div>
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <input v-model="registrationForm.persons.lastName" name="persons.lastName" type="text"
+              placeholder="Last name...." class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group no-border form-control-lg mx-auto px-auto">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <textarea v-model="registrationForm.persons.bio" name="persons.bio" placeholder="About me..."
+              class="form-control bioArea">
+
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div v-if="regPage === 2" class="card-body ">
+        <div class="row">
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <span class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons users_circle-08"></i>
+              </div>
+            </span>
+            <input id="addressSelect" v-model="registrationForm.persons.address" name="persons.address" type="text"
+              class="form-control" placeholder="Address...">
+          </div>
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <input v-model="registrationForm.persons.city" name="persons.city" type="text" placeholder="City...."
+              class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <span class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons users_circle-08"></i>
+              </div>
+            </span>
+            <input v-model="registrationForm.persons.zip" name="persons.zip" type="text" class="form-control"
+              placeholder="Zip...">
+          </div>
+          <div class="input-group no-border form-control-lg col-6 px-1">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="now-ui-icons text_caps-small"></i>
+              </div>
+            </div>
+            <input v-model="registrationForm.persons.state" name="persons.state" type="text" placeholder="State...."
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer ">
+        <!-- <input @click="registration(1)" type="submit" value="Next" class="btn btn-primary btn-round btn-lg btn-block mb-3"> -->
+        <div class="button-box col-lg-12 rowT">
+          <button v-if="regPage > 0" type="button" @keyup.enter="registration(regPage - 1)"
+            @click="registration(regPage - 1)" class="btn btn-primary btn-round btn-lg mb-3 col-5">
+            Previous
+          </button>
+          <div v-else \class="col-5">
+
+          </div>
+          <button v-if="regPage > -1 && regPage < 2" type="button" @click="registration(regPage + 1)"
+            @keyup.enter="registration(regPage + 1)" class="btn btn-primary btn-round btn-lg mb-3 col-5">
+            Next
+          </button>
+
+          <button v-else type="button"
+            @click="sendForm('registrationForm', '/auth/registration', 'POST', 'registration', '/')"
+            @keyup.enter="sendForm('registrationForm', '/auth/registration', 'POST', 'registration', '/')"
+            class="btn btn-primary btn-round btn-lg mb-3 col-5">
+            Create Account
+          </button>
+        </div>
+
+
+        <div class="pull-left">
+          <h6>
+            <a @click="loginPage = 'login'" href="#pablo" class="link footer-link">Login</a>
+          </h6>
+        </div>
+        <div class="pull-right">
+          <h6>
+            <a href="#pablo" class="link footer-link">Need Help?</a>
+          </h6>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+</div>

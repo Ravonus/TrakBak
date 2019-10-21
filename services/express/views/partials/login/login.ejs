@@ -1,0 +1,42 @@
+<div v-if="loginPage === 'login'" class="col-md-4 ml-auto mr-auto">
+  <form id="userLogin" class="form" method="" action="">
+    <div class="card card-login card-plain">
+      <div class="card-header ">
+        <div class="logo-container">
+          <img src="img/now-logo.png" alt="">
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class="input-group no-border form-control-lg">
+          <span class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="now-ui-icons users_circle-08"></i>
+            </div>
+          </span>
+          <input name="account" type="text" class="form-control" placeholder="Account...">
+        </div>
+        <div class="input-group no-border form-control-lg">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="now-ui-icons text_caps-small"></i>
+            </div>
+          </div>
+          <input name="password" type="password" placeholder="Password..." class="form-control">
+        </div>
+      </div>
+      <div class="card-footer ">
+        <input type="submit" value="Login" class="btn btn-primary btn-round btn-lg btn-block mb-3">
+        <div class="pull-left">
+          <h6>
+            <a @click="loginPageSwap('register')" href="#pablo" class="link footer-link">Create Account</a>
+          </h6>
+        </div>
+        <div class="pull-right">
+          <h6>
+            <a href="#pablo" class="link footer-link">Need Help?</a>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

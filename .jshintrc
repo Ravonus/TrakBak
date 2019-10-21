@@ -1,0 +1,14 @@
+{
+  "esversion": 8,
+  "node": true,
+  "latedef": "nofunc",
+  "globals" : {
+    "appRoot": true,
+    "config" : true,
+    "$": true,
+    "log" : true,
+    "_sockets" : true,
+    "Functions" : true
+    
+  }
+}

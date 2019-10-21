@@ -1,0 +1,8 @@
+  <form ref='uploadForm' 
+  id='uploadForm' 
+  action='http://192.168.86.38:1337/files/upload' 
+  method='post' 
+  encType="multipart/form-data">
+    <input type="file" name="fileUpload" />
+    <input class="btn" @click="fileUpload($event, JSON.stringify({Users:user._id, target:'avatar'}))" value='Upload!' />
+</form>

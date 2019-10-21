@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card mx-3">
+      <div class="card-header">
+        <h5 class="title">{{nav.subPage}}</h5>
+      </div>
+      <div v-if="nav.subPage === 'Edit Profile'" class="card-body">
+        <form id="updateProfile">
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <label>Company (disabled)</label>
+                <input type="text" class="form-control" disabled="" placeholder="Company" value="PLM">
+              </div>
+            </div>
+            <div class="col-md-3 px-1">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" placeholder="Username" :value="user.account" disabled>
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" placeholder="Email" :value="user.email" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>First Name</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.firstName"
+                  type="text" class="form-control" placeholder="Company" name="persons.firstName">
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Last Name</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.lastName"
+                  type="text" class="form-control" placeholder="Last Name" name="persons.lastName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Address</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.address"
+                  type="text" class="form-control" placeholder="Home Address" name="persons.address">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>City</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.city"
+                  type="text" class="form-control" placeholder="City" name="persons.city">
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>State</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.state"
+                  type="text" class="form-control" placeholder="State" name="persons.state">
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>Postal Code</label>
+                <input @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.zip"
+                  type="number" class="form-control" placeholder="ZIP Code" name="persons.zip">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>About Me</label>
+                <textarea @input="checkObj('user', 'userCheck', 'saveProfileButton')" v-model="user.persons.bio"
+                  rows="4" cols="80" class="form-control" placeholder="Here can be your description"
+                  name="persons.bio">{{user.persons.bio}}</textarea>
+              </div>
+            </div>
+          </div>
+          <button @click="crud('put', '/api/users', 'form', 'updateProfile:me')" v-if="saveProfileButton" type="button"
+            class="btn btn-primary btn-lg btn-block">Save Profile</button>
+
+        </form>
+      </div>
+
+    </div>
+    <div v-if="nav.subPage === 'My Settings'" class="row">
+      <% include ./profile/mySettings%>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-user">
+      <div class="image">
+        <img src="img/profile-header.png" alt="...">
+      </div>
+      <div class="card-body">
+        <div class="author">
+          <a href="#">
+            <img v-if="user.avatar" class="avatar border-gray" alt="avatar"
+              :src="`/${user.account}/${user.avatar.fileName}`" />
+            <img v-else class="avatar border-gray" alt="avatar"
+              :src="'https://avatars.dicebear.com/v2/gridy/'+user.account+'.svg?options[colorful]=1'" />
+            <h5 class="title">{{`${user.persons.firstName} ${user.persons.lastName}`}}</h5>
+          </a>
+          <p class="description">
+            {{user.account}}
+          </p>
+        </div>
+        <p style="white-space: pre-line;" class="description text-center">
+          {{user.persons.bio}}
+        </p>
+      </div>
+      <hr>
+      <div class="button-container">
+        <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg waves-effect waves-dark">
+          <i class="fab fa-facebook-square"></i>
+        </button>
+        <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg waves-effect waves-dark">
+          <i class="fab fa-twitter"></i>
+        </button>
+        <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg waves-effect waves-dark">
+          <i class="fab fa-google-plus-square"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

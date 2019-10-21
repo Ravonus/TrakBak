@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+<head>
+  <% include ./partials/head %>
+
+  <% if (socketRequest) { %>
+    <socketRequest data-objs="<%= data %>" data-page="<%= socketRequest %>"></socketRequest>
+  <% } %>
+</head>
+
+<body class="sidebar-mini">
+
+  <% include ./partials/elements/loader %>
+
+  <div id="userApp" v-cloak>
+
+    <div class="">
+      <% include ./partials/sidebar %>
+      <div class="main-panel" id="main-panel">
+        <% include ./partials/navbar %>
+        <div :class="nav.page+ ' panel-header ' +'panel-header-'+nav.pageSetup[nav.page].header">
+
+        </div>
+        <div v-if="nav.page === 'forums'" class="content">
+          <% include ./pages/forums %>
+        </div>
+
+        <div v-else-if="nav.page === 'editProfile' || nav.page === 'myProfile' || nav.page === 'settings'"
+          class="content">
+          <% include ./pages/profile %>
+        </div>
+
+        <div v-else-if="nav.page === 'users'" class="content">
+          <% include ./pages/admin/users %>
+          <% include ./modals/createUsers %>
+        </div>
+
+        <div v-else-if="nav.page === 'groups'" class="content">
+          <% include ./pages/admin/groups %>
+          <% include ./modals/showGroups %>
+          <% include ./modals/createGroups %>
+        </div>
+
+        <div v-else-if="nav.page === 'categories'" class="content">
+          <% include ./pages/admin/categories %>
+          <% include ./modals/createCategories %>
+        </div>
+
+        <div v-else-if="nav.page === 'topics'" class="content">
+          <% include ./pages/admin/topics %>
+          <% include ./modals/createTopics %>
+        </div>
+
+        <div v-else-if="nav.page === 'videos'" class="content">
+            <% include ./pages/admin/videos %>
+            <% include ./modals/createVideos %>
+          </div>
+
+          <div v-else-if="nav.page === 'watch'" class="content">
+            <% include ./pages/videos %>
+          </div>
+
+        <div v-else class="content">
+          <% include ./pages/dashboard %>
+        </div>
+        <% include ./partials/footer %>
+
+      </div>
+    </div>
+  </div>
+</body>
+<% include ./partials/scripts %>
+
+</html>

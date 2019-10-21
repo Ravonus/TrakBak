@@ -1,0 +1,20 @@
+<div class="row">
+  <div id="tableCard" @contextmenu="handler" @click="checkMenu" class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">{{nav.subPage}}</h5>
+        <div class="text-right">
+          <a @click="clickMenuFunction('createUsers', undefined, undefined, {name:'createUsers'})"
+            class="waves-effect waves-dark btn btn-round btn-info btn-icon btn-sm"><i class="fas fa-plus"></i></a>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <% include ../../elements/tables %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../modals/showUsers %>

@@ -1,0 +1,76 @@
+<!--Main layout-->
+<main class="pt-4 mx-lg-4">
+    <div class="container-fluid mt-5">
+
+        <!-- Heading -->
+        <div class="card mb-4 wow fadeIn">
+
+            <!--Card content-->
+            <div class="card-body d-sm-flex justify-content-between">
+
+                <h4 class="mb-2 mb-sm-0 pt-1">
+                    <a href="/" target="_blank">Home Page</a>
+                    <span>/</span>
+                    <span>
+                        <a href="#" @click="hideSide"> {{capitalizeFirstLetter(navigation)}} </a>
+                        
+                    </span>
+                </h4>
+
+                <form class="d-flex justify-content-center">
+                    <!-- Default input -->
+                    <input type="search" id="mainSearch" placeholder="Type your query" aria-label="Search" class="form-control">
+                    <button :class="'btn btn-sm my-0 p btn-'+navColor" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+        <!-- Heading -->
+
+        <br>
+        <div v-if="navigation === 'dashboard'">
+
+            <% include ../../pages/admin/dashboard %>
+
+        </div>
+
+        <div v-else-if="navigation === 'users'">
+
+            <% include ../../pages/admin/users %>
+
+        </div>
+
+        <div v-else-if="navigation === 'groups'">
+
+            <% include ../../pages/admin/groups %>
+
+        </div>
+
+        <div v-else-if="navigation === 'tickets'">
+
+                <% include ../../pages/admin/tickets %>
+
+        </div>
+
+        <div v-else-if="navigation === 'videos'">
+
+                <% include ../../pages/admin/videos %>
+
+        </div>
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+            <div class="col-md-6 mb-4">
+            </div>
+
+        </div>
+        <!--Grid row-->
+
+      
+    </div>
+</main>
+<!--Main layout-->

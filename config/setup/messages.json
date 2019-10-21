@@ -1,0 +1,89 @@
+{
+    "noneSecure": {
+        "msg": "It looks like you may be connecting to a non-secure server. Although not recommended. The Secure flag may be turned off within configuration file mgSync.json.",
+        "type": "error",
+        "close": true,
+        "log": 3
+    },
+    "wrongToken": {
+        "msg": "Your server token is incorrect. You should head to ${mgSync.server} and make sure the right token is within mgSync.json Token flag.",
+        "type": "error",
+        "close": true,
+        "log": 3
+    },
+    "reachMysql": {
+        "msg": "Could not reach your mysql server [val].",
+        "type": "error",
+        "log": 3
+    },
+    "serverUnreachable": {
+        "msg": "Could not communicate with ${mgSync.server}",
+        "type": "error",
+        "log": 3
+    },
+    "nonSecure": {
+        "msg": "It looks like you may be connecting to a non-secure server",
+        "type": "error",
+        "close": true,
+        "log": 3
+    },
+    "noToken": {
+        "msg": "No Token provided.",
+        "type": "error",
+        "close": true,
+        "log": 3
+    },
+    "turnOff": {
+        "msg": "Site has turned off application.",
+        "type": "info",
+        "close": true,
+        "log": 3
+    },
+    "certMatch": {
+        "msg": "Certificate does not match",
+        "type": "error",
+        "close": true,
+        "log": 3
+    },
+    "dspConfFiles": {
+        "msg": "[val] configurations were loaded",
+        "type": "info",
+        "username": "[val]", 
+        "log": 3
+    },
+    "dspConfNotFound": {
+        "msg": "A dsp conf file was not found. Although not criticle to running application. Can help with management. If you want this warning to go away. Remove or fix conf-dir within dsp.json file.",
+        "type": "warning",
+        "log": 3
+    },
+    "appDisconnected": {
+        "msg": "Application disconnected from ${mgSync.server}",
+        "type": "warning",
+        "log": 3
+    },
+    "connectTo": {
+        "msg": "Connected to ${mgSync.server} successfully.",
+        "type": "success",
+        "log": 3
+    },
+    "unauthorizedAttempt": {
+        "msg": "Warning unauthorize attempt to the application was made. Don't worry here at mog.garden we take your security very seriously. A ticket has already been generated and attached to your account. You also may email support@mog.garden and put #123 inside subject.",
+        "type": "error",
+        "log": 3
+    },
+    "updateConf": {
+        "msg": "An admin has updated server configuration. [val] key has been updated with [val], within [val] conf file.",
+        "type": "info",
+        "log": 3
+    },
+    "dspProcess": {
+        "msg": "[val] process has started.",
+        "type": "success",
+        "log": 3
+    },
+    "dspProcessClose": {
+        "msg": "[val] process has closed.",
+        "type": "error",
+        "log": 3
+    }
+}

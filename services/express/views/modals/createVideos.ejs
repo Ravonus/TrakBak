@@ -1,0 +1,111 @@
+<div
+  v-if="docs.data && docs.data[nav.page] && docs.data[nav.page] && docs.data[nav.page].create && selectPick(['groupsList'])"
+  class="modal fade" id="createVideos" tabindex="-1" role="dialog" aria-labelledby="createVideosLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update Object</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="Create">
+   
+        <label class="cLable">Video Type</label>
+        <select @change="showUrl=$event.target.value" id="selectVideo" class="selectpicker form-group col-12">
+          <option value="" selected>Local</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Vimeo">Vimeo</option>
+        </select>
+ 
+        <div class="row align-items-end">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label v-if="docs.data[nav.page].create.name" class="cLable">Category name</label>
+              <label v-else class="cLable"></label>
+              <input @input="vModel($event, true)" type="text" class="form-control" name="name" placeholder="Name">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label v-if="docs.data[nav.page].create.permissions" class="cLable">Permissions</label>
+              <label v-else class="cLable"></label>
+              <input @input="vModel($event, true)" type="number" class="form-control" name="permissions"
+                placeholder="Permissions">
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="row">
+              <label class="cLable d-flex d-flex justify-content-center">Enabled</label>
+              <div class="d-flex d-flex justify-content-center">
+                <input type="checkbox" checked name="enabled" class="bootstrap-switch"
+                  data-on-label="<i class='now-ui-icons ui-1_check'></i>"
+                  data-off-label="<i class='now-ui-icons ui-1_simple-remove'></i>" />
+              </div>
+
+
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+            <label class="cLable">Groups</label>
+            <select @change="setFormList($event, nav.page, 'groups')" id="groupsList" class="selectpicker"
+              data-live-search="true" multiple>
+              <option v-if="lists.groupsList && lists.groupsList.data" v-for="list in lists.groupsList.data"
+                :id="list._id">{{list.name}}</option>
+            </select>
+          </div>
+
+          <div class="col-sm-4">
+            <div v-if="showUrl !== ''" >
+                <div class="form-group">
+                    <label>{{showUrl}} Url</label>
+                    <input id="videoUrl" @input="vModel($event, true)" type="text" class="form-control" name="url" :placeholder="showUrl + ' Url'">
+                  </div>
+            </div>
+            <div v-else class="picture-container">
+              <div class="picture">
+                <img src="img/image_placeholder.jpg" class="picture-src" id="wizardPicturePreview" title="" />
+                <input type="file" id="wizard-picture">
+              </div>
+              <h6 class="description">Upload Video</h6>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label v-if="docs.data[nav.page].create.description" class="cLable">Category description</label>
+              <label v-else class="cLable"></label>
+              <textarea @input="vModel($event, true)" rows="4" cols="80" placeholder="Add description for category"
+                name="description" class="form-control"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- <input id="select-to" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
+        <h4 class="modal-title">Modal Heading</h4>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <div class="text-right">
+
+            <button
+            v-if="docs.data && docs.data[nav.page] && docs.data[nav.page] && docs.data[nav.page].create && docs.data[nav.page].create.name && docs.data[nav.page].create.description && showUrl !== '' && grabValue('videoUrl')"
+            @click="videoUrl(grabValue('videoUrl'))" type="button" class="btn btn-primary">Saves</button>
+
+          <button
+            v-else-if="docs.data && docs.data[nav.page] && docs.data[nav.page] && docs.data[nav.page].create && docs.data[nav.page].create.name && docs.data[nav.page].create.description && showUrl === ''"
+            @click="videoDoc('wizard-picture')" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

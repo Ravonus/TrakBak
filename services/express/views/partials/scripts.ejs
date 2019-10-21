@@ -1,0 +1,151 @@
+<script src="/js/jquery.js"></script>
+<script src="resumable.js"></script>
+
+<script>
+  var r = new Resumable({
+    target: 'videos/upload?db=t',
+    chunkSize: 1 * 1024 * 1024,
+    simultaneousUploads: 2,
+    firstRun: false,
+    testChunks: false
+  });
+  // Resumable.js isn't supported, fall back on a different method
+  if (!r.support) {
+    $('.resumable-error').show();
+  } else {
+    // Show a place for dropping/selecting files
+    //   $('.resumable-drop').show();
+    //   r.assignDrop($('.picture')[0]);
+    //  r.assignBrowse($('.picture')[0]);
+
+    // Handle file add event
+    r.on('fileAdded', function (file) {
+      r.opts.target = userApp.filePush ? `videos/upload?${userApp.filePush}` : 'videos/upload';
+
+      // Show progress pabr
+      $('.resumable-progress, .resumable-list').show();
+      // Show pause, hide resume
+      $('.resumable-progress .progress-resume-link').hide();
+      $('.resumable-progress .progress-pause-link').show();
+      // Add the file to the list
+      $('.resumable-list').append('<li class="resumable-file-' + file.uniqueIdentifier +
+        '">Uploading <span class="resumable-file-name"></span> <span class="resumable-file-progress"></span>');
+      $('.resumable-file-' + file.uniqueIdentifier + ' .resumable-file-name').html(file.fileName);
+      // Actually start the upload
+      r.upload();
+    });
+    r.on('pause', function () {
+      // Show resume, hide pause
+      $('.resumable-progress .progress-resume-link').show();
+      $('.resumable-progress .progress-pause-link').hide();
+    });
+    r.on('complete', function (file) {
+      // Hide pause/resume when the upload has completed
+   //   $('.resumable-progress .progress-resume-link, .resumable-progress .progress-pause-link').hide();
+
+    });
+    r.on('fileSuccess', function (file, message) {
+      r.opts.firstRun = false;
+      r.opts.target = 'videos/upload?db=t';
+      userApp.toastrs[file.fileName].fadeOut();
+      // Reflect that the file upload has completed
+      $('.resumable-file-' + file.uniqueIdentifier + ' .resumable-file-progress').html('(completed)');
+    });
+    r.on('fileError', function (file, message) {
+      // Reflect that the file upload has resulted in error
+      $('.resumable-file-' + file.uniqueIdentifier + ' .resumable-file-progress').html(
+        '(file could not be uploaded: ' + message + ')');
+    });
+    r.on('fileProgress', function (file) {
+      // console.log('FUCK YOU', file.isComplete());
+   
+      if(userApp.videoProgress) userApp.videoProgress.set(file.progress() * 100);
+      if (r.opts.target !== 'videos/upload?db=t' && r.opts.firstRun) {
+        r.opts.target = 'videos/upload?db=t';
+       
+      }
+      else if (!userApp.videoProgress) {
+        $('#createVideos').modal('hide');
+        userApp.docs.data.videos.create = {};
+        userApp.$forceUpdate();
+        $('#wizard-picture').val('');
+        r.opts.firstRun = true;
+        var html =
+          `<div style="height:25px; width:100%;" data-img-size=10 data-preset="stripe" data-stroke-trail="gray" data-fill="data:ldbar/res,stripe(#ff9,#fc9,1)" id="myItem1" class="ldBar"></div>`
+        userApp.toastr('success', html, 'Video Upload', {
+          id:file.fileName,
+          extendedTimeOut: 0,
+          timeOut: 0
+        });
+        if(!userApp.videoProgress) { userApp.videoProgress = new ldBar("#myItem1"); 
+        userApp.videoProgress.set(0);
+      }
+      }
+
+
+
+      // Handle progress for both the file and the overall upload
+      $('.resumable-file-' + file.uniqueIdentifier + ' .resumable-file-progress').html(Math.floor(file.progress() *
+        100) + '%');
+      $('.progress-bar').css({
+        width: Math.floor(r.progress() * 100) + '%'
+      });
+    });
+    r.on('cancel', function () {
+      $('.resumable-file-progress').html('canceled');
+    });
+    r.on('uploadStart', function () {
+      r.opts.firstRun = false;
+      // Show pause, hide resume
+      $('.resumable-progress .progress-resume-link').hide();
+      $('.resumable-progress .progress-pause-link').show();
+    });
+  }
+</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<!-- Don't Edit below this line -->
+<script src="/js/vue.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/wave.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/datatables.js"></script>
+<script src="/js/jquery-hammer.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/buttons-print.min.js"></script>
+<script src="/js/dataTables-buttons.js"></script>
+<script src="/js/dataTables-responsive.js"></script>
+<script src="/js/dataTables.colReorder.js"></script>
+<script src="/js/datatables-select.js"></script>
+<script src="/js/dataTables.cellEdit.js"></script>
+<script src="/js/moment.js"></script>
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="/js/popcorn.js"></script>
+<script src="/js/selectize.js"></script>
+<script src="/js/toastr.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.js"></script>
+<script src="/js/bootstrap-notify.js"></script>
+<script src="/js/bootstrap-selectpicker.js"></script>
+<script src="/js/bootstrap-show-password.js"></script>
+<script src="/js/bootstrap-switch.js"></script>
+<script src="/js/bootstrap-tagsinput.js"></script>
+<script src="/js/chartjs.min.js"></script>
+<script src="/js/demo.js"></script>
+<script src="/js/fullcalendar.min.js"></script>
+<script src="/js/jasny-bootstrap.min.js"></script>
+<script src="/js/jquery-jvectormap.js"></script>
+<script src="/js/jquery.bootstrap-wizard.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/loading.js"></script>
+<script src="/js/nouislider.min.js"></script>
+<script src="/js/now-ui-dashboard.js"></script>
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="/js/plm.js"></script>
+<script src="/js/pluralString.js"></script>
+<script src="/js/popcorn-capture.js"></script>
+<script src="/js/resumable.js"></script>
+<script src="/js/sockets.js"></script>
+<script src="/js/sweetalert2.min.js"></script>
+<script src="/js/userApp.js"></script>

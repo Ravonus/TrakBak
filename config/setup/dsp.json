@@ -1,0 +1,12 @@
+{
+    "mysql-host": "localhost",
+    "mysql-db" : "dspdb",
+    "mysql-user" : "darkstar",
+    "mysql-password" : "password",
+    "conf-dir" : "C:/Users/User/Documents/darkstar-master/conf",
+    "executables" : ["DSConnect-server", "DSGame-server", "DSSearch-server"],
+    "DS-dir": "C:/Users/User/Documents/Darkstar",
+    "processPollingTime" : 1500,
+    "push" : true,
+    "pull" : false
+  }

@@ -1,0 +1,34 @@
+{
+    "title": "Contact me for project request.",
+    "paragraph": "Amet laborum pariatur nulla aute mollit sit pariatur nostrud culpa irure sunt mollit adipisicing excepteur. Pariatur elit dolor eiusmod nisi dolor enim elit in consequat ut ut. Amet sunt tempor quis in consectetur minim sit amet deserunt. Duis dolor aliquip mollit enim consequat esse qui ad aute voluptate nisi nulla.",
+    "contactTitle": "Get in touch",
+    "contactParagraph": "Reprehenderit ullamco amet id minim reprehenderit nisi minim aliqua sint magna tempor ea deserunt consectetur.",
+    "contactForm": {
+        "id" : "sendEmail",
+        "submitScript" :"sendEmail",
+        "submitButtonText" : "Send Email",
+        "recaptcha": true,
+        "fields": [{
+                "icon": "user",
+                "field": "Name",
+                "name": "name",
+                "type": "text",
+                "id": "contact_name"
+            },
+            {
+                "icon": "envelope",
+                "field": "Email",
+                "name": "email",
+                "type": "email",
+                "id": "contact_email"
+            },
+            {
+                "icon": "pencil-alt",
+                "field": "Message",
+                "name": "message",
+                "type": "textarea",
+                "id": "contact_textarea"
+            }
+        ]
+    }
+}
