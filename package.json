@@ -26,7 +26,7 @@
     "email-existence": "^0.1.6",
     "email-verifier": "^0.4.1",
     "express": "^4.16.4",
-    "express-fileupload": "^1.1.4",
+    "express-fileupload": "^1.1.9",
     "express-route-reload": "^1.0.1",
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
