@@ -25,7 +25,7 @@
     "ejs": "^2.6.1",
     "email-existence": "^0.1.6",
     "email-verifier": "^0.4.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-fileupload": "^1.1.4",
     "express-route-reload": "^1.0.1",
     "ffmpeg": "0.0.4",
